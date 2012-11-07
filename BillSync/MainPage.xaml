@@ -1,0 +1,57 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="BillSync.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Background="{StaticResource PhoneBackgroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:BillSync">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+          
+      <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="BillSync" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="home" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125*" />
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="325*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Height="133" HorizontalAlignment="Center" Tap="newBill_Tap" Margin="32,6,38,396" Name="newItem" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Center" Width="386" Grid.ColumnSpan="3" />
+            <Rectangle Height="152" HorizontalAlignment="Left" Tap="transactions_Tap" Margin="32,145,0,0" Name="recent" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
+            <Rectangle Height="222" HorizontalAlignment="Left" Tap="people_Tap" Margin="155,145,0,0" Name="list" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="132" Grid.Column="2" />
+            <Rectangle Height="113" HorizontalAlignment="Left" Tap="notifications_Tap" Margin="32,303,0,0" Name="notifications" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
+            <TextBlock Height="Auto" HorizontalAlignment="Right" Margin="0,101,47,0" Name="textBlock_newGroup"  Text="new group" VerticalAlignment="Top" Width="Auto" FontFamily="Segoe WP" Grid.Column="2" FontSize="28" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,259,34,0" Name="textBlock_bills" Text="bills" VerticalAlignment="Top" Width="Auto" FontSize="28" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,378,179,0" Name="textBlock_notifications" Text="notifications" VerticalAlignment="Top" Width="Auto" FontSize="28" Grid.ColumnSpan="2" Grid.Column="1" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,329,47,0" Name="textBlock_people" Text="people" VerticalAlignment="Top" Width="Auto" Grid.Column="2" FontSize="28" />
+        </Grid>
+    </Grid>
+ 
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Click="ApplicationBarSettingsMenu_Click" Text="settings"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

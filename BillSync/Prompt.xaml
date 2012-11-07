@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="BillSync.Prompt"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="132" d:DesignWidth="418" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <Border  BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="4" Width="415">
+        <Grid x:Name="LayoutRoot" Height="123" Background="{StaticResource PhoneBackgroundBrush}" Width="410">
+            <TextBox InputScope="Text" Height="Auto" HorizontalAlignment="Stretch" Name="textBox_name" Tap="textBox_name_Tap"  Text="" VerticalAlignment="Top" Margin="2,0,6,0" />
+            <Button Height="72" HorizontalAlignment="Left" Margin="15,57,0,0" Name="button_create" VerticalAlignment="Top" Width="379"/>
+        </Grid>
+    </Border>
+
+</UserControl>
