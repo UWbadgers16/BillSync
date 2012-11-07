@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace BillSync
 {
-    public class Transaction2
+    public class ItemWrapper
     {
         public string Name
         {
@@ -26,6 +26,12 @@ namespace BillSync
         }
 
         public string Amount
+        {
+            get;
+            set;
+        }
+
+        public string Group
         {
             get;
             set;

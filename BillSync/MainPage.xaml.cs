@@ -105,7 +105,7 @@ namespace BillSync
         //handle recent tap
         private void transactions_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Transactions.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
         }
 
         //handle list tap
