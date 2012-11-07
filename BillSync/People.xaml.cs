@@ -37,15 +37,15 @@ namespace BillSync
  
                     source.Add(new JumpList() { Name = result.DisplayName });      
                 }
-                //var groupBy = from jumplist in source
-                //              group jumplist by jumplist.GroupHeader into c
-                //              orderby c.Key
-                //              select new Group<JumpList>(c.Key, c);
+                var groupBy = from jumplist in source
+                              group jumplist by jumplist.GroupHeader into c
+                              orderby c.Key
+                              select new Group2<JumpList>(c.Key, c);
 
 
-                //this.outstandingListGroups.ItemsSource = groupBy;
-                //this.settledListGroups.ItemsSource = groupBy;
-                //this.allListGroups.ItemsSource = groupBy;
+                this.outstandingListGroups.ItemsSource = groupBy;
+                this.settledListGroups.ItemsSource = groupBy;
+                this.allListGroups.ItemsSource = groupBy;
             }
             catch (System.Exception)
             {
