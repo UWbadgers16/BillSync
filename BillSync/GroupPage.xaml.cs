@@ -14,13 +14,13 @@ using System.Windows.Controls.Primitives;
 
 namespace BillSync
 {
-    public partial class Bill : PhoneApplicationPage
+    public partial class GroupPage : PhoneApplicationPage
     {
         Popup newItemName = new Popup();
         List<Item> items = new List<Item>();
         List<Member> source = new List<Member>();
 
-        public Bill()
+        public GroupPage()
         {
             InitializeComponent();
             source.Add(new Member() { Name = "John" });

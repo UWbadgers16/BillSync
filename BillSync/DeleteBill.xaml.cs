@@ -13,11 +13,11 @@ using Microsoft.Phone.Controls;
 
 namespace BillSync
 {
-    public partial class DeleteItem : PhoneApplicationPage
+    public partial class DeleteBill : PhoneApplicationPage
     {
         List<Item> items = new List<Item>();
 
-        public DeleteItem()
+        public DeleteBill()
         {
             InitializeComponent();
             items = (List<Item>)GlobalVars.globalData;
