@@ -32,11 +32,18 @@ namespace BillSync
             {
                 List
                     <JumpList> source = new List<JumpList>();
-                foreach (var result in e.Results)
+
+                 foreach (var members in Database_Functions.GetMembers())
                 {
- 
-                    source.Add(new JumpList() { Name = result.DisplayName });      
+                    source.Add(new JumpList() {Name = members.Name});
                 }
+
+        //        foreach (var result in e.Results)
+        //        {
+        // 
+        //            source.Add(new JumpList() { Name = result.DisplayName });      
+        //        }
+
                 var groupBy = from jumplist in source
                               group jumplist by jumplist.GroupHeader into c
                               orderby c.Key
