@@ -14,15 +14,18 @@ using System.Windows.Controls.Primitives;
 
 namespace BillSync
 {
-    public partial class GroupPage : PhoneApplicationPage
+    public partial class NewGroup : PhoneApplicationPage
     {
         Popup newItemName = new Popup();
         List<Item> items = new List<Item>();
         List<Member> source = new List<Member>();
+        Boolean specify_amount = false;
 
-        public GroupPage()
+        public NewGroup()
         {
             InitializeComponent();
+            textBlock_specifyName.Visibility = Visibility.Collapsed;
+            textBox_specifyAmount.Visibility = Visibility.Collapsed;
             source.Add(new Member() { Name = "John" });
             source.Add(new Member() { Name = "Eric" });
             source.Add(new Member() { Name = "Yue Weng" });
@@ -85,6 +88,39 @@ namespace BillSync
         private void button_addContributor_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+        }
+
+        private void button_specifyAmount_Click(object sender, RoutedEventArgs e)
+        {
+            if (!specify_amount)
+            {
+                Member temp = (Member)listPicker.Items[listPicker.SelectedIndex];
+                textBlock_specifyName.Text = temp.Name;
+                textBlock_specifyName.Visibility = Visibility.Visible;
+                textBox_specifyAmount.Visibility = Visibility.Visible;
+                specify_amount = true;
+            }
+            else
+            {
+                textBlock_specifyName.Visibility = Visibility.Collapsed;
+                textBox_specifyAmount.Visibility = Visibility.Collapsed;
+                specify_amount = false;
+            }
+            
+        }
+
+        private void listPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (specify_amount)
+            {
+                Member temp = (Member)listPicker.Items[listPicker.SelectedIndex];
+                textBlock_specifyName.Text = temp.Name;
+            }
+        }
+
+        private void pivot_bill_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

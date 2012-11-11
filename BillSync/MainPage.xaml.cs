@@ -30,36 +30,36 @@ namespace BillSync
         public MainPage()
         {
             InitializeComponent();
-            using (GroupDataContext context = new GroupDataContext(ConnectionString))
-            {
-                if (!context.DatabaseExists())
-                {
-                    // create database if it does not exist
-                    context.CreateDatabase();
-                }
-                else
-                { // debug
-                    MessageBox.Show("deleting db");
-                    context.DeleteDatabase();
-                    context.CreateDatabase();
-                }
-            }
-            using (GroupDataContext context = new GroupDataContext(ConnectionString))
-            {
-                if (!context.DatabaseExists())
-                {
-                    // create database if it does not exist
-                    context.CreateDatabase();
-                }
-                else
-                { // debug
-                    MessageBox.Show("deleting db");
-                    context.DeleteDatabase();
-                    context.CreateDatabase();
-                }
-            }
+            //using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            //{
+            //    if (!context.DatabaseExists())
+            //    {
+            //        // create database if it does not exist
+            //        context.CreateDatabase();
+            //    }
+            //    else
+            //    { // debug
+            //        MessageBox.Show("deleting db");
+            //        context.DeleteDatabase();
+            //        context.CreateDatabase();
+            //    }
+            //}
+            //using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            //{
+            //    if (!context.DatabaseExists())
+            //    {
+            //        // create database if it does not exist
+            //        context.CreateDatabase();
+            //    }
+            //    else
+            //    { // debug
+            //        MessageBox.Show("deleting db");
+            //        context.DeleteDatabase();
+            //        context.CreateDatabase();
+            //    }
+            //}
 
-            test(); //debug
+            //test(); //debug
         }
 
         // database test
