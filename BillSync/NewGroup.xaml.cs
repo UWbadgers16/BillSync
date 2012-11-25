@@ -20,27 +20,40 @@ namespace BillSync
         List<NewItem> items = new List<NewItem>();
         List<ItemWrapper> source = new List<ItemWrapper>();
         Boolean first_load = true;
+        //List<Member> contributors = new List<Member>();
         
         public NewGroup()
         {
             InitializeComponent();
+            //contributors.Add(new Member() { Name = "John" });
+            //contributors.Add(new Member() { Name = "Eric" });
+            //contributors.Add(new Member() { Name = "Yue Weng" });
+            //contributors.Add(new Member() { Name = "Georgii" });
+            //this.listPicker_contributors.ItemsSource = contributors;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            if (GlobalVars.globalData != null)
+            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null)
             {
-                try
+                if (GlobalVars.item != null)
                 {
-                    items.Add((NewItem)GlobalVars.globalData);
+                    items.Add(GlobalVars.item);
+                    GlobalVars.item = null;
                 }
-                catch (InvalidCastException ex)
+                else if (GlobalVars.items != null)
                 {
-                    items = (List<NewItem>)GlobalVars.globalData;
+                    items = GlobalVars.items;
+                    GlobalVars.items = null;
                 }
-                GlobalVars.globalData = null;
+                else if (GlobalVars.editItem != null)
+                {
+                    int index = findItem(GlobalVars.editItem.item_name.Text);
+                    items[index] = GlobalVars.editItem;
+                    GlobalVars.editItem = null;
+                }
                 List<ItemWrapper> source = new List<ItemWrapper>();
                 foreach (NewItem item in items)
                 {
@@ -68,7 +81,7 @@ namespace BillSync
 
         private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
         {
-            GlobalVars.globalData = items;
+            GlobalVars.items = items;
             NavigationService.Navigate(new Uri("/DeleteBill.xaml", UriKind.Relative));
         }
 
@@ -98,10 +111,18 @@ namespace BillSync
 
             newItemPrompt.button_create.Click += (s, args) =>
             {
-                this.IsEnabled = true;
-                newItemName.IsOpen = false;
-                newItem.Title = newItemPrompt.Title;
-                NavigationService.Navigate(new Uri("/NewItem.xaml?msg=" + newItem.Title, UriKind.Relative));
+                if (findItem(newItemPrompt.Title) != -1)
+                {
+                    MessageBox.Show("Item name already exists. Please enter in new name", "Item name exists", MessageBoxButton.OK);
+                    newItemPrompt.textBox_name.Text = "";
+                }
+                else
+                {
+                    this.IsEnabled = true;
+                    newItemName.IsOpen = false;
+                    newItem.Title = newItemPrompt.Title;
+                    NavigationService.Navigate(new Uri("/NewItem.xaml?msg=" + newItem.Title, UriKind.Relative));
+                }
             };
         }
 
@@ -188,5 +209,31 @@ namespace BillSync
                 }
             }
         }
+
+        private void Item_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            TextBlock tapped = (TextBlock)sender;
+            int index = findItem(tapped.Text);
+            GlobalVars.item = items[index];
+            NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
+        }
+
+        private int findItem(string name)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item_name.Text.Equals(name))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        //private void button_addContributors_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+        //}
     }
 }

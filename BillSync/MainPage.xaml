@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="325*" />
             </Grid.ColumnDefinitions>
-            <Rectangle Height="133" HorizontalAlignment="Center" Tap="newBill_Tap" Margin="32,6,38,396" Name="newItem" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Center" Width="386" Grid.ColumnSpan="3" />
+            <Rectangle Height="133" HorizontalAlignment="Center" Tap="newBill_Tap" Margin="32,6,38,362" Name="newItem" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Center" Width="386" Grid.ColumnSpan="3" />
             <Rectangle Height="152" HorizontalAlignment="Left" Tap="transactions_Tap" Margin="32,145,0,0" Name="recent" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
             <Rectangle Height="222" HorizontalAlignment="Left" Tap="people_Tap" Margin="155,145,0,0" Name="list" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="132" Grid.Column="2" />
             <Rectangle Height="113" HorizontalAlignment="Left" Tap="notifications_Tap" Margin="32,303,0,0" Name="notifications" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />

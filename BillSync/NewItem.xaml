@@ -29,17 +29,17 @@
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
+        <Grid x:Name="LayoutRoot" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="item_name" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-        <ScrollViewer>
+            <!--TitlePanel contains the name of the application and page title-->
+            <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+                <TextBlock x:Name="item_name" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            </StackPanel>
             <StackPanel Margin="20,150,0,0" Name="stackPanel_main">
                 <TextBlock Height="35" Name="textBlock_description" Text="Description" FontSize="24" />
                 <TextBox InputScope="Text" Height="71" Name="textBox_description" Width="460" Margin="-18,-10,0,0" />
@@ -51,8 +51,9 @@
                 <CheckBox Content="Split Even" Height="71" Name="checkBox_splitEven" Margin="-8,0,0,0" />
                 <Button Content="Specify amount" Height="Auto" Name="button_specifyAmount" Width="229" Margin="-248,0,0,0" Click="button_specifyAmount_Click" />
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
+    
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">

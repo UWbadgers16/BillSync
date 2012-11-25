@@ -8,11 +8,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
+using System.Collections.Generic;
+using System.Windows.Controls.Primitives;
 
 namespace BillSync
 {
     public class GlobalVars
     {
-        public static Object globalData;
+        public static NewItem item;
+        public static NewItem editItem;
+        public static List<NewItem> items;
     }
 }

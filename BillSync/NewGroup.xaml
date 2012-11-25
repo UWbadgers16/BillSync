@@ -21,8 +21,7 @@
         <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34"/>
-                    <TextBlock Text="{Binding Group}" FontSize="34"/>
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -41,6 +40,18 @@
             </Border>
         </DataTemplate>
 
+        <DataTemplate x:Name="ListPickerItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ListPickerFullModeItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+            </StackPanel>
+        </DataTemplate>
+        
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -53,6 +64,9 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="group_name" Text="delete bill" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <!--<Button Content="Add contributors" Height="71" Name="button_addContributors" Width="467" Click="button_addContributors_Click" Margin="0,20,0,0" />
+            <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24" Margin="12,0,0,0" />
+            <toolkit:ListPicker x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Width="444" />-->
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->

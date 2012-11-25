@@ -20,8 +20,8 @@ namespace BillSync
         public DeleteBill()
         {
             InitializeComponent();
-            items = (List<NewItem>)GlobalVars.globalData;
-            GlobalVars.globalData = null;
+            items = GlobalVars.items;
+            GlobalVars.items = null;
             updateList();
         }
 
@@ -119,7 +119,7 @@ namespace BillSync
             MessageBoxResult m = MessageBox.Show("You'd like to delete these items?", "Delete?", MessageBoxButton.OKCancel);
             if (m == MessageBoxResult.OK)
             {
-                GlobalVars.globalData = items;
+                GlobalVars.items = items;
                 //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "delete", UriKind.Relative));
                 NavigationService.GoBack();
             }

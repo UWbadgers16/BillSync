@@ -19,6 +19,7 @@ namespace BillSync
         List<TextBox> textBoxes = new List<TextBox>();
         Boolean specify_amount = false;
         List<Member> source = new List<Member>();
+        Boolean isEditing = false;
 
         public NewItem()
         {
@@ -34,8 +35,25 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-            string msg = NavigationContext.QueryString["msg"];
-            item_name.Text = msg;
+            if (GlobalVars.item != null)
+            {
+                NewItem load = GlobalVars.item;
+                this.item_name.Text = load.item_name.Text;
+                this.textBox_description.Text = load.textBox_description.Text;
+                this.textBox_total.Text = load.textBox_total.Text;
+                this.listPicker = load.listPicker;
+                this.checkBox_splitEven = load.checkBox_splitEven;
+                textBlocks.Clear();
+                textBoxes.Clear();
+                loadSpecifics(load);
+                isEditing = true;
+                GlobalVars.item = null;
+            }
+            else
+            {
+                string msg = NavigationContext.QueryString["msg"];
+                item_name.Text = msg;
+            }
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -65,23 +83,19 @@ namespace BillSync
         private void button_addContributors_Click(object sender, RoutedEventArgs e)
         {
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+            NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
         }
 
         private void button_specifyAmount_Click(object sender, RoutedEventArgs e)
         {
-            int index = listPicker.SelectedIndex;
-            if (!specify_amount)
+            if (checkBox_splitEven.IsChecked == true)
             {
-                textBlocks[index].Visibility = Visibility.Visible;
-                textBoxes[index].Visibility = Visibility.Visible;
-                specify_amount = true;
+                MessageBoxResult m = MessageBox.Show("Choose to not split evenly?", "Split even conflict", MessageBoxButton.OKCancel);
+                if (m == MessageBoxResult.OK)
+                    specifyAmountToggle();
             }
             else
-            {
-                textBlocks[index].Visibility = Visibility.Collapsed;
-                textBoxes[index].Visibility = Visibility.Collapsed;
-                specify_amount = false;
-            }
+                specifyAmountToggle(); 
         }
 
         private void listPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,9 +119,61 @@ namespace BillSync
 
         private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
-            GlobalVars.globalData = this;
+            if (isEditing)
+            {
+                GlobalVars.editItem = this;
+                isEditing = false;
+            }
+            else
+            {
+
+                GlobalVars.item = this;
+            }
             //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));
             NavigationService.GoBack();
+        }
+
+        private void loadSpecifics(NewItem load)
+        {
+            Member temp;
+            for (int i = 0; i < listPicker.Items.Count; i++)
+            {
+                TextBlock newBlock = new TextBlock();
+                newBlock.FontSize = 24;
+                newBlock.Margin = new Thickness(0, 10, 0, 0);
+                newBlock.Visibility = Visibility.Collapsed;
+                temp = (Member)listPicker.Items[i];
+                newBlock.Text = temp.Name;
+                newBlock.Text = load.textBlocks[i].Text;
+                textBlocks.Add(newBlock);
+                TextBox newBox = new TextBox();
+                newBox.Height = 71;
+                newBox.Width = 460;
+                newBox.Text = "";
+                newBox.Margin = new Thickness(-18, -5, 0, 0);
+                newBox.Visibility = Visibility.Collapsed;
+                newBox.Text = load.textBoxes[i].Text;
+                textBoxes.Add(newBox);
+                stackPanel_main.Children.Add(newBlock);
+                stackPanel_main.Children.Add(newBox);
+            }
+        }
+
+        private void specifyAmountToggle()
+        {
+            int index = listPicker.SelectedIndex;
+            if (!specify_amount)
+            {
+                textBlocks[index].Visibility = Visibility.Visible;
+                textBoxes[index].Visibility = Visibility.Visible;
+                specify_amount = true;
+            }
+            else
+            {
+                textBlocks[index].Visibility = Visibility.Collapsed;
+                textBoxes[index].Visibility = Visibility.Collapsed;
+                specify_amount = false;
+            }
         }
     }
 }
