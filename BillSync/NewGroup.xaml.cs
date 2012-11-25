@@ -94,8 +94,6 @@ namespace BillSync
                     addItem();
                 else if (m == MessageBoxResult.Cancel)
                     NavigationService.GoBack();
-
-                first_load = false;
             }
         }
 
@@ -122,6 +120,7 @@ namespace BillSync
                     newItemName.IsOpen = false;
                     newItem.Title = newItemPrompt.Title;
                     NavigationService.Navigate(new Uri("/NewItem.xaml?msg=" + newItem.Title, UriKind.Relative));
+                    first_load = false;
                 }
             };
         }
@@ -187,9 +186,13 @@ namespace BillSync
         {
             if (newItemName.IsOpen)
             {
-                this.IsEnabled = true;
+                if (!first_load)
+                {
+                    this.IsEnabled = true;
+                    e.Cancel = true;
+                }
+
                 newItemName.IsOpen = false;
-                e.Cancel = true;
             }
             else
                 base.OnBackKeyPress(e);
