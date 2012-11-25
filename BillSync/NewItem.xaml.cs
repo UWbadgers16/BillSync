@@ -88,14 +88,19 @@ namespace BillSync
 
         private void button_specifyAmount_Click(object sender, RoutedEventArgs e)
         {
-            if (checkBox_splitEven.IsChecked == true)
+            int index = listPicker.SelectedIndex;
+            if (!specify_amount)
             {
-                MessageBoxResult m = MessageBox.Show("Choose to not split evenly?", "Split even conflict", MessageBoxButton.OKCancel);
-                if (m == MessageBoxResult.OK)
-                    specifyAmountToggle();
+                textBlocks[index].Visibility = Visibility.Visible;
+                textBoxes[index].Visibility = Visibility.Visible;
+                specify_amount = true;
             }
             else
-                specifyAmountToggle(); 
+            {
+                textBlocks[index].Visibility = Visibility.Collapsed;
+                textBoxes[index].Visibility = Visibility.Collapsed;
+                specify_amount = false;
+            }
         }
 
         private void listPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -157,23 +162,20 @@ namespace BillSync
                 stackPanel_main.Children.Add(newBlock);
                 stackPanel_main.Children.Add(newBox);
             }
+        } 
+
+        private void checkBox_splitEven_Checked(object sender, RoutedEventArgs e)
+        {
+            button_specifyAmount.IsEnabled = false;
+            int index = listPicker.SelectedIndex;
+            textBlocks[index].Visibility = Visibility.Collapsed;
+            textBoxes[index].Visibility = Visibility.Collapsed;
+            specify_amount = false;
         }
 
-        private void specifyAmountToggle()
+        private void checkBox_splitEven_Unchecked(object sender, RoutedEventArgs e)
         {
-            int index = listPicker.SelectedIndex;
-            if (!specify_amount)
-            {
-                textBlocks[index].Visibility = Visibility.Visible;
-                textBoxes[index].Visibility = Visibility.Visible;
-                specify_amount = true;
-            }
-            else
-            {
-                textBlocks[index].Visibility = Visibility.Collapsed;
-                textBoxes[index].Visibility = Visibility.Collapsed;
-                specify_amount = false;
-            }
+            button_specifyAmount.IsEnabled = true;
         }
     }
 }
