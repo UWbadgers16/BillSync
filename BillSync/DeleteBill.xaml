@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
 	 xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -17,34 +17,30 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <!-- The template for deletion items -->
-        <DataTemplate x:Key="deleteItemTemplate">
-            <StackPanel Orientation="Horizontal" Width="460" Height="120">
-                <Button Width="120" Height="120">
-                    <Button.Content>
-                        <TextBlock Text="View"/>
-                    </Button.Content>
-                </Button>
-                <StackPanel Orientation="Vertical" Height="80" Width="340">
-                    <TextBlock Text="{Binding Name}" FontSize="26"/>
-                    <TextBlock Text="{Binding Amount}" FontSize="26"/>
+
+        <!-- The template for transaction items -->
+        <DataTemplate x:Key="billTemplate">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="TextBlock_Tap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
 
 
         <!-- The group header template, for groups in the main list -->
-        <DataTemplate x:Key="groupHeaderTemplate">
-            <Border Background="{StaticResource PhoneAccentBrush}" Margin="6">
-                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White"/>
+        <DataTemplate x:Key="billHeaderTemplate">
+            <Border Background="Blue" Width="79" Height="79" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="groupItemTemplate" >
-            <Border Background="{StaticResource PhoneAccentBrush}" Width ="440" Height="50" Margin="0,6"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <DataTemplate x:Key="billItemTemplate" >
+            <Border Background="Blue" Width="99" Height="99" Margin="6">
+                <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White"/>
             </Border>
         </DataTemplate>
+
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -56,15 +52,15 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="PageTitle" Text="delete bill" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="group_name" Text="delete bill" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <toolkit:LongListSelector x:Name="deleteListGroup" Background="Transparent" 
-                 ItemTemplate="{StaticResource deleteItemTemplate}"
-					GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
-                    GroupItemTemplate="{StaticResource groupItemTemplate}" >
+            <toolkit:LongListSelector x:Name="billListGroup" Background="Transparent" 
+                 ItemTemplate="{StaticResource billTemplate}"
+					GroupHeaderTemplate="{StaticResource billHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource billItemTemplate}" >
                 <toolkit:LongListSelector.GroupItemsPanel>
                     <ItemsPanelTemplate>
                         <toolkit:WrapPanel/>
@@ -73,17 +69,11 @@
             </toolkit:LongListSelector>
         </Grid>
     </Grid>
- 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
+            <shell:ApplicationBarIconButton IconUri="/Images/deleteItem.png" Click="ApplicationBarDeleteButton_Click" Text="delete"/>
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

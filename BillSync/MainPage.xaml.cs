@@ -91,6 +91,7 @@ namespace BillSync
         //handle new item tap
         private void newBill_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            this.IsEnabled = false;
             Prompt newGroup = new Prompt(Prompt.Type.Group);
             newGroupName.Child = newGroup;
             newGroupName.VerticalOffset = 180;
@@ -99,8 +100,9 @@ namespace BillSync
 
             newGroup.button_create.Click += (s, args) =>
             {
+                this.IsEnabled = true;
                 newGroupName.IsOpen = false;
-                NavigationService.Navigate(new Uri("/GroupPage.xaml?msg=" + newGroup.Title, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + newGroup.Title, UriKind.Relative));
             };
         }
 
@@ -137,6 +139,7 @@ namespace BillSync
         {
             if (newGroupName.IsOpen)
             {
+                this.IsEnabled = true;
                 newGroupName.IsOpen = false;
                 e.Cancel = true;
             }

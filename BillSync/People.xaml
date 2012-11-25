@@ -63,7 +63,7 @@
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Outstanding">
                
-                    <toolkit:LongListSelector x:Name="outstandingListGroups" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
+                    <toolkit:LongListSelector x:Name="outstandingListGroups" SelectionChanged="outstandingListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
                                 <toolkit:WrapPanel/>
@@ -75,7 +75,7 @@
             
             <!--Panorama item two-->
             <controls:PanoramaItem Header="Settled">
-                <toolkit:LongListSelector x:Name="settledListGroups" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
+                <toolkit:LongListSelector x:Name="settledListGroups" SelectionChanged="settledListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel/>
@@ -87,7 +87,7 @@
 
             <!--Panorama item three-->
             <controls:PanoramaItem Header="All">
-                <toolkit:LongListSelector x:Name="allListGroups" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
+                <toolkit:LongListSelector x:Name="allListGroups" SelectionChanged="allListGroups_SelectionChanged"  Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel/>

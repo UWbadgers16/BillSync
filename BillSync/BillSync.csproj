@@ -51,9 +51,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewGroup.xaml.cs">
-      <DependentUpon>NewGroup.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Group2.cs" />
+    <Compile Include="ItemState.cs" />
     <Compile Include="Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
@@ -66,10 +65,8 @@
     </Compile>
     <Compile Include="GlobalVars.cs" />
     <Compile Include="Group.cs" />
-    <Compile Include="Group2.cs" />
     <Compile Include="GroupDataContext.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Item2.cs" />
     <Compile Include="ItemsList.xaml.cs">
       <DependentUpon>ItemsList.xaml</DependentUpon>
     </Compile>
@@ -79,6 +76,12 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Member.cs" />
+    <Compile Include="NewGroup.xaml.cs">
+      <DependentUpon>NewGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewItem.xaml.cs">
+      <DependentUpon>NewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Notifications.xaml.cs">
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
@@ -96,10 +99,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="NewGroup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Calendar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +116,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +155,9 @@
     <Content Include="Images\add.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\deleteItem.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -177,7 +187,11 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Images\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

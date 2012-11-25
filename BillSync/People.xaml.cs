@@ -17,7 +17,10 @@ namespace BillSync
 {
     public partial class People : PhoneApplicationPage
     {
-        
+        int page = 0;
+        Boolean fromNewGroup = false;
+        int goToPivot = 0;
+   
         public People()
         {
             InitializeComponent();
@@ -75,10 +78,33 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-            string msg = "";
+            string msg = NavigationContext.QueryString["msg"];
+            string this_page = NavigationContext.QueryString["this_page"];
 
-            if (NavigationContext.QueryString.TryGetValue("msg", out msg))
-                panorama_people.DefaultItem = panorama_people.Items[Convert.ToInt32(msg)];
+            if(!int.TryParse(msg, out page))
+                panorama_people.DefaultItem = panorama_people.Items[page];
+            else if (msg.Equals("add_member"))
+            {
+                fromNewGroup = true;
+            }   
+        }
+
+        private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(fromNewGroup)
+                NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "" + "&name=" + outstandingListGroups.SelectedItem, UriKind.Relative));
+        }
+
+        private void settledListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (fromNewGroup)
+                NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "" + "&name=" + outstandingListGroups.SelectedItem, UriKind.Relative));
+        }
+
+        private void allListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (fromNewGroup)
+                NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "" + "&name=" + outstandingListGroups.SelectedItem, UriKind.Relative));
         }
 
     }

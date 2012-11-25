@@ -17,66 +17,53 @@ namespace BillSync
     public partial class NewGroup : PhoneApplicationPage
     {
         Popup newItemName = new Popup();
-        List<Item> items = new List<Item>();
-        List<Member> source = new List<Member>();
-        Boolean specify_amount = false;
-
+        List<NewItem> items = new List<NewItem>();
+        List<ItemWrapper> source = new List<ItemWrapper>();
+        Boolean first_load = true;
+        
         public NewGroup()
         {
             InitializeComponent();
-            textBlock_specifyName.Visibility = Visibility.Collapsed;
-            textBox_specifyAmount.Visibility = Visibility.Collapsed;
-            source.Add(new Member() { Name = "John" });
-            source.Add(new Member() { Name = "Eric" });
-            source.Add(new Member() { Name = "Yue Weng" });
-            source.Add(new Member() { Name = "Georgii" });
-            this.listPicker.ItemsSource = source;
-        }
-
-        public List<Item> Items
-        {
-            get { return items; }
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            string msg = "";
+            if (GlobalVars.globalData != null)
+            {
+                try
+                {
+                    items.Add((NewItem)GlobalVars.globalData);
+                }
+                catch (InvalidCastException ex)
+                {
+                    items = (List<NewItem>)GlobalVars.globalData;
+                }
+                GlobalVars.globalData = null;
+                List<ItemWrapper> source = new List<ItemWrapper>();
+                foreach (NewItem item in items)
+                {
+                    source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
+                }
 
-            if (NavigationContext.QueryString.TryGetValue("msg", out msg))
-                pivot_bill.Title = msg;
+                var itemSource = from i in source
+                                 group i by i.Name.Substring(0, 1) into c
+                                 orderby c.Key
+                                 select new BillGroup<ItemWrapper>(c.Key, c);
+
+                this.billListGroup.ItemsSource = itemSource;
+            }
+            else
+            {
+                string msg = NavigationContext.QueryString["msg"];
+                group_name.Text = msg;
+            }
         }
 
         private void ApplicationBarAddButton_Click(object sender, EventArgs e)
         {
-            PivotItem newPivot = new PivotItem();
-            Prompt newItemPrompt = new Prompt(Prompt.Type.Bill);
-            Item newItem = new Item();
-            newItemName.Child = newItemPrompt;
-            newItemName.VerticalOffset = 180;
-            newItemName.HorizontalOffset = 30;
-            newItemName.IsOpen = true;
-
-            newItemPrompt.button_create.Click += (s, args) =>
-            {
-                newItemName.IsOpen = false;
-                newItem.Title = newItemPrompt.Title;
-                items.Add(newItem);
-                newPivot.Header = newItem.Title;
-                pivot_bill.Items.Add(newPivot);
-            };
-        }
-
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
-        {
-            if (newItemName.IsOpen)
-            {
-                newItemName.IsOpen = false;
-                e.Cancel = true;
-            }
-            else
-                base.OnBackKeyPress(e);
+            addItem();
         }
 
         private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
@@ -85,42 +72,121 @@ namespace BillSync
             NavigationService.Navigate(new Uri("/DeleteBill.xaml", UriKind.Relative));
         }
 
-        private void button_addContributor_Click(object sender, RoutedEventArgs e)
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+            if (first_load && items.Count == 0)
+            {
+                MessageBoxResult m = MessageBox.Show("Add a new item", "Add Item", MessageBoxButton.OKCancel);
+                if (m == MessageBoxResult.OK)
+                    addItem();
+                else if (m == MessageBoxResult.Cancel)
+                    NavigationService.GoBack();
+
+                first_load = false;
+            }
         }
 
-        private void button_specifyAmount_Click(object sender, RoutedEventArgs e)
+        private void addItem()
         {
-            if (!specify_amount)
+            this.IsEnabled = false;
+            Prompt newItemPrompt = new Prompt(Prompt.Type.Item);
+            NewItem newItem = new NewItem();
+            newItemName.Child = newItemPrompt;
+            newItemName.VerticalOffset = 180;
+            newItemName.HorizontalOffset = 30;
+            newItemName.IsOpen = true;
+
+            newItemPrompt.button_create.Click += (s, args) =>
             {
-                Member temp = (Member)listPicker.Items[listPicker.SelectedIndex];
-                textBlock_specifyName.Text = temp.Name;
-                textBlock_specifyName.Visibility = Visibility.Visible;
-                textBox_specifyAmount.Visibility = Visibility.Visible;
-                specify_amount = true;
+                this.IsEnabled = true;
+                newItemName.IsOpen = false;
+                newItem.Title = newItemPrompt.Title;
+                NavigationService.Navigate(new Uri("/NewItem.xaml?msg=" + newItem.Title, UriKind.Relative));
+            };
+        }
+
+        public class BillGroup<T> : IEnumerable<T>
+        {
+            public BillGroup(string name, IEnumerable<T> items)
+            {
+                this.Title = name.Substring(0,1);
+                this.TileTitle = name.Substring(0, 1);
+                this.Items = new List<T>(items);
+            }
+
+            public override bool Equals(object obj)
+            {
+                BillGroup<T> that = obj as BillGroup<T>;
+
+                return (that != null) && (this.Title.Equals(that.Title));
+            }
+
+            public string TileTitle
+            {
+                get;
+                set;
+            }
+            public string Title
+            {
+                get;
+                set;
+            }
+
+            public IList<T> Items
+            {
+                get;
+                set;
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
+
+            #region IEnumerable<T> Members
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                return this.Items.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IEnumerable Members
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return this.Items.GetEnumerator();
+            }
+
+            #endregion
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (newItemName.IsOpen)
+            {
+                this.IsEnabled = true;
+                newItemName.IsOpen = false;
+                e.Cancel = true;
             }
             else
-            {
-                textBlock_specifyName.Visibility = Visibility.Collapsed;
-                textBox_specifyAmount.Visibility = Visibility.Collapsed;
-                specify_amount = false;
-            }
-            
+                base.OnBackKeyPress(e);
         }
 
-        private void listPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
-            if (specify_amount)
+            MessageBoxResult m = MessageBox.Show("You'd like to save this group?", "Save?", MessageBoxButton.OKCancel);
+            if (m == MessageBoxResult.OK)
             {
-                Member temp = (Member)listPicker.Items[listPicker.SelectedIndex];
-                textBlock_specifyName.Text = temp.Name;
+                int newGroup = Database_Functions.AddGroup(group_name.Text);
+
+                foreach (NewItem i in items)
+                {
+                    Database_Functions.AddItem(newGroup, i.item_name.Text, i.textBox_description.Text);
+
+                }
             }
-        }
-
-        private void pivot_bill_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

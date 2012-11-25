@@ -14,7 +14,7 @@ namespace BillSync
 {
     public partial class Prompt : UserControl
     {
-        public enum Type {Group, Bill};
+        public enum Type {Group, Item};
         private Boolean hasNew = false;
         private Boolean defaultMessage = false;
 
@@ -27,9 +27,9 @@ namespace BillSync
                     textBox_name.Text = "enter group name";
                     button_create.Content = "create new group";
                     break;
-                case Prompt.Type.Bill:
-                    textBox_name.Text = "enter bill name";
-                    button_create.Content = "create new bill";
+                case Prompt.Type.Item:
+                    textBox_name.Text = "enter item name";
+                    button_create.Content = "create new item";
                     break;
             }
             defaultMessage = true;

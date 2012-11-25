@@ -4,57 +4,78 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    Loaded="PhoneApplicationPage_Loaded">
 
     <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Name="ListPickerItemTemplate">
+
+        <!-- The template for transaction items -->
+        <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Name}" FontSize="34"/>
+                    <TextBlock Text="{Binding Group}" FontSize="34"/>
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Name="ListPickerFullModeItemTemplate">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
-            </StackPanel>
+
+
+        <!-- The group header template, for groups in the main list -->
+        <DataTemplate x:Key="billHeaderTemplate">
+            <Border Background="Blue" Width="79" Height="79" HorizontalAlignment="Left">
+                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            </Border>
         </DataTemplate>
+
+        <DataTemplate x:Key="billItemTemplate" >
+            <Border Background="Blue" Width="99" Height="99" Margin="6">
+                <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            </Border>
+        </DataTemplate>
+
     </phone:PhoneApplicationPage.Resources>
-    
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <!--Pivot Control-->
-        <controls:Pivot Title="new group" SelectionChanged="pivot_bill_SelectionChanged"  FontSize="72" Name="pivot_bill" FontFamily="Microsoft NeoGothic">
-            <!--Pivot item one-->
-            <!--Pivot item two-->
-        </controls:Pivot>
-        <ScrollViewer>
-            <StackPanel Margin="20,220,0,0">
-                <TextBlock Height="30" Name="textBlock_total" Text="Total" FontSize="24" />
-                <TextBox Height="71" Name="textBox_total" Text="" Width="460" Margin="-18,-5,0,0" />
-                <Button Content="Add contributors" Height="71" Name="button1" Width="460" Padding="10,3,10,5" Margin="-18,0,0,0" Click="button_addContributor_Click" />
-                <TextBlock Height="36" Name="textBlock_contributors" Text="Contributors" FontSize="24" />
-                <toolkit:ListPicker x:Name="listPicker" SelectionChanged="listPicker_SelectionChanged" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Margin="4,-10,12,12" />
-                <CheckBox Content="Split Even" Height="71" Name="checkBox_splitEven" Margin="-8,0,0,0" />
-                <Button Content="Specify amount" Height="Auto" Name="button_specifyAmount" Width="229" Margin="-248,0,0,0" Click="button_specifyAmount_Click" />
-                <TextBlock Height="Auto" Name="textBlock_specifyName" Text="TextBlock" FontSize="24" Margin="0,10,0,0"/>
-                <TextBox Height="71" Name="textBox_specifyAmount" Text="" Width="460" Margin="-18,-5,0,0"/>
-            </StackPanel>
-        </ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="group_name" Text="delete bill" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <toolkit:LongListSelector x:Name="billListGroup" Background="Transparent" 
+                 ItemTemplate="{StaticResource billTemplate}"
+					GroupHeaderTemplate="{StaticResource billHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource billItemTemplate}" >
+                <toolkit:LongListSelector.GroupItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </toolkit:LongListSelector.GroupItemsPanel>
+            </toolkit:LongListSelector>
+        </Grid>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Click="ApplicationBarAddButton_Click" Text="add"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/save.png" Click="ApplicationBarSaveButton_Click"  Text="save group"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Click="ApplicationBarAddButton_Click"  Text="add"/>
             <shell:ApplicationBarIconButton IconUri="/Images/delete.png" Click="ApplicationBarDeleteButton_Click"  Text="delete"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-    
+
 </phone:PhoneApplicationPage>

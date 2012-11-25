@@ -15,40 +15,28 @@ namespace BillSync
 {
     public partial class DeleteBill : PhoneApplicationPage
     {
-        List<Item> items = new List<Item>();
+        List<NewItem> items = new List<NewItem>();
 
         public DeleteBill()
         {
             InitializeComponent();
-            items = (List<Item>)GlobalVars.globalData;
+            items = (List<NewItem>)GlobalVars.globalData;
             GlobalVars.globalData = null;
-            var deleteItems = from i in items
-                              group i by i.Title into c
-                              orderby c.Key
-                              select new DeleteGroup<Item>(c.Key, c);
-
-            this.deleteListGroup.ItemsSource = deleteItems;
+            updateList();
         }
 
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        public class BillGroup<T> : IEnumerable<T>
         {
-            base.OnNavigatedTo(e);
-            items = (List<Item>)GlobalVars.globalData;
-            GlobalVars.globalData = null;
-        }
-
-        public class DeleteGroup<T> : IEnumerable<T>
-        {
-            public DeleteGroup(string name, IEnumerable<T> items)
+            public BillGroup(string name, IEnumerable<T> items)
             {
-                this.Title = name;
-                this.TileTitle = name;
+                this.Title = name.Substring(0, 1);
+                this.TileTitle = name.Substring(0, 1);
                 this.Items = new List<T>(items);
             }
 
             public override bool Equals(object obj)
             {
-                DeleteGroup<T> that = obj as DeleteGroup<T>;
+                BillGroup<T> that = obj as BillGroup<T>;
 
                 return (that != null) && (this.Title.Equals(that.Title));
             }
@@ -92,6 +80,49 @@ namespace BillSync
             }
 
             #endregion
+        }
+
+        private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            TextBlock tapped = (TextBlock)sender;
+            string tappedText = tapped.Text;
+            for(int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item_name.Text.Equals(tappedText))
+                {
+                    MessageBoxResult m = MessageBox.Show("You'd like to delete " + tappedText + "?", "Delete?", MessageBoxButton.OKCancel);
+                    if(m == MessageBoxResult.OK)
+                        items.RemoveAt(i);
+                }
+            }
+
+            updateList();
+        }
+
+        private void updateList()
+        {
+            List<ItemWrapper> source = new List<ItemWrapper>();
+            foreach (NewItem item in items)
+            {
+                source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
+            }
+            var itemSource = from i in source
+                             group i by i.Name.Substring(0, 1) into c
+                             orderby c.Key
+                             select new BillGroup<ItemWrapper>(c.Key, c);
+
+            this.billListGroup.ItemsSource = itemSource;
+        }
+
+        private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
+        {
+            MessageBoxResult m = MessageBox.Show("You'd like to delete these items?", "Delete?", MessageBoxButton.OKCancel);
+            if (m == MessageBoxResult.OK)
+            {
+                GlobalVars.globalData = items;
+                //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "delete", UriKind.Relative));
+                NavigationService.GoBack();
+            }
         }
     }
 }

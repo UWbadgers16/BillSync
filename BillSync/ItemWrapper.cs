@@ -13,6 +13,12 @@ namespace BillSync
 {
     public class ItemWrapper
     {
+        public NewItem ItemPage
+        {
+            get;
+            set;
+        }
+
         public string Name
         {
             get;
