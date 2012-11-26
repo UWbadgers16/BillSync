@@ -75,7 +75,7 @@ namespace BillSync
             IList<Item> itemList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
-                IQueryable<Item> query = from c in context.Items select c;
+                IQueryable<Item> query = from c in context.Items orderby c.Created select c;
                 itemList = query.ToList();
             }
             return itemList;
