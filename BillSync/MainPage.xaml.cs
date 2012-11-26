@@ -60,7 +60,7 @@ namespace BillSync
                 }
             }
 
-            //test(); //debug
+            test(); //debug
         }
 
         // database test
