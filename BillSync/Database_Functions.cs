@@ -104,6 +104,17 @@ namespace BillSync
             }
         }
 
+        public static string GetGroupName(int item_id)
+        {
+            IList<Item> itemList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Item> query = from c in context.Items orderby c.Created select c;
+                itemList = query.ToList();
+            }
+            return itemList.FirstOrDefault().Group.Name;
+        }
+
         public static void ChangeDate(int item_id, DateTime datetime)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
