@@ -56,6 +56,13 @@ namespace BillSync
             set;
         }
 
+        [Column]
+        public DateTime Due
+        {
+            get;
+            set;
+        }
+
         [Column(Storage = "groupID", DbType = "Int")]
         public int? GroupID
         {

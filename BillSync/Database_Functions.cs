@@ -81,7 +81,7 @@ namespace BillSync
             return itemList;
         }
 
-        public static int AddItem(int group_id, String item_name, String item_desc)
+        public static int AddItem(int group_id, String item_name, String item_desc, DateTime due)
         {
             // Get associated Group for group_id
             IList<Group> groupList = null;
@@ -94,12 +94,25 @@ namespace BillSync
                 item.Title = item_name;
                 item.Description = item_desc;
                 item.Created = DateTime.Now;
+                item.Due = due;
                 item.Group = groupList.FirstOrDefault();
 
                 context.Items.InsertOnSubmit(item);
                 context.SubmitChanges();
 
                 return item.ID;
+            }
+        }
+
+        public static void ChangeDate(int item_id, DateTime datetime)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Item item = (from c in context.Items where c.ID == item_id select c).Single();
+
+                item.Created = datetime;
+
+                context.SubmitChanges();
             }
         }
 

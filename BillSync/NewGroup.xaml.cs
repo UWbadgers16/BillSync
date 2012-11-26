@@ -207,7 +207,7 @@ namespace BillSync
 
                 foreach (NewItem i in items)
                 {
-                    Database_Functions.AddItem(newGroup, i.item_name.Text, i.textBox_description.Text);
+                    Database_Functions.AddItem(newGroup, i.item_name.Text, i.textBox_description.Text, DateTime.Now);
 
                 }
             }

@@ -60,7 +60,7 @@ namespace BillSync
                 }
             }
 
-            //test(); //debug
+            test(); //debug
         }
 
         // database test
@@ -69,14 +69,24 @@ namespace BillSync
             int group1 = Database_Functions.AddGroup("Apartment");
             int group2 = Database_Functions.AddGroup("House");
             int group3 = Database_Functions.AddGroup("Trip");
-            int item1 = Database_Functions.AddItem(group1, "Groceries", "orange juice and bread");
-            int item2 = Database_Functions.AddItem(group2, "Internet", "asfdfsd");
-            int item3 = Database_Functions.AddItem(group3, "Power", "asdfasdfasdfs");
-            int item4 = Database_Functions.AddItem(group3, "Cable", "qwerty");
-            int item5 = Database_Functions.AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra");
-            int item6 = Database_Functions.AddItem(group1, "Booze", "halloween party");
-            int item7 = Database_Functions.AddItem(group1, "N64", "");
-            int item8 = Database_Functions.AddItem(group1, "Super Smash Bros 64", "");
+            int item1 = Database_Functions.AddItem(group1, "Groceries", "orange juice and bread", DateTime.Now);
+            int item2 = Database_Functions.AddItem(group2, "Internet", "asfdfsd", DateTime.Now);
+            int item3 = Database_Functions.AddItem(group3, "Power", "asdfasdfasdfs", DateTime.Now);
+            int item4 = Database_Functions.AddItem(group3, "Cable", "qwerty", DateTime.Now);
+            int item5 = Database_Functions.AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra", DateTime.Now);
+            int item6 = Database_Functions.AddItem(group1, "Booze", "halloween party", DateTime.Now);
+            int item7 = Database_Functions.AddItem(group1, "N64", "", DateTime.Now);
+            int item8 = Database_Functions.AddItem(group1, "Super Smash Bros 64", "", DateTime.Now);
+
+            Database_Functions.ChangeDate(item1, DateTime.Parse("2012-01-01 7:34:42Z"));
+            Database_Functions.ChangeDate(item2, DateTime.Parse("2012-01-05 7:34:42Z"));
+            Database_Functions.ChangeDate(item3, DateTime.Parse("2012-01-10 7:34:42Z"));
+            Database_Functions.ChangeDate(item4, DateTime.Parse("2012-01-15 7:34:42Z"));
+            Database_Functions.ChangeDate(item5, DateTime.Parse("2012-02-01 7:34:42Z"));
+            Database_Functions.ChangeDate(item6, DateTime.Parse("2012-04-01 7:34:42Z"));
+            Database_Functions.ChangeDate(item7, DateTime.Parse("2012-06-01 7:34:42Z"));
+            Database_Functions.ChangeDate(item8, DateTime.Parse("2012-10-01 7:34:42Z"));
+
             int member1 = Database_Functions.AddMember(group1, "Georgii Saveliev");
             int member2 = Database_Functions.AddMember(group2, "Eric Dargelies");
             int member3 = Database_Functions.AddMember(group3, "Yue Weng Mak");
@@ -102,10 +112,10 @@ namespace BillSync
             Database_Functions.AddTransaction(item8, member4, -16.54m);
             Database_Functions.AddTransaction(item8, member5, -26.54m);
 
-            /*Database_Functions.PrintGroups();
-            Database_Functions.PrintItems();
-            Database_Functions.PrintMembers();
-            Database_Functions.PrintTransactions();*/
+            //Database_Functions.PrintGroups();
+            //Database_Functions.PrintItems();
+            //Database_Functions.PrintMembers();
+            //Database_Functions.PrintTransactions();
 
             //sendLedgerEmail(1);
         }
