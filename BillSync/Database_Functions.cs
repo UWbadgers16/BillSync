@@ -81,7 +81,7 @@ namespace BillSync
             return itemList;
         }
 
-        public static void AddItem(int group_id, String item_name, String item_desc)
+        public static int AddItem(int group_id, String item_name, String item_desc)
         {
             // Get associated Group for group_id
             IList<Group> groupList = null;
@@ -98,6 +98,8 @@ namespace BillSync
 
                 context.Items.InsertOnSubmit(item);
                 context.SubmitChanges();
+
+                return item.ID;
             }
         }
 
@@ -147,7 +149,7 @@ namespace BillSync
             return memberList;
         }
 
-        public static void AddMember(int group_id, String member_name)
+        public static int AddMember(int group_id, String member_name)
         {
             // Get associated Group for group_id
             IList<Group> groupList = null;
@@ -163,6 +165,8 @@ namespace BillSync
 
                 context.Members.InsertOnSubmit(member);
                 context.SubmitChanges();
+
+                return member.ID;
             }
         }
 
@@ -194,7 +198,7 @@ namespace BillSync
             return transactionList;
         }
 
-        public static void AddTransaction(int item_id, int member_id, decimal amount)
+        public static int AddTransaction(int item_id, int member_id, decimal amount)
         {
             // Get associated Item for item_id and Member for member_id
             IList<Item> itemList = null;
@@ -213,6 +217,8 @@ namespace BillSync
 
                 context.Transactions.InsertOnSubmit(transaction);
                 context.SubmitChanges();
+
+                return transaction.ID;
             }
         }
 

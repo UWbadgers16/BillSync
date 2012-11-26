@@ -17,6 +17,7 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text;
+using Microsoft.Phone.Tasks;
 
 namespace BillSync
 {
@@ -65,27 +66,48 @@ namespace BillSync
         // database test
         public void test()
         {
-            int test1 = Database_Functions.AddGroup("apartment");
-            int test2 = Database_Functions.AddGroup("house");
-            int test3 = Database_Functions.AddGroup("trip");
-            Database_Functions.AddItem(test1, "groceries", "orange juice and bread");
-            Database_Functions.AddItem(test2, "internet", "asfdfsd");
-            Database_Functions.AddItem(test3, "powerbill", "asdfasdfasdfs");
-            Database_Functions.AddItem(test3, "cable", "qwerty");
-            Database_Functions.AddMember(test1, "Georgii Saveliev");
-            Database_Functions.AddMember(test2, "Eric Dargelies");
-            Database_Functions.AddMember(test3, "Yue Weng Mak");
-            Database_Functions.AddMember(test1, "John Cabaj");
-            Database_Functions.AddTransaction(1, 1, 14.50m);
-            Database_Functions.AddTransaction(2, 1, 20.33m);
-            Database_Functions.AddTransaction(2, 2, 45.66m);
-            Database_Functions.AddTransaction(3, 3, 65.88m);
-            Database_Functions.AddTransaction(9, 5, 99.99m);
+            int group1 = Database_Functions.AddGroup("Apartment");
+            int group2 = Database_Functions.AddGroup("House");
+            int group3 = Database_Functions.AddGroup("Trip");
+            int item1 = Database_Functions.AddItem(group1, "Groceries", "orange juice and bread");
+            int item2 = Database_Functions.AddItem(group2, "Internet", "asfdfsd");
+            int item3 = Database_Functions.AddItem(group3, "Power", "asdfasdfasdfs");
+            int item4 = Database_Functions.AddItem(group3, "Cable", "qwerty");
+            int item5 = Database_Functions.AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra");
+            int item6 = Database_Functions.AddItem(group1, "Booze", "halloween party");
+            int item7 = Database_Functions.AddItem(group1, "N64", "");
+            int item8 = Database_Functions.AddItem(group1, "Super Smash Bros 64", "");
+            int member1 = Database_Functions.AddMember(group1, "Georgii Saveliev");
+            int member2 = Database_Functions.AddMember(group2, "Eric Dargelies");
+            int member3 = Database_Functions.AddMember(group3, "Yue Weng Mak");
+            int member4 = Database_Functions.AddMember(group1, "John Cabaj");
+            int member5 = Database_Functions.AddMember(group1, "Eric Dargelies");
+            int member6 = Database_Functions.AddMember(group1, "Yue Weng Mak");
+            int transaction1 = Database_Functions.AddTransaction(item1, member1, 14.50m);
+            int transaction2 = Database_Functions.AddTransaction(item2, member1, 20.33m);
+            int transaction3 = Database_Functions.AddTransaction(item2, member2, 45.66m);
+            int transaction4 = Database_Functions.AddTransaction(item3, member3, 65.88m);
+            int transaction5 = Database_Functions.AddTransaction(item4, member4, 99.99m);
 
-            Database_Functions.PrintGroups();
+            // group1 - items 1, 5-8
+            Database_Functions.AddTransaction(item1, member4, -36.54m);
+            Database_Functions.AddTransaction(item5, member5, 5.00m);
+            Database_Functions.AddTransaction(item6, member6, 10.04m);
+            Database_Functions.AddTransaction(item7, member6, -20.54m);
+            Database_Functions.AddTransaction(item8, member6, -55.54m);
+            Database_Functions.AddTransaction(item5, member1, -66.54m);
+            Database_Functions.AddTransaction(item6, member4, -77.54m);
+            Database_Functions.AddTransaction(item7, member5, -88.54m);
+            Database_Functions.AddTransaction(item8, member1, -6.54m);
+            Database_Functions.AddTransaction(item8, member4, -16.54m);
+            Database_Functions.AddTransaction(item8, member5, -26.54m);
+
+            /*Database_Functions.PrintGroups();
             Database_Functions.PrintItems();
             Database_Functions.PrintMembers();
-            Database_Functions.PrintTransactions();
+            Database_Functions.PrintTransactions();*/
+
+            //sendLedgerEmail(1);
         }
 
         //handle new item tap
@@ -145,6 +167,48 @@ namespace BillSync
             }
             else
                 base.OnBackKeyPress(e);
+        }
+
+        private void sendLedgerEmail(int group_id)
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.AppendLine("Ledger: \n\n==========================\n");
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Group> gquery = from c in context.Groups where c.ID == group_id select c;
+                IList<Group> group = gquery.ToList();
+                messageBuilder.AppendLine("Group Name: " + group.FirstOrDefault().Name + "\n==========================\n");
+
+                IQueryable<Member> mquery = from c in context.Members where c.Group.ID == group_id select c;
+                IList<Member> members = mquery.ToList();
+                string membernames = "";
+                foreach (Member member in members)
+                {
+                    membernames = membernames + member.Name + "\t";
+                }
+
+                messageBuilder.AppendLine("Members:\n" + membernames + "\n==========================\n` ");
+
+                IQueryable<Item> iquery = from c in context.Items where c.Group.ID == group_id select c;
+                IList<Item> items = iquery.ToList();
+                foreach (Item item in items)
+                {
+                    messageBuilder.AppendLine("\nItem: " + item.Title + " (" + item.ID.ToString() + ")");
+                    messageBuilder.AppendLine("Transactions:\n");
+                    IQueryable<Transaction> tquery = from c in context.Transactions where c.ItemID == item.ID select c;
+                    IList<Transaction> transactions = tquery.ToList();
+                    foreach (Transaction transaction in transactions)
+                    {
+                        messageBuilder.AppendLine("\t" + transaction.Member.Name + ": " + transaction.Amount);
+                    }
+                }
+            }
+
+            EmailComposeTask email = new EmailComposeTask();
+            email.Body = messageBuilder.ToString();
+            email.Subject = "BillSync ledger for group ID " + group_id.ToString();
+            email.To = "georgii@saveliev.su";
+            email.Show();
         }
     }
 }
