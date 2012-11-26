@@ -21,8 +21,8 @@
 		<DataTemplate x:Key="transItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="120">
                 <Button Width="120" Height="120">
-                    <Button.Content >
-                        <TextBlock Text="{Binding Group}"/>
+                    <Button.Content>
+                        <TextBlock Text="View"/>
                     </Button.Content>
                 </Button>
                 <StackPanel Orientation="Vertical" Height="80" Width="340">

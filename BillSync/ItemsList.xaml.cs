@@ -20,16 +20,11 @@ namespace BillSync
         {
 			InitializeComponent();
             //Items must be added in order by correct date, otherwise they will appear out of order.
-            IList<Group> groups = Database_Functions.GetGroups();
             List<ItemWrapper> source = new List<ItemWrapper>();
-            //
-            foreach (Group group in groups)
-            { 
-                IList<Item> bills = group.Items;
-                foreach (Item bill in bills)
-                {
-                    source.Add(new ItemWrapper() { Name = bill.Title, Group = group.Name, Date = getDateString(bill.Created) });
-                }
+            IList<Item> bills = Database_Functions.GetItems();
+            foreach (Item bill in bills)
+            {                 
+                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created)});
             }
 
 			var transByDate = from trans in source
