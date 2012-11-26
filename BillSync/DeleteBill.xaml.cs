@@ -116,7 +116,7 @@ namespace BillSync
 
         private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
         {
-            MessageBoxResult m = MessageBox.Show("You'd like to delete these items?", "Delete?", MessageBoxButton.OKCancel);
+            MessageBoxResult m = MessageBox.Show("You'd like to delete these items?", "Confirm delete?", MessageBoxButton.OKCancel);
             if (m == MessageBoxResult.OK)
             {
                 GlobalVars.items = items;

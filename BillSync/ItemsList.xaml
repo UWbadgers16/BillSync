@@ -35,7 +35,7 @@
 
 		<!-- The group header template, for groups in the main list -->
 		<DataTemplate x:Key="groupHeaderTemplate">
-			<Border Background="Blue" Margin="6">
+			<Border Background="Blue" Width="460" Height="50" Margin="6">
 				<TextBlock Text="{Binding Title}" FontSize="40" Foreground="White"/>
 			</Border>
 		</DataTemplate>

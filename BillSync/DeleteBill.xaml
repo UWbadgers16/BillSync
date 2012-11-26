@@ -22,7 +22,7 @@
         <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="TextBlock_Tap"/>
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="TextBlock_Tap" TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -30,7 +30,7 @@
 
         <!-- The group header template, for groups in the main list -->
         <DataTemplate x:Key="billHeaderTemplate">
-            <Border Background="Blue" Width="79" Height="79" HorizontalAlignment="Left">
+            <Border Background="Blue" Width="460" Height="50" HorizontalAlignment="Left" Margin="0,10,0,0">
                 <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             </Border>
         </DataTemplate>
@@ -72,7 +72,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/deleteItem.png" Click="ApplicationBarDeleteButton_Click" Text="delete"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/deleteItem.png" Click="ApplicationBarDeleteButton_Click" Text="confirm"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

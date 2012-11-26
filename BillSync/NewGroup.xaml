@@ -21,7 +21,7 @@
         <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap"/>
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap" TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -29,7 +29,7 @@
 
         <!-- The group header template, for groups in the main list -->
         <DataTemplate x:Key="billHeaderTemplate">
-            <Border Background="Blue" Width="79" Height="79" HorizontalAlignment="Left">
+            <Border Background="Blue" Width="460" Height="50" HorizontalAlignment="Left" Margin="0,10,0,0">
                 <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             </Border>
         </DataTemplate>
@@ -63,7 +63,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="group_name" Text="delete bill" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="group_name" Text="new group" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             <!--<Button Content="Add contributors" Height="71" Name="button_addContributors" Width="467" Click="button_addContributors_Click" Margin="0,20,0,0" />
             <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24" Margin="12,0,0,0" />
             <toolkit:ListPicker x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Width="444" />-->

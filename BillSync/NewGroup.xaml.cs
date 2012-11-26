@@ -20,8 +20,14 @@ namespace BillSync
         List<NewItem> items = new List<NewItem>();
         List<ItemWrapper> source = new List<ItemWrapper>();
         Boolean first_load = true;
+        int group_id;
         //List<Member> contributors = new List<Member>();
-        
+
+        public int Group_ID
+        {
+            get { return group_id; }
+        }
+
         public NewGroup()
         {
             InitializeComponent();
@@ -30,6 +36,7 @@ namespace BillSync
             //contributors.Add(new Member() { Name = "Yue Weng" });
             //contributors.Add(new Member() { Name = "Georgii" });
             //this.listPicker_contributors.ItemsSource = contributors;
+            group_id = Database_Functions.AddGroup(group_name.Text);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -116,6 +123,7 @@ namespace BillSync
                 }
                 else
                 {
+                    GlobalVars.group = this;
                     this.IsEnabled = true;
                     newItemName.IsOpen = false;
                     newItem.Title = newItemPrompt.Title;

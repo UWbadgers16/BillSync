@@ -20,6 +20,7 @@ namespace BillSync
         Boolean specify_amount = false;
         List<Member> source = new List<Member>();
         Boolean isEditing = false;
+        NewGroup group;
 
         public NewItem()
         {
@@ -29,6 +30,7 @@ namespace BillSync
             source.Add(new Member() { Name = "Yue Weng" });
             source.Add(new Member() { Name = "Georgii" });
             this.listPicker.ItemsSource = source;
+            group = GlobalVars.group;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -43,6 +45,7 @@ namespace BillSync
                 this.textBox_total.Text = load.textBox_total.Text;
                 this.listPicker = load.listPicker;
                 this.checkBox_splitEven = load.checkBox_splitEven;
+                this.dataPicker_date = load.dataPicker_date;
                 textBlocks.Clear();
                 textBoxes.Clear();
                 loadSpecifics(load);
@@ -74,6 +77,8 @@ namespace BillSync
                 newBox.Text = "";
                 newBox.Margin = new Thickness(-18, -5, 0, 0);
                 newBox.Visibility = Visibility.Collapsed;
+                InputScope asdf = new InputScope();
+                newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
                 stackPanel_main.Children.Add(newBox);
@@ -131,7 +136,7 @@ namespace BillSync
             }
             else
             {
-
+            
                 GlobalVars.item = this;
             }
             //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));

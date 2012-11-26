@@ -44,7 +44,9 @@
                 <TextBlock Height="35" Name="textBlock_description" Text="Description" FontSize="24" />
                 <TextBox InputScope="Text" Height="71" Name="textBox_description" Width="460" Margin="-18,-10,0,0" />
                 <TextBlock Height="30" Name="textBlock_total" Text="Total" FontSize="24" />
-                <TextBox Height="71" Name="textBox_total" Text="" Width="460" Margin="-18,-5,0,0" />
+                <TextBox InputScope="Number" Height="71" Name="textBox_total" Text="" Width="460" Margin="-18,-5,0,0" />
+                <TextBlock Height="35" Name="textBlock_data" Text="Due date" FontSize="24"/>
+                <toolkit:DatePicker Height="71" Name="dataPicker_date" Width="460" Margin="-18,-5,0,0" />
                 <Button Content="Add contributors" Height="71" Name="button_addContributors" Width="460" Padding="10,3,10,5" Margin="-18,0,0,0" Click="button_addContributors_Click" />
                 <TextBlock Height="36" Name="textBlock_contributors" Text="Contributors" FontSize="24" />
                 <toolkit:ListPicker x:Name="listPicker" SelectionChanged="listPicker_SelectionChanged" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Margin="4,-10,12,12" />

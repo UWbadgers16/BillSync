@@ -10,7 +10,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Collections.Generic;
-using System.Windows.Controls.Primitives;
 
 namespace BillSync
 {
@@ -19,5 +18,6 @@ namespace BillSync
         public static NewItem item;
         public static NewItem editItem;
         public static List<NewItem> items;
+        public static NewGroup group;
     }
 }
