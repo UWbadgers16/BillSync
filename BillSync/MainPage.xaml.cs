@@ -39,13 +39,13 @@ namespace BillSync
                     context.CreateDatabase();
                     test();
                 }
-                else
+                /*else
                 { // debug
                     MessageBox.Show("deleting db");
                     context.DeleteDatabase();
                     context.CreateDatabase();
                     test();
-                }
+                }*/
             }
 
             //test(); //debug
@@ -92,13 +92,13 @@ namespace BillSync
             Database_Functions.AddTransaction(item5, member5, 5.00m);
             Database_Functions.AddTransaction(item6, member6, 10.04m);
             Database_Functions.AddTransaction(item7, member6, -20.54m);
-            Database_Functions.AddTransaction(item8, member6, -55.54m);
+            Database_Functions.AddTransaction(item8, member6, -16.54m);
             Database_Functions.AddTransaction(item5, member1, -66.54m);
             Database_Functions.AddTransaction(item6, member4, -77.54m);
             Database_Functions.AddTransaction(item7, member5, -88.54m);
-            Database_Functions.AddTransaction(item8, member1, -6.54m);
+            Database_Functions.AddTransaction(item8, member1, -16.54m);
             Database_Functions.AddTransaction(item8, member4, -16.54m);
-            Database_Functions.AddTransaction(item8, member5, -26.54m);
+            Database_Functions.AddTransaction(item8, member5, -16.54m);
             Database_Functions.AddTransaction(item8, member4, 1.54m);
             Database_Functions.AddTransaction(item8, member6, 3.54m);
 

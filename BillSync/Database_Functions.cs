@@ -115,30 +115,17 @@ namespace BillSync
             }
         }
 
-        /*
-         * 
-         * fdsfds
-         * */
-        public static int EditItem(int group_id, String item_name, String item_desc, DateTime due)
+        public static void EditItem(int item_id, String item_name, String item_desc, DateTime due)
         {
-            // Get associated Group for group_id
-            IList<Group> groupList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
-                IQueryable<Group> query = from c in context.Groups where c.ID == group_id select c;
-                groupList = query.ToList();
+                Item item = (from c in context.Items where c.ID == item_id select c).Single();
 
-                Item item = new Item();
                 item.Title = item_name;
                 item.Description = item_desc;
-                item.Created = DateTime.Now;
                 item.Due = due;
-                item.Group = groupList.FirstOrDefault();
 
-                context.Items.InsertOnSubmit(item);
                 context.SubmitChanges();
-
-                return item.ID;
             }
         }
 
@@ -159,6 +146,33 @@ namespace BillSync
                 transactionList = query.ToList();
             }
             return transactionList;
+        }
+
+        public static bool IsSplitEvenly(int item_id)
+        {
+            IList<Transaction> transactionList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                transactionList = query.ToList();
+            }
+
+            decimal cost = 0;
+            bool is_split_even = false;
+            int num_owers = 0;
+            foreach (Transaction transaction in transactionList)
+            {
+                if (!is_split_even && transaction.Amount < 0){ // if the transaction is for amount owned, hold onto the cost
+                    cost = transaction.Amount;
+                    is_split_even = true;
+                    num_owers = 1;
+                }
+                else if (cost == transaction.Amount)
+                    num_owers++;
+            }
+            if (num_owers == 1)
+                is_split_even = false;
+            return is_split_even;
         }
 
         public static decimal GetItemCost(int item_id)
@@ -265,6 +279,18 @@ namespace BillSync
                 context.SubmitChanges();
 
                 return member.ID;
+            }
+        }
+
+        public static void EditMember(int member_id, String member_name)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Member member = (from c in context.Members where c.ID == member_id select c).Single();
+
+                member.Name = member_name;
+
+                context.SubmitChanges();
             }
         }
 
