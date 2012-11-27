@@ -47,7 +47,7 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null)
+            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1)
             {
                 if (GlobalVars.item != null)
                 {
@@ -64,6 +64,14 @@ namespace BillSync
                     int index = findItem(GlobalVars.editItem.item_name.Text);
                     items[index] = GlobalVars.editItem;
                     GlobalVars.editItem = null;
+                }
+                else if (GlobalVars.group_id != -1)
+                {
+                    int temp_group_id = GlobalVars.group_id;
+                    GlobalVars.group_id = -1;
+                    group_name.Text = Database_Functions.GetGroupName(temp_group_id);
+
+
                 }
                 List<ItemWrapper> source = new List<ItemWrapper>();
                 foreach (NewItem item in items)
