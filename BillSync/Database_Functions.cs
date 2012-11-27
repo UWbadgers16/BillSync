@@ -236,7 +236,7 @@ namespace BillSync
             return memberList;
         }
 
-        public static IList<Member> GetGroupMembers(int group_id)
+        public static IList<Member> GetMembers(int group_id)
         {
             IList<Member> memberList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
