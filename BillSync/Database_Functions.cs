@@ -109,10 +109,8 @@ namespace BillSync
             IList<Item> itemList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
-                IQueryable<Item> query = from c in context.Items where c.ID == item_id select c;
-                itemList = query.ToList();
+                return (from c in context.Items where c.ID == item_id select c).Single().Group.Name;
             }
-            return itemList.FirstOrDefault().Group.Name;
         }
 
         public static void ChangeDate(int item_id, DateTime datetime)
