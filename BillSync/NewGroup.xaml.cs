@@ -67,24 +67,26 @@ namespace BillSync
                 }
                 else if (GlobalVars.group_id != -1)
                 {
+                    first_load = false;
                     int temp_group_id = GlobalVars.group_id;
                     GlobalVars.group_id = -1;
                     group_name.Text = Database_Functions.GetGroupName(temp_group_id);
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
-                    List<NewItem> transf_items = populateGroup(temp_items, temp_group_id);
+                    items = populateGroup(temp_items, temp_group_id);
                 }
-                List<ItemWrapper> source = new List<ItemWrapper>();
-                foreach (NewItem item in items)
-                {
-                    source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
-                }
+                //List<ItemWrapper> source = new List<ItemWrapper>();
+                //foreach (NewItem item in items)
+                //{
+                //    source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
+                //}
 
-                var itemSource = from i in source
-                                 group i by i.Name.Substring(0, 1) into c
-                                 orderby c.Key
-                                 select new BillGroup<ItemWrapper>(c.Key, c);
+                //var itemSource = from i in source
+                //                 group i by i.Name.Substring(0, 1) into c
+                //                 orderby c.Key
+                //                 select new BillGroup<ItemWrapper>(c.Key, c);
 
-                this.billListGroup.ItemsSource = itemSource;
+                //this.billListGroup.ItemsSource = itemSource;
+                populateList(items);
             }
             else
             {
@@ -275,14 +277,33 @@ namespace BillSync
 
             foreach (Item i in items)
             {
+                GlobalVars.group = this;
                 NewItem newItem = new NewItem();
                 newItem.item_name.Text = i.Title;
                 newItem.textBox_description.Text = i.Description;
                 newItem.textBox_total.Text = Database_Functions.GetItemCost(i.ID).ToString();
                 newItem.datePicker_date.Value = i.Due;
+                newItem.checkBox_splitEven.IsChecked = Database_Functions.IsSplitEvenly(i.ID);
+                newItems.Add(newItem);
             }
 
             return newItems;
+        }
+
+        private void populateList(List<NewItem> items)
+        {
+            List<ItemWrapper> source = new List<ItemWrapper>();
+            foreach (NewItem item in items)
+            {
+                source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
+            }
+
+            var itemSource = from i in source
+                             group i by i.Name.Substring(0, 1) into c
+                             orderby c.Key
+                             select new BillGroup<ItemWrapper>(c.Key, c);
+
+            this.billListGroup.ItemsSource = itemSource;
         }
     }
 }

@@ -22,6 +22,18 @@ namespace BillSync
         Boolean isEditing = false;
         NewGroup group;
 
+        public List<TextBlock> TextBlocks
+        {
+            get { return textBlocks; }
+            set { textBlocks = value; }
+        }
+
+        public List<TextBox> TextBoxes
+        {
+            get { return textBoxes; }
+            set { textBoxes = value; }
+        }
+
         public NewItem()
         {
             InitializeComponent();
@@ -196,7 +208,6 @@ namespace BillSync
                 int item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
                 GlobalVars.item = this;
             }
-            //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));
             NavigationService.GoBack();
         }
     }
