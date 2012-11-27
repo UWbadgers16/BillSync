@@ -70,8 +70,8 @@ namespace BillSync
                     int temp_group_id = GlobalVars.group_id;
                     GlobalVars.group_id = -1;
                     group_name.Text = Database_Functions.GetGroupName(temp_group_id);
-
-
+                    IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
+                    List<NewItem> transf_items = createNewItems(temp_items);
                 }
                 List<ItemWrapper> source = new List<ItemWrapper>();
                 foreach (NewItem item in items)
@@ -258,6 +258,24 @@ namespace BillSync
         private void button_addContributors_Click(object sender, RoutedEventArgs e)
         {
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+        }
+
+        private List<NewItem> createNewItems(IList<Item> items)
+        {
+            List<NewItem> newItems = new List<NewItem>();
+            //IList<Transaction> transactions = Database_Functions.GetTransactions(
+
+            foreach (Item i in items)
+            {
+                NewItem newItem = new NewItem();
+                newItem.item_name.Text = i.Title;
+                newItem.textBox_description.Text = i.Description;
+                //newItem.textBox_total.text = 
+                newItem.datePicker_date.Value = i.Due;
+
+            }
+
+            return newItems;
         }
     }
 }
