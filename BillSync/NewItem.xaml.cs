@@ -45,7 +45,7 @@ namespace BillSync
                 this.textBox_total.Text = load.textBox_total.Text;
                 this.listPicker = load.listPicker;
                 this.checkBox_splitEven = load.checkBox_splitEven;
-                this.dataPicker_date = load.dataPicker_date;
+                this.datePicker_date = load.datePicker_date;
                 textBlocks.Clear();
                 textBoxes.Clear();
                 loadSpecifics(load);
@@ -136,7 +136,7 @@ namespace BillSync
             }
             else
             {
-            
+                int item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
                 GlobalVars.item = this;
             }
             //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));
