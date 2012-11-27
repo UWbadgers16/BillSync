@@ -71,7 +71,7 @@ namespace BillSync
                     GlobalVars.group_id = -1;
                     group_name.Text = Database_Functions.GetGroupName(temp_group_id);
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
-                    List<NewItem> transf_items = createNewItems(temp_items);
+                    List<NewItem> transf_items = populateGroup(temp_items, temp_group_id);
                 }
                 List<ItemWrapper> source = new List<ItemWrapper>();
                 foreach (NewItem item in items)
@@ -88,9 +88,16 @@ namespace BillSync
             }
             else
             {
-                string msg = NavigationContext.QueryString["msg"];
-                group_name.Text = msg;
-                group_id = Database_Functions.AddGroup(group_name.Text);
+                try
+                {
+                    string msg = NavigationContext.QueryString["msg"];
+                    group_name.Text = msg;
+                    group_id = Database_Functions.AddGroup(group_name.Text);
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    //do nothing
+                }
             }
         }
 
@@ -221,7 +228,7 @@ namespace BillSync
 
         private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
-            MessageBoxResult m = MessageBox.Show("You'd like to save this group?", "Save?", MessageBoxButton.OKCancel);
+            MessageBoxResult m = MessageBox.Show("Would you like to save this group?", "Save?", MessageBoxButton.OKCancel);
             if (m == MessageBoxResult.OK)
             {
                 int newGroup = Database_Functions.AddGroup(group_name.Text);
@@ -260,19 +267,19 @@ namespace BillSync
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
         }
 
-        private List<NewItem> createNewItems(IList<Item> items)
+        private List<NewItem> populateGroup(IList<Item> items, int group_id)
         {
             List<NewItem> newItems = new List<NewItem>();
-            //IList<Transaction> transactions = Database_Functions.GetTransactions(
+            IList<Member> members = Database_Functions.GetMembers(group_id);
+            this.listPicker_contributors.ItemsSource = members;
 
             foreach (Item i in items)
             {
                 NewItem newItem = new NewItem();
                 newItem.item_name.Text = i.Title;
                 newItem.textBox_description.Text = i.Description;
-                //newItem.textBox_total.text = 
+                newItem.textBox_total.Text = Database_Functions.GetItemCost(i.ID).ToString();
                 newItem.datePicker_date.Value = i.Due;
-
             }
 
             return newItems;

@@ -132,18 +132,7 @@ namespace BillSync
 
         private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
-            if (isEditing)
-            {
-                GlobalVars.editItem = this;
-                isEditing = false;
-            }
-            else
-            {
-                int item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
-                GlobalVars.item = this;
-            }
-            //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));
-            NavigationService.GoBack();
+            saveItem();
         }
 
         private void loadSpecifics(NewItem load)
@@ -184,6 +173,31 @@ namespace BillSync
         private void checkBox_splitEven_Unchecked(object sender, RoutedEventArgs e)
         {
             button_specifyAmount.IsEnabled = true;
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult m = MessageBox.Show("Would you like to save this item?", "Save item?", MessageBoxButton.OKCancel);
+            if (m == MessageBoxResult.OK)
+                saveItem();
+            else
+                base.OnBackKeyPress(e);
+        }
+
+        private void saveItem()
+        {
+            if (isEditing)
+            {
+                GlobalVars.editItem = this;
+                isEditing = false;
+            }
+            else
+            {
+                int item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
+                GlobalVars.item = this;
+            }
+            //NavigationService.Navigate(new Uri("/NewGroup.xaml?msg=" + "save", UriKind.Relative));
+            NavigationService.GoBack();
         }
     }
 }

@@ -90,7 +90,7 @@ namespace BillSync
             {
                 if (items[i].item_name.Text.Equals(tappedText))
                 {
-                    MessageBoxResult m = MessageBox.Show("You'd like to delete " + tappedText + "?", "Delete?", MessageBoxButton.OKCancel);
+                    MessageBoxResult m = MessageBox.Show("Would you like to delete " + tappedText + "?", "Delete?", MessageBoxButton.OKCancel);
                     if(m == MessageBoxResult.OK)
                         items.RemoveAt(i);
                 }
@@ -116,7 +116,7 @@ namespace BillSync
 
         private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
         {
-            MessageBoxResult m = MessageBox.Show("You'd like to delete these items?", "Confirm delete?", MessageBoxButton.OKCancel);
+            MessageBoxResult m = MessageBox.Show("Would you like to delete these items?", "Confirm delete?", MessageBoxButton.OKCancel);
             if (m == MessageBoxResult.OK)
             {
                 GlobalVars.items = items;
