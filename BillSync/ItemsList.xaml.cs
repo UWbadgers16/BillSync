@@ -24,7 +24,7 @@ namespace BillSync
             IList<Item> bills = Database_Functions.GetItems();
             foreach (Item bill in bills)
             {                 
-                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created), GroupName = (int)bill.GroupID});
+                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created), GroupName = Database_Functions.GetGroupName(bill.ID)});
             }
 
 			var transByDate = from trans in source
