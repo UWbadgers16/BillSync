@@ -81,6 +81,17 @@ namespace BillSync
             return itemList;
         }
 
+        public static IList<Item> GetItems(int group_id)
+        {
+            IList<Item> itemList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Item> query = from c in context.Items orderby c.Created where c.ID == group_id select c;
+                itemList = query.ToList();
+            }
+            return itemList;
+        }
+
         public static int AddItem(int group_id, String item_name, String item_desc, DateTime due)
         {
             // Get associated Group for group_id
@@ -106,7 +117,6 @@ namespace BillSync
 
         public static string GetGroupName(int item_id)
         {
-            IList<Item> itemList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 return (from c in context.Items where c.ID == item_id select c).Single().Group.Name;
