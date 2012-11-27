@@ -24,7 +24,7 @@ namespace BillSync
             IList<Item> bills = Database_Functions.GetItems();
             foreach (Item bill in bills)
             {                 
-                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created)});
+                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created), GroupName = (int)bill.GroupID});
             }
 
 			var transByDate = from trans in source
@@ -33,9 +33,9 @@ namespace BillSync
 								   select new Group<ItemWrapper>(c.Key, c);
 
             this.transListGroup.ItemsSource = transByDate;
-		
 		}
-
+        //globalvars.groupid = mygroupid
+        //navigate to new group page
         public String getDateString(DateTime date)
         {
 

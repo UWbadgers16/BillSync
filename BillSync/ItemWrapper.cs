@@ -37,7 +37,7 @@ namespace BillSync
             set;
         }
 
-        public string Group
+        public string GroupName
         {
             get;
             set;
