@@ -81,7 +81,7 @@ namespace BillSync
                     dateString = "December";
                     break;
             }
-            return "Due: " + dateString + " " + theDay + " " + theYear;
+            return "Due: " + dateString + " " + theDay + ", " + theYear;
         }
 
         public String getDateString(DateTime date)
@@ -182,6 +182,14 @@ namespace BillSync
             }
 
             #endregion
+        }
+        private void GroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button temp = (Button)sender;
+            int group_id = Convert.ToInt32(temp.Tag);
+            //MessageBox.Show(group_id.ToString());
+            GlobalVars.group_id = group_id;
+            NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));
         }
     }
 }

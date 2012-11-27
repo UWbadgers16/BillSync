@@ -20,7 +20,7 @@
         <!-- The template for notification items -->
         <DataTemplate x:Key="notifItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="Auto">
-                <Button Width="120" Height="120">
+                <Button x:Name="GroupButton" Tag="{Binding GroupID}" Click="GroupButton_Click" Width="120" Height="120">
                     <Button.Content>
                         <TextBlock Text="View"/>
                     </Button.Content>
