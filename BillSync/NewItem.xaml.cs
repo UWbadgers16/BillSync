@@ -18,19 +18,20 @@ namespace BillSync
         List<TextBlock> textBlocks = new List<TextBlock>();
         List<TextBox> textBoxes = new List<TextBox>();
         Boolean specify_amount = false;
-        List<Member> source = new List<Member>();
+        //List<Member> source = new List<Member>();
         Boolean isEditing = false;
         NewGroup group;
 
         public NewItem()
         {
             InitializeComponent();
-            source.Add(new Member() { Name = "John" });
-            source.Add(new Member() { Name = "Eric" });
-            source.Add(new Member() { Name = "Yue Weng" });
-            source.Add(new Member() { Name = "Georgii" });
-            this.listPicker.ItemsSource = source;
+            //source.Add(new Member() { Name = "John" });
+            //source.Add(new Member() { Name = "Eric" });
+            //source.Add(new Member() { Name = "Yue Weng" });
+            //source.Add(new Member() { Name = "Georgii" });
+            //this.listPicker.ItemsSource = source;
             group = GlobalVars.group;
+            GlobalVars.group = null;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -50,12 +51,14 @@ namespace BillSync
                 textBoxes.Clear();
                 loadSpecifics(load);
                 isEditing = true;
+                this.listPicker.ItemsSource = load.listPicker.ItemsSource;
                 GlobalVars.item = null;
             }
             else
             {
                 string msg = NavigationContext.QueryString["msg"];
                 item_name.Text = msg;
+                this.listPicker.ItemsSource = group.Members;
             }
         }
 
@@ -85,11 +88,11 @@ namespace BillSync
             }
         }
 
-        private void button_addContributors_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
-            NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
-        }
+        //private void button_addContributors_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+        //    NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+        //}
 
         private void button_specifyAmount_Click(object sender, RoutedEventArgs e)
         {

@@ -21,7 +21,12 @@ namespace BillSync
         List<ItemWrapper> source = new List<ItemWrapper>();
         Boolean first_load = true;
         int group_id;
-        //List<Member> contributors = new List<Member>();
+        List<Member> contributors = new List<Member>();
+
+        public List<Member> Members
+        {
+            get { return contributors; }
+        }
 
         public int Group_ID
         {
@@ -31,12 +36,11 @@ namespace BillSync
         public NewGroup()
         {
             InitializeComponent();
-            //contributors.Add(new Member() { Name = "John" });
-            //contributors.Add(new Member() { Name = "Eric" });
-            //contributors.Add(new Member() { Name = "Yue Weng" });
-            //contributors.Add(new Member() { Name = "Georgii" });
-            //this.listPicker_contributors.ItemsSource = contributors;
-            group_id = Database_Functions.AddGroup(group_name.Text);
+            contributors.Add(new Member() { Name = "John" });
+            contributors.Add(new Member() { Name = "Eric" });
+            contributors.Add(new Member() { Name = "Yue Weng" });
+            contributors.Add(new Member() { Name = "Georgii" });
+            this.listPicker_contributors.ItemsSource = contributors;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -78,6 +82,7 @@ namespace BillSync
             {
                 string msg = NavigationContext.QueryString["msg"];
                 group_name.Text = msg;
+                group_id = Database_Functions.AddGroup(group_name.Text);
             }
         }
 
@@ -242,9 +247,9 @@ namespace BillSync
             return -1;
         }
 
-        //private void button_addContributors_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
-        //}
+        private void button_addContributors_Click(object sender, RoutedEventArgs e)
+        {
+            //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+        }
     }
 }
