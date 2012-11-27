@@ -48,5 +48,11 @@ namespace BillSync
             get;
             set;
         }
+
+        public string DueDate
+        {
+            get;
+            set;
+        }
     }
 }

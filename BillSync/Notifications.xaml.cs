@@ -15,33 +15,73 @@ namespace BillSync
 {
     public partial class Notifications : PhoneApplicationPage
     {
-        enum months { January = 1, February, March, April, May, June, July, August, September, November, December };
         // Constructor
         public Notifications()
         {
-            DateTime dateSystem;
             InitializeComponent();
             //Items must be added in order by correct date, otherwise they will appear out of order.
-            List<ItemWrapper> source = new List<ItemWrapper>(); 
+            List<ItemWrapper> source = new List<ItemWrapper>();
             IList<Item> bills = Database_Functions.GetItems();
             foreach (Item bill in bills)
-            {
-                source.Add(new ItemWrapper()
-                {
-                    Name = bill.Title,
-                    Date = getDateString(bill.Created),
-                    GroupName = Database_Functions.GetGroupName(bill.ID),
-                    GroupID = (int)bill.GroupID
-                });
+            {                 
+                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Due), GroupName = Database_Functions.GetGroupName(bill.ID), 
+                GroupID = (int)bill.GroupID, DueDate = getDueDateString(bill.Due)});
             }
 
             var transByDate = from trans in source
                               group trans by trans.Date into c
                               //orderby c.Key
                               select new Group<ItemWrapper>(c.Key, c);
-
+            
             this.notifListGroup.ItemsSource = transByDate;
 
+        }
+
+        public String getDueDateString(DateTime date){
+            int theMonth = date.Month;
+            String theYear = date.Year.ToString();
+            String theDay = date.Day.ToString();
+            String dateString;
+            switch (theMonth)
+            {
+                case 1:
+                    dateString = "January";
+                    break;
+                case 2:
+                    dateString = "February";
+                    break;
+                case 3:
+                    dateString = "March";
+                    break;
+                case 4:
+                    dateString = "April";
+                    break;
+                case 5:
+                    dateString = "May";
+                    break;
+                case 6:
+                    dateString = "June";
+                    break;
+                case 7:
+                    dateString = "July";
+                    break;
+                case 8:
+                    dateString = "August";
+                    break;
+                case 9:
+                    dateString = "September";
+                    break;
+                case 10:
+                    dateString = "October";
+                    break;
+                case 11:
+                    dateString = "November";
+                    break;
+                default:
+                    dateString = "December";
+                    break;
+            }
+            return "Due: " + dateString + " " + theDay + " " + theYear;
         }
 
         public String getDateString(DateTime date)

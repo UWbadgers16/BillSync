@@ -27,6 +27,7 @@
                 </Button>
                 <StackPanel Orientation="Vertical" Height="Auto" Width="340">
                     <TextBlock Text="{Binding Name}" FontSize="26" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding DueDate}" FontSize="26" TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
