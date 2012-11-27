@@ -39,15 +39,16 @@ namespace BillSync
                     context.CreateDatabase();
                     test();
                 }
-                /*else
+                else
                 { // debug
                     MessageBox.Show("deleting db");
                     context.DeleteDatabase();
                     context.CreateDatabase();
-                }*/
+                    test();
+                }
             }
 
-            test(); //debug
+            //test(); //debug
         }
 
         // database test
@@ -98,6 +99,8 @@ namespace BillSync
             Database_Functions.AddTransaction(item8, member1, -6.54m);
             Database_Functions.AddTransaction(item8, member4, -16.54m);
             Database_Functions.AddTransaction(item8, member5, -26.54m);
+            Database_Functions.AddTransaction(item8, member4, 1.54m);
+            Database_Functions.AddTransaction(item8, member6, 3.54m);
 
             //Database_Functions.PrintGroups();
             //Database_Functions.PrintItems();

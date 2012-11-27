@@ -172,7 +172,8 @@ namespace BillSync
             decimal cost = 0;
             foreach (Transaction transaction in transactionList)
             {
-                cost += transaction.Amount;
+                if (transaction.Amount > 0)
+                    cost += transaction.Amount;
             }
             return cost;
         }
@@ -230,6 +231,17 @@ namespace BillSync
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 IQueryable<Member> query = from c in context.Members select c;
+                memberList = query.ToList();
+            }
+            return memberList;
+        }
+
+        public static IList<Member> GetGroupMembers(int group_id)
+        {
+            IList<Member> memberList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Member> query = from c in context.Members where c.Group.ID == group_id select c;
                 memberList = query.ToList();
             }
             return memberList;
