@@ -15,7 +15,7 @@ namespace BillSync
 {
     public partial class DeleteBill : PhoneApplicationPage
     {
-        List<NewItem> items = new List<NewItem>();
+        IList<NewItem> items = new List<NewItem>();
 
         public DeleteBill()
         {

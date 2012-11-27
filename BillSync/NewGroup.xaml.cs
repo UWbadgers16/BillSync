@@ -17,13 +17,13 @@ namespace BillSync
     public partial class NewGroup : PhoneApplicationPage
     {
         Popup newItemName = new Popup();
-        List<NewItem> items = new List<NewItem>();
-        List<ItemWrapper> source = new List<ItemWrapper>();
+        IList<NewItem> items = new List<NewItem>();
+        IList<ItemWrapper> source = new List<ItemWrapper>();
         Boolean first_load = true;
         int group_id;
-        List<Member> contributors = new List<Member>();
+        IList<Member> contributors = new List<Member>();
 
-        public List<Member> Members
+        public IList<Member> Members
         {
             get { return contributors; }
         }
@@ -269,11 +269,13 @@ namespace BillSync
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
         }
 
-        private List<NewItem> populateGroup(IList<Item> items, int group_id)
+        private IList<NewItem> populateGroup(IList<Item> items, int group_id)
         {
-            List<NewItem> newItems = new List<NewItem>();
-            IList<Member> members = Database_Functions.GetMembers(group_id);
-            this.listPicker_contributors.ItemsSource = members;
+            IList<NewItem> newItems = new List<NewItem>();
+            IList<Member> memb = Database_Functions.GetMembers(group_id);
+            //contributors = memberIListToList(memb);
+            contributors = memb;
+            this.listPicker_contributors.ItemsSource = memb;
 
             foreach (Item i in items)
             {
@@ -284,15 +286,17 @@ namespace BillSync
                 newItem.textBox_total.Text = Database_Functions.GetItemCost(i.ID).ToString();
                 newItem.datePicker_date.Value = i.Due;
                 newItem.checkBox_splitEven.IsChecked = Database_Functions.IsSplitEvenly(i.ID);
+                newItem.listPicker.ItemsSource = memb;
+                newItem.loadAmounts();
                 newItems.Add(newItem);
             }
 
             return newItems;
         }
 
-        private void populateList(List<NewItem> items)
+        private void populateList(IList<NewItem> items)
         {
-            List<ItemWrapper> source = new List<ItemWrapper>();
+            IList<ItemWrapper> source = new List<ItemWrapper>();
             foreach (NewItem item in items)
             {
                 source.Add(new ItemWrapper() { ItemPage = item, Name = item.item_name.Text });
@@ -305,5 +309,23 @@ namespace BillSync
 
             this.billListGroup.ItemsSource = itemSource;
         }
+
+        private void Item_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            MessageBox.Show("HERE");
+        }
+
+        //private List<Member> memberIListToList(IList<Member> memb)
+        //{
+        //    List<Member> members = new List<Member>();
+
+        //    foreach (Member m in memb)
+        //    {
+        //        members.Add(m);
+        //    }
+
+        //    return members;
+        //}
+
     }
 }

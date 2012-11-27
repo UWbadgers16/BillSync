@@ -17,7 +17,7 @@ namespace BillSync
     {
         public static NewItem item;
         public static NewItem editItem;
-        public static List<NewItem> items;
+        public static IList<NewItem> items;
         public static NewGroup group;
         public static int group_id = -1;
     }

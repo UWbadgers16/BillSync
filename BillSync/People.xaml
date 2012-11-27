@@ -33,7 +33,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="jumpListItemTemplate">
-            <Border Background="{Binding GroupBackgroundBrush}" Margin="0">
+            <Border Background="{StaticResource PhoneAccentBrush}" Margin="0">
                 <StackPanel Orientation="Horizontal" Width="460" Height="50">
                     <Image Source ="Images/add.png " Width="20" Height="20">    
                      
@@ -44,7 +44,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="groupItemTemplate">
-            <Border Background="Blue" Width="99" Height="99" Margin="6">
+            <Border Background="{StaticResource PhoneAccentBrush}" Width="99" Height="99" Margin="6">
                 <TextBlock Text="{Binding Title}"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="36"
@@ -57,12 +57,11 @@
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
-        
         <controls:Panorama Title="people" HorizontalAlignment="Left" Width="480" Name="panorama_people">
+
             
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Outstanding">
-               
                     <toolkit:LongListSelector x:Name="outstandingListGroups" SelectionChanged="outstandingListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
@@ -97,8 +96,7 @@
 
             </controls:PanoramaItem>
         </controls:Panorama>
-        
-        
+        <ProgressBar Height="4" HorizontalAlignment="Left" Margin="524,325,0,0" Name="progressBar1" VerticalAlignment="Top" Width="460" />
     </Grid>
 
     <!--Panorama-based applications should not show an ApplicationBar-->

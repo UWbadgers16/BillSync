@@ -21,7 +21,7 @@
         <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap" Hold="Item_Hold" TextWrapping="Wrap" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -29,13 +29,13 @@
 
         <!-- The group header template, for groups in the main list -->
         <DataTemplate x:Key="billHeaderTemplate">
-            <Border Background="Blue" Width="460" Height="50" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Border Background="{StaticResource PhoneAccentBrush}" Width="460" Height="50" HorizontalAlignment="Left" Margin="0,10,0,0">
                 <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="billItemTemplate" >
-            <Border Background="Blue" Width="99" Height="99" Margin="6">
+            <Border Background="{StaticResource PhoneAccentBrush}" Width="99" Height="99" Margin="6">
                 <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             </Border>
         </DataTemplate>

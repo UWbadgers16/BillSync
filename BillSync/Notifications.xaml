@@ -35,13 +35,13 @@
 
         <!-- The group header template, for groups in the main list -->
         <DataTemplate x:Key="groupHeaderTemplate">
-            <Border Background="Blue" Margin="6">
+            <Border Background="{StaticResource PhoneAccentBrush}" Margin="6">
                 <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White"/>
             </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="groupItemTemplate" >
-            <Border Background="Blue" Width="99" Height="99" Margin="6">
+            <Border Background="{StaticResource PhoneAccentBrush}" Width="99" Height="99" Margin="6">
                 <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White"/>
             </Border>
         </DataTemplate>
