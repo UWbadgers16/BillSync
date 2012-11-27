@@ -39,13 +39,13 @@ namespace BillSync
                     context.CreateDatabase();
                     test();
                 }
-                /*else
+                else
                 { // debug
                     MessageBox.Show("deleting db");
                     context.DeleteDatabase();
                     context.CreateDatabase();
                     test();
-                }*/
+                }
             }
 
             //test(); //debug
