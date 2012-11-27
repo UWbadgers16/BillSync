@@ -24,7 +24,8 @@ namespace BillSync
             IList<Item> bills = Database_Functions.GetItems();
             foreach (Item bill in bills)
             {                 
-                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created), GroupName = Database_Functions.GetGroupName(bill.ID)});
+                source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Created), GroupName = Database_Functions.GetGroupName(bill.ID), 
+                GroupID = (int)bill.GroupID});
             }
 
 			var transByDate = from trans in source
@@ -135,5 +136,14 @@ namespace BillSync
 
 			#endregion
 		}
+
+        private void GroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button temp = (Button)sender;
+            int group_id = Convert.ToInt32(temp.Content);
+            //MessageBox.Show(group_id.ToString());
+            GlobalVars.group_id = group_id;
+            NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));
+        }
 	}
 }

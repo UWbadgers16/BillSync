@@ -42,5 +42,11 @@ namespace BillSync
             get;
             set;
         }
+
+        public int GroupID
+        {
+            get;
+            set;
+        }
     }
 }
