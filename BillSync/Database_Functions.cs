@@ -92,6 +92,17 @@ namespace BillSync
             return itemList;
         }
 
+        public static IList<Item> GetItemsSortByDueDate(int group_id)
+        {
+            IList<Item> itemList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Item> query = from c in context.Items orderby c.Due where c.ID == group_id select c;
+                itemList = query.ToList();
+            }
+            return itemList;
+        }
+
         public static int AddItem(int group_id, String item_name, String item_desc, DateTime due)
         {
             // Get associated Group for group_id
