@@ -21,7 +21,7 @@ namespace BillSync
             InitializeComponent();
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
-            IList<Item> bills = Database_Functions.GetItems();
+            IList<Item> bills = Database_Functions.GetItemsSortByDueDate();
             foreach (Item bill in bills)
             {                 
                 source.Add(new ItemWrapper() { Name = bill.Title, Date = getDateString(bill.Due), GroupName = Database_Functions.GetGroupName(bill.ID), 
