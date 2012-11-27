@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:GroupButton="clr-namespace:BillSync;assembly="
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
 	 xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
@@ -20,8 +21,8 @@
 		<!-- The template for transaction items -->
 		<DataTemplate x:Key="transItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="120">
-                <Button x:Name="GroupButton"  Content="{Binding GroupID}" Click="GroupButton_Click" Width="120" Height="120" DataContext="{Binding}">
-
+                <Button x:Name="GroupButton" Tag="{Binding GroupID}" Click="GroupButton_Click" Width="120" Height="120" DataContext="{Binding}" Visibility="Visible">
+                    <TextBlock Text="View" FontSize="26"/>
                 </Button>
                 <StackPanel Orientation="Vertical" Height="80" Width="340">
                     <TextBlock Text="{Binding Name}" FontSize="26"/>

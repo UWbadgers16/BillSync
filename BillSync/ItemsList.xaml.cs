@@ -140,7 +140,7 @@ namespace BillSync
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button temp = (Button)sender;
-            int group_id = Convert.ToInt32(temp.Content);
+            int group_id = Convert.ToInt32(temp.Tag);
             //MessageBox.Show(group_id.ToString());
             GlobalVars.group_id = group_id;
             NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));

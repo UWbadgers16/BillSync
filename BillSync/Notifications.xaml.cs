@@ -22,20 +22,18 @@ namespace BillSync
             DateTime dateSystem;
             InitializeComponent();
             //Items must be added in order by correct date, otherwise they will appear out of order.
-            List<ItemWrapper> source = new List<ItemWrapper>();
-            dateSystem = new DateTime(2012, 11, 18);
-            source.Add(new ItemWrapper() { Name = "John posted a new bill: Cable Bill", Date = getDateString(dateSystem), Amount = "9.47" });
-            dateSystem = new DateTime(2012, 11, 18);
-            source.Add(new ItemWrapper() { Name = "Yue Weng posted a new bill: Groceries", Date = getDateString(dateSystem), Amount = "9.47" });
-            dateSystem = new DateTime(2012, 10, 18);
-            source.Add(new ItemWrapper() { Name = "Georgii paid a bill: MG&E", Date = getDateString(dateSystem), Amount = "9.47" });
-            dateSystem = new DateTime(2012, 10, 18);
-            source.Add(new ItemWrapper() { Name = "A bill due date is approaching: Halloween Tickets", Date = getDateString(dateSystem), Amount = "9.47" });
-            dateSystem = new DateTime(2012, 10, 18);
-            source.Add(new ItemWrapper() { Name = "Georgii posted a new bill: The four horsemen of the Apocolypse", Date = getDateString(dateSystem), Amount = "9.47" });
-            dateSystem = new DateTime(2012, 10, 18);
-            source.Add(new ItemWrapper() { Name = "John paid the bill: Rent", Date = getDateString(dateSystem), Amount = "9.47" });
-
+            List<ItemWrapper> source = new List<ItemWrapper>(); 
+            IList<Item> bills = Database_Functions.GetItems();
+            foreach (Item bill in bills)
+            {
+                source.Add(new ItemWrapper()
+                {
+                    Name = bill.Title,
+                    Date = getDateString(bill.Created),
+                    GroupName = Database_Functions.GetGroupName(bill.ID),
+                    GroupID = (int)bill.GroupID
+                });
+            }
 
             var transByDate = from trans in source
                               group trans by trans.Date into c
