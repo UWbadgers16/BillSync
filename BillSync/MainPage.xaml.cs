@@ -57,14 +57,14 @@ namespace BillSync
             int group1 = Database_Functions.AddGroup("Apartment");
             int group2 = Database_Functions.AddGroup("House");
             int group3 = Database_Functions.AddGroup("Trip");
-            int item1 = Database_Functions.AddItem(group1, "Groceries", "orange juice and bread", DateTime.Now);
-            int item2 = Database_Functions.AddItem(group2, "Internet", "asfdfsd", DateTime.Now);
-            int item3 = Database_Functions.AddItem(group3, "Power", "asdfasdfasdfs", DateTime.Now);
-            int item4 = Database_Functions.AddItem(group3, "Cable", "qwerty", DateTime.Now);
-            int item5 = Database_Functions.AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra", DateTime.Now);
-            int item6 = Database_Functions.AddItem(group1, "Booze", "halloween party", DateTime.Now);
-            int item7 = Database_Functions.AddItem(group1, "N64", "", DateTime.Now);
-            int item8 = Database_Functions.AddItem(group1, "Super Smash Bros 64", "", DateTime.Now);
+            int item1 = Database_Functions.AddItem(group1, "Groceries", "orange juice and bread", DateTime.Parse("2013-01-01 7:34:42Z"));
+            int item2 = Database_Functions.AddItem(group2, "Internet", "asfdfsd", DateTime.Parse("2013-01-05 7:34:42Z"));
+            int item3 = Database_Functions.AddItem(group3, "Power", "asdfasdfasdfs", DateTime.Parse("2013-01-10 7:34:42Z"));
+            int item4 = Database_Functions.AddItem(group3, "Cable", "qwerty", DateTime.Parse("2013-01-15 7:34:42Z"));
+            int item5 = Database_Functions.AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra", DateTime.Parse("2013-02-01 7:34:42Z"));
+            int item6 = Database_Functions.AddItem(group1, "Booze", "halloween party", DateTime.Parse("2013-04-01 7:34:42Z"));
+            int item7 = Database_Functions.AddItem(group1, "N64", "", DateTime.Parse("2013-06-01 7:34:42Z"));
+            int item8 = Database_Functions.AddItem(group1, "Super Smash Bros 64", "", DateTime.Parse("2013-10-01 7:34:42Z"));
 
             Database_Functions.ChangeDate(item1, DateTime.Parse("2012-01-01 7:34:42Z"));
             Database_Functions.ChangeDate(item2, DateTime.Parse("2012-01-05 7:34:42Z"));
