@@ -115,12 +115,66 @@ namespace BillSync
             }
         }
 
+        /*
+         * 
+         * fdsfds
+         * */
+        public static int EditItem(int group_id, String item_name, String item_desc, DateTime due)
+        {
+            // Get associated Group for group_id
+            IList<Group> groupList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Group> query = from c in context.Groups where c.ID == group_id select c;
+                groupList = query.ToList();
+
+                Item item = new Item();
+                item.Title = item_name;
+                item.Description = item_desc;
+                item.Created = DateTime.Now;
+                item.Due = due;
+                item.Group = groupList.FirstOrDefault();
+
+                context.Items.InsertOnSubmit(item);
+                context.SubmitChanges();
+
+                return item.ID;
+            }
+        }
+
         public static string GetGroupName(int item_id)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 return (from c in context.Items where c.ID == item_id select c).Single().Group.Name;
             }
+        }
+
+        public static IList<Transaction> GetItemTransactions(int item_id)
+        {
+            IList<Transaction> transactionList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                transactionList = query.ToList();
+            }
+            return transactionList;
+        }
+
+        public static decimal GetItemCost(int item_id)
+        {
+            IList<Transaction> transactionList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                transactionList = query.ToList();
+            }
+            decimal cost = 0;
+            foreach (Transaction transaction in transactionList)
+            {
+                cost += transaction.Amount;
+            }
+            return cost;
         }
 
         public static void ChangeDate(int item_id, DateTime datetime)
