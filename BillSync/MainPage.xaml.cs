@@ -17,7 +17,6 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text;
-using Microsoft.Phone.Tasks;
 
 namespace BillSync
 {
@@ -107,7 +106,7 @@ namespace BillSync
             //Database_Functions.PrintMembers();
             //Database_Functions.PrintTransactions();
 
-            //sendLedgerEmail(1);
+            //Database_Functions.sendLedgerEmail(1);
         }
 
         //handle new item tap
@@ -167,48 +166,6 @@ namespace BillSync
             }
             else
                 base.OnBackKeyPress(e);
-        }
-
-        private void sendLedgerEmail(int group_id)
-        {
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.AppendLine("Ledger: \n\n==========================\n");
-            using (GroupDataContext context = new GroupDataContext(ConnectionString))
-            {
-                IQueryable<Group> gquery = from c in context.Groups where c.ID == group_id select c;
-                IList<Group> group = gquery.ToList();
-                messageBuilder.AppendLine("Group Name: " + group.FirstOrDefault().Name + "\n==========================\n");
-
-                IQueryable<Member> mquery = from c in context.Members where c.Group.ID == group_id select c;
-                IList<Member> members = mquery.ToList();
-                string membernames = "";
-                foreach (Member member in members)
-                {
-                    membernames = membernames + member.Name + "\t";
-                }
-
-                messageBuilder.AppendLine("Members:\n" + membernames + "\n==========================\n` ");
-
-                IQueryable<Item> iquery = from c in context.Items where c.Group.ID == group_id select c;
-                IList<Item> items = iquery.ToList();
-                foreach (Item item in items)
-                {
-                    messageBuilder.AppendLine("\nItem: " + item.Title + " (" + item.ID.ToString() + ")");
-                    messageBuilder.AppendLine("Transactions:\n");
-                    IQueryable<Transaction> tquery = from c in context.Transactions where c.ItemID == item.ID select c;
-                    IList<Transaction> transactions = tquery.ToList();
-                    foreach (Transaction transaction in transactions)
-                    {
-                        messageBuilder.AppendLine("\t" + transaction.Member.Name + ": " + transaction.Amount);
-                    }
-                }
-            }
-
-            EmailComposeTask email = new EmailComposeTask();
-            email.Body = messageBuilder.ToString();
-            email.Subject = "BillSync ledger for group ID " + group_id.ToString();
-            email.To = "georgii@saveliev.su";
-            email.Show();
         }
     }
 }
