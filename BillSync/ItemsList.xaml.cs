@@ -19,7 +19,27 @@ namespace BillSync
 		public Transactions()
         {
 			InitializeComponent();
-            load();
+
+            //Items must be added in order by correct date, otherwise they will appear out of order.
+            List<ItemWrapper> source = new List<ItemWrapper>();
+            IList<Item> bills = Database_Functions.GetItems();
+            foreach (Item bill in bills)
+            {
+                source.Add(new ItemWrapper()
+                {
+                    Name = bill.Title,
+                    Date = getDateString(bill.Created),
+                    GroupName = Database_Functions.GetGroupName(bill.ID),
+                    GroupID = (int)bill.GroupID
+                });
+            }
+
+            var transByDate = from trans in source
+                              group trans by trans.Date into c
+                              //orderby c.Key
+                              select new Group<ItemWrapper>(c.Key, c);
+
+            this.transListGroup.ItemsSource = transByDate;
 		}
         //globalvars.groupid = mygroupid
         //navigate to new group page
@@ -135,32 +155,6 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            load();
-        }
-
-        private void load()
-        {
-            //Items must be added in order by correct date, otherwise they will appear out of order.
-            List<ItemWrapper> source = new List<ItemWrapper>();
-            IList<Item> bills = Database_Functions.GetItems();
-            foreach (Item bill in bills)
-            {
-                source.Add(new ItemWrapper()
-                {
-                    Name = bill.Title,
-                    Date = getDateString(bill.Created),
-                    GroupName = Database_Functions.GetGroupName(bill.ID),
-                    GroupID = (int)bill.GroupID
-                });
-            }
-
-            var transByDate = from trans in source
-                              group trans by trans.Date into c
-                              //orderby c.Key
-                              select new Group<ItemWrapper>(c.Key, c);
-
-            this.transListGroup.ItemsSource = transByDate;
         }
 	}
 }
