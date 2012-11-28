@@ -1,10 +1,10 @@
 Details for team members:
 
 
-Georgii - continue work on editing of an item
+Georgii - email ledger, export to .csv or Excel, sync local db to skydrive
 
 Yue Weng - coordinate with Georgii to get the People page working
 
 Eric - get Notifications page working and make sure that when going ItemsList-->Add item to group-->back to ItemsList via the back button that the ItemsList is updated
 
-John - work on better deletion/edit method and add a progress bar
+John - change item name, change group name, deactivate members, view page on item tap, save group and members, delete item from database, add a progress bar
