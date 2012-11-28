@@ -40,6 +40,20 @@ namespace BillSync
             set;
         }
 
+        [Column]
+        public string Email
+        {
+            get;
+            set;
+        }
+
+        [Column]
+        public string Phone
+        {
+            get;
+            set;
+        }
+
         [Column(CanBeNull = false)]
         public bool Active
         {

@@ -299,7 +299,7 @@ namespace BillSync
             return memberList;
         }
 
-        public static int AddMember(int group_id, String member_name)
+        public static int AddMember(int group_id, String member_name, String email, string phone_number)
         {
             // Get associated Group for group_id
             IList<Group> groupList = null;
@@ -311,6 +311,8 @@ namespace BillSync
                 Member member = new Member();
                 member.Name = member_name;
                 member.Active = true;
+                member.Email = email;
+                member.Phone = phone_number;
                 member.Group = groupList.FirstOrDefault();
 
                 context.Members.InsertOnSubmit(member);
@@ -320,13 +322,15 @@ namespace BillSync
             }
         }
 
-        public static void EditMember(int member_id, String member_name)
+        public static void EditMember(int member_id, String member_name, String email, string phone_number)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 Member member = (from c in context.Members where c.ID == member_id select c).Single();
 
                 member.Name = member_name;
+                member.Email = email;
+                member.Phone = phone_number;
 
                 context.SubmitChanges();
             }
@@ -479,12 +483,12 @@ namespace BillSync
             ChangeDate(item7, DateTime.Parse("2012-06-01 7:34:42Z"));
             ChangeDate(item8, DateTime.Parse("2012-10-01 7:34:42Z"));
 
-            int member1 = AddMember(group1, "Georgii Saveliev");
-            int member2 = AddMember(group2, "Eric Dargelies");
-            int member3 = AddMember(group3, "Yue Weng Mak");
-            int member4 = AddMember(group1, "John Cabaj");
-            int member5 = AddMember(group1, "Eric Dargelies");
-            int member6 = AddMember(group1, "Yue Weng Mak");
+            int member1 = AddMember(group1, "Georgii Saveliev", "gsaveliev@wisc.edu", "608-698-3167");
+            int member2 = AddMember(group2, "Eric Dargelies", "dargelies@wisc.edu", "920-733-9441");
+            int member3 = AddMember(group3, "Yue Weng Mak", "ymak@wisc.edu", "608-770-6358");
+            int member4 = AddMember(group1, "John Cabaj", "cabaj@wisc.edu", "920-208-9224");
+            int member5 = AddMember(group1, "Eric Dargelies", "dargelies@wisc.edu", "920-733-9441");
+            int member6 = AddMember(group1, "Yue Weng Mak", "ymak@wisc.edu", "608-770-6358");
             int transaction1 = AddTransaction(item1, member1, 14.50m); //group1
             int transaction2 = AddTransaction(item2, member2, 20.33m); //group2
             int transaction3 = AddTransaction(item4, member3, 20.33m); //group3
