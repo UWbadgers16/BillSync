@@ -225,30 +225,42 @@ namespace BillSync
                 newItemName.IsOpen = false;
             }
             else
-                base.OnBackKeyPress(e);
+            {
+                MessageBoxResult m = MessageBox.Show("Would you like to save this group?", "Save group?", MessageBoxButton.OKCancel);
+                if (m == MessageBoxResult.OK)
+                    saveGroup();
+                else
+                    base.OnBackKeyPress(e);
+
+                //base.OnBackKeyPress(e);
+            }
         }
+
+        //protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        //{
+        //    MessageBoxResult m = MessageBox.Show("Would you like to save this item?", "Save item?", MessageBoxButton.OKCancel);
+
+        //    if (m == MessageBoxResult.OK)
+        //        saveItem();
+        //    else
+        //        base.OnBackKeyPress(e);
+        //}
 
         private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
             MessageBoxResult m = MessageBox.Show("Would you like to save this group?", "Save?", MessageBoxButton.OKCancel);
             if (m == MessageBoxResult.OK)
             {
-                int newGroup = Database_Functions.AddGroup(group_name.Text);
-
-                foreach (NewItem i in items)
-                {
-                    Database_Functions.AddItem(newGroup, i.item_name.Text, i.textBox_description.Text, DateTime.Now);
-
-                }
+                saveGroup();
             }
         }
 
         private void Item_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            TextBlock tapped = (TextBlock)sender;
-            int index = findItem(tapped.Text);
-            GlobalVars.item = items[index];
-            NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
+            //TextBlock tapped = (TextBlock)sender;
+            //int index = findItem(tapped.Text);
+            //GlobalVars.item = items[index];
+            //NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
         }
 
         private int findItem(string name)
@@ -287,11 +299,17 @@ namespace BillSync
                 newItem.datePicker_date.Value = i.Due;
                 newItem.checkBox_splitEven.IsChecked = Database_Functions.IsSplitEvenly(i.ID);
                 newItem.listPicker.ItemsSource = memb;
+                newItem.Item_ID = i.ID;
                 newItem.loadAmounts();
                 newItems.Add(newItem);
             }
 
             return newItems;
+        }
+
+        private void button_removeContributors_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void populateList(IList<NewItem> items)
@@ -312,7 +330,45 @@ namespace BillSync
 
         private void Item_Hold(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            MessageBox.Show("HERE");
+            TextBlock tapped = (TextBlock)sender;
+            int index = findItem(tapped.Text);
+            GlobalVars.item = items[index];
+            contextMenu_edit_delete.IsOpen = true;
+        }
+
+        private void editItem_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
+        }
+
+        private void deleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            NewItem temp = GlobalVars.item;
+            GlobalVars.item = null;
+            Boolean found = false;
+
+            for (int i = 0; i < items.Count && !found; i++)
+            {
+                if (items[i].item_name.Text.Equals(temp.item_name.Text))
+                {
+                    MessageBoxResult m = MessageBox.Show("Would you like to delete " + items[i].item_name.Text + "?", "Delete?", MessageBoxButton.OKCancel);
+                    if (m == MessageBoxResult.OK)
+                        items.RemoveAt(i);
+                    found = true;
+                    populateList(items);
+                    //delete from database
+                }
+            }
+        }
+
+        private void saveGroup()
+        {
+            int newGroup = Database_Functions.AddGroup(group_name.Text);
+
+            foreach (NewItem i in items)
+            {
+                //save group
+            }
         }
 
         //private List<Member> memberIListToList(IList<Member> memb)

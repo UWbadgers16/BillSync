@@ -21,7 +21,7 @@
         <DataTemplate x:Key="billTemplate">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap" Hold="Item_Hold" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Item_Tap" Hold="Item_Hold" TextWrapping="Wrap" Margin="0,10"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -67,7 +67,10 @@
             <Button Content="Add contributors" Height="71" Name="button_addContributors" Width="467" Click="button_addContributors_Click" Margin="0,20,0,0" />
             <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24" Margin="12,0,0,0" />
             <toolkit:ListPicker x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Width="444" />
+            <Button Content="Remove contributors" Height="71" Name="button_removeContributors" Width="467" Click="button_removeContributors_Click"  Margin="0" />
         </StackPanel>
+
+        
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
@@ -81,6 +84,12 @@
                     </ItemsPanelTemplate>
                 </toolkit:LongListSelector.GroupItemsPanel>
             </toolkit:LongListSelector>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu x:Name="contextMenu_edit_delete" IsOpen="False">
+                    <toolkit:MenuItem Header="edit" Click="editItem_Click"/>
+                    <toolkit:MenuItem Header="delete" Click="deleteItem_Click"/>
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
         </Grid>
     </Grid>
 

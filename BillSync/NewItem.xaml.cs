@@ -21,6 +21,13 @@ namespace BillSync
         //List<Member> source = new List<Member>();
         Boolean isEditing = false;
         NewGroup group;
+        int item_id = -1;
+
+        public int Item_ID
+        {
+            get { return item_id; }
+            set { item_id = value; }
+        }
 
         public IList<TextBlock> TextBlocks
         {
@@ -189,16 +196,20 @@ namespace BillSync
 
         private void saveItem()
         {
+            IList<Member> members = Database_Functions.GetMembers(group.Group_ID);
             if (isEditing)
             {
                 GlobalVars.editItem = this;
                 isEditing = false;
+                Database_Functions.EditItem(item_id, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
             }
             else
             {
-                int item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
+                item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
                 GlobalVars.item = this;
             }
+
+            addTransactions(members);
             NavigationService.GoBack();
         }
 
@@ -225,6 +236,19 @@ namespace BillSync
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
                 stackPanel_main.Children.Add(newBox);
+            }
+        }
+
+        private void addTransactions(IList<Member> members)
+        {
+            decimal total = Decimal.Parse(textBox_total.Text);
+            decimal split = total / members.Count;
+            for (int i = 0; i < members.Count; i++)
+            {
+                if (checkBox_splitEven.IsChecked == true)
+                    Database_Functions.AddTransaction(item_id, members[i].ID, split);
+                else
+                    Database_Functions.AddTransaction(item_id, members[i].ID, Decimal.Parse(textBoxes[i].Text));
             }
         }
     }
