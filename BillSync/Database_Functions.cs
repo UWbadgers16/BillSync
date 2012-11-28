@@ -441,5 +441,69 @@ namespace BillSync
             email.To = "georgii@saveliev.su";
             email.Show();
         }
+
+        // database test
+        public static void test()
+        {
+            int group1 = AddGroup("Apartment");
+            int group2 = AddGroup("House");
+            int group3 = AddGroup("Trip");
+            int item1 = AddItem(group1, "Groceries", "orange juice and bread", DateTime.Parse("2013-01-01 7:34:42Z"));
+            int item2 = AddItem(group2, "Internet", "asfdfsd", DateTime.Parse("2013-01-05 7:34:42Z"));
+            int item3 = AddItem(group3, "Power", "asdfasdfasdfs", DateTime.Parse("2013-01-10 7:34:42Z"));
+            int item4 = AddItem(group3, "Cable", "qwerty", DateTime.Parse("2013-01-15 7:34:42Z"));
+            int item5 = AddItem(group1, "Horse masks", "OG horse, black horse, unicorn, zebra", DateTime.Parse("2013-02-01 7:34:42Z"));
+            int item6 = AddItem(group1, "Booze", "halloween party", DateTime.Parse("2013-04-01 7:34:42Z"));
+            int item7 = AddItem(group1, "N64", "", DateTime.Parse("2013-06-01 7:34:42Z"));
+            int item8 = AddItem(group1, "Super Smash Bros 64", "", DateTime.Parse("2013-10-01 7:34:42Z"));
+
+            ChangeDate(item1, DateTime.Parse("2012-01-01 7:34:42Z"));
+            ChangeDate(item2, DateTime.Parse("2012-01-05 7:34:42Z"));
+            ChangeDate(item3, DateTime.Parse("2012-01-10 7:34:42Z"));
+            ChangeDate(item4, DateTime.Parse("2012-01-15 7:34:42Z"));
+            ChangeDate(item5, DateTime.Parse("2012-02-01 7:34:42Z"));
+            ChangeDate(item6, DateTime.Parse("2012-04-01 7:34:42Z"));
+            ChangeDate(item7, DateTime.Parse("2012-06-01 7:34:42Z"));
+            ChangeDate(item8, DateTime.Parse("2012-10-01 7:34:42Z"));
+
+            int member1 = AddMember(group1, "Georgii Saveliev");
+            int member2 = AddMember(group2, "Eric Dargelies");
+            int member3 = AddMember(group3, "Yue Weng Mak");
+            int member4 = AddMember(group1, "John Cabaj");
+            int member5 = AddMember(group1, "Eric Dargelies");
+            int member6 = AddMember(group1, "Yue Weng Mak");
+            int transaction1 = AddTransaction(item1, member1, 14.50m); //group1
+            int transaction2 = AddTransaction(item2, member2, 20.33m); //group2
+            int transaction3 = AddTransaction(item4, member3, 20.33m); //group3
+            int transaction4 = AddTransaction(item3, member3, 65.88m); //group3
+
+            // group1 - items 1, 5-8
+            AddTransaction(item2, member2, -13.54m); //group2
+            AddTransaction(item1, member4, -36.54m); //group1
+            AddTransaction(item5, member5, 5.00m);   //group1
+            AddTransaction(item6, member6, 10.04m);  //group1
+            AddTransaction(item7, member6, -20.54m); //group1
+            AddTransaction(item8, member6, -16.54m); //group1
+            AddTransaction(item5, member1, -66.54m); //group1
+            AddTransaction(item6, member4, -77.54m); //group1
+            AddTransaction(item7, member5, -88.54m); //group1
+            AddTransaction(item8, member1, -16.54m); //group1
+            AddTransaction(item8, member4, -16.54m); //group1
+            AddTransaction(item8, member5, -16.54m); //group1
+            AddTransaction(item8, member4, 1.54m);   //group1
+            AddTransaction(item8, member6, 3.54m);   //group1
+
+            //PrintGroups();
+            //PrintItems();
+            //MessageBox.Show("deleting");
+            //removeItem(item1);
+            //removeItem(item2);
+            //removeItem(item3);
+            //PrintItems();
+            //PrintMembers();
+            //PrintTransactions();
+
+            //sendLedgerEmail(group3);
+        }
     }
 }
