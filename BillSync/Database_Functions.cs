@@ -292,7 +292,7 @@ namespace BillSync
             IList<Member> memberList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
-                IQueryable<Member> query = from c in context.Members where c.Group.ID == group_id select c;
+                IQueryable<Member> query = from c in context.Members where c.Group.ID == group_id && c.Active == true select c;
                 memberList = query.ToList();
             }
             return memberList;
@@ -319,13 +319,13 @@ namespace BillSync
             }
         }
 
-        public static void EditMember(int member_id, String member_name)
+        public static void setMemberActivity(int member_id, bool active)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 Member member = (from c in context.Members where c.ID == member_id select c).Single();
 
-                member.Name = member_name;
+                member.Active = active;
 
                 context.SubmitChanges();
             }
@@ -503,7 +503,7 @@ namespace BillSync
             //PrintMembers();
             //PrintTransactions();
 
-            //sendLedgerEmail(group3);
+            //sendLedgerEmail(group1);
         }
     }
 }
