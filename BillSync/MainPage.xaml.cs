@@ -80,33 +80,38 @@ namespace BillSync
             int member4 = Database_Functions.AddMember(group1, "John Cabaj");
             int member5 = Database_Functions.AddMember(group1, "Eric Dargelies");
             int member6 = Database_Functions.AddMember(group1, "Yue Weng Mak");
-            int transaction1 = Database_Functions.AddTransaction(item1, member1, 14.50m);
-            int transaction2 = Database_Functions.AddTransaction(item2, member1, 20.33m);
-            int transaction3 = Database_Functions.AddTransaction(item2, member2, 45.66m);
-            int transaction4 = Database_Functions.AddTransaction(item3, member3, 65.88m);
-            int transaction5 = Database_Functions.AddTransaction(item4, member4, 99.99m);
+            int transaction1 = Database_Functions.AddTransaction(item1, member1, 14.50m); //group1
+            int transaction2 = Database_Functions.AddTransaction(item2, member2, 20.33m); //group2
+            int transaction3 = Database_Functions.AddTransaction(item4, member3, 20.33m); //group3
+            int transaction4 = Database_Functions.AddTransaction(item3, member3, 65.88m); //group3
 
             // group1 - items 1, 5-8
-            Database_Functions.AddTransaction(item1, member4, -36.54m);
-            Database_Functions.AddTransaction(item5, member5, 5.00m);
-            Database_Functions.AddTransaction(item6, member6, 10.04m);
-            Database_Functions.AddTransaction(item7, member6, -20.54m);
-            Database_Functions.AddTransaction(item8, member6, -16.54m);
-            Database_Functions.AddTransaction(item5, member1, -66.54m);
-            Database_Functions.AddTransaction(item6, member4, -77.54m);
-            Database_Functions.AddTransaction(item7, member5, -88.54m);
-            Database_Functions.AddTransaction(item8, member1, -16.54m);
-            Database_Functions.AddTransaction(item8, member4, -16.54m);
-            Database_Functions.AddTransaction(item8, member5, -16.54m);
-            Database_Functions.AddTransaction(item8, member4, 1.54m);
-            Database_Functions.AddTransaction(item8, member6, 3.54m);
+            Database_Functions.AddTransaction(item2, member2, -13.54m); //group2
+            Database_Functions.AddTransaction(item1, member4, -36.54m); //group1
+            Database_Functions.AddTransaction(item5, member5, 5.00m);   //group1
+            Database_Functions.AddTransaction(item6, member6, 10.04m);  //group1
+            Database_Functions.AddTransaction(item7, member6, -20.54m); //group1
+            Database_Functions.AddTransaction(item8, member6, -16.54m); //group1
+            Database_Functions.AddTransaction(item5, member1, -66.54m); //group1
+            Database_Functions.AddTransaction(item6, member4, -77.54m); //group1
+            Database_Functions.AddTransaction(item7, member5, -88.54m); //group1
+            Database_Functions.AddTransaction(item8, member1, -16.54m); //group1
+            Database_Functions.AddTransaction(item8, member4, -16.54m); //group1
+            Database_Functions.AddTransaction(item8, member5, -16.54m); //group1
+            Database_Functions.AddTransaction(item8, member4, 1.54m);   //group1
+            Database_Functions.AddTransaction(item8, member6, 3.54m);   //group1
 
             //Database_Functions.PrintGroups();
+            //Database_Functions.PrintItems();
+            //MessageBox.Show("deleting");
+            //Database_Functions.removeItem(item1);
+            //Database_Functions.removeItem(item2);
+            //Database_Functions.removeItem(item3);
             //Database_Functions.PrintItems();
             //Database_Functions.PrintMembers();
             //Database_Functions.PrintTransactions();
 
-            //Database_Functions.sendLedgerEmail(1);
+            Database_Functions.sendLedgerEmail(group3);
         }
 
         //handle new item tap

@@ -54,6 +54,18 @@ namespace BillSync
             }
         }
 
+        public static void EditGroup(int group_id, String group_name)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Group group = (from c in context.Groups where c.ID == group_id select c).Single();
+
+                group.Name = group_name;
+
+                context.SubmitChanges();
+            }
+        }
+
         public static void PrintGroups()
         {
             IList<Group> groups = GetGroups();
@@ -137,6 +149,19 @@ namespace BillSync
                 item.Description = item_desc;
                 item.Due = due;
 
+                context.SubmitChanges();
+            }
+        }
+
+        public static void removeItem(int item_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                context.Transactions.DeleteAllOnSubmit(query);
+
+                Item item = (from c in context.Items where c.ID == item_id select c).Single();
+                context.Items.DeleteOnSubmit(item);
                 context.SubmitChanges();
             }
         }
@@ -371,13 +396,14 @@ namespace BillSync
             MessageBox.Show(messageBuilder.ToString());
         }
 
-        /***
+        /*******************************
          * Misc Functions
-         * */
-        public void sendLedgerEmail(int group_id)
+         ******************************* */
+
+        public static void sendLedgerEmail(int group_id)
         {
             StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.AppendLine("Ledger: \n\n==========================\n");
+            messageBuilder.AppendLine("Ledger for ");
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 IQueryable<Group> gquery = from c in context.Groups where c.ID == group_id select c;
@@ -389,10 +415,10 @@ namespace BillSync
                 string membernames = "";
                 foreach (Member member in members)
                 {
-                    membernames = membernames + member.Name + "\t";
+                    membernames = membernames + member.Name + ", ";
                 }
 
-                messageBuilder.AppendLine("Members:\n" + membernames + "\n==========================\n` ");
+                messageBuilder.AppendLine("Members:\n" + membernames + "\n==========================\n");
 
                 IQueryable<Item> iquery = from c in context.Items where c.Group.ID == group_id select c;
                 IList<Item> items = iquery.ToList();
@@ -400,7 +426,7 @@ namespace BillSync
                 {
                     messageBuilder.AppendLine("\nItem: " + item.Title + " (" + item.ID.ToString() + ")");
                     messageBuilder.AppendLine("Transactions:\n");
-                    IQueryable<Transaction> tquery = from c in context.Transactions where c.ItemID == item.ID select c;
+                    IQueryable<Transaction> tquery = from c in context.Transactions where c.ItemID == item.ID orderby c.Member.Name select c;
                     IList<Transaction> transactions = tquery.ToList();
                     foreach (Transaction transaction in transactions)
                     {
