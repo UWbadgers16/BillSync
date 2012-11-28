@@ -281,6 +281,11 @@ namespace BillSync
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
         }
 
+        private void button_removeContributors_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private IList<NewItem> populateGroup(IList<Item> items, int group_id)
         {
             IList<NewItem> newItems = new List<NewItem>();
@@ -305,11 +310,6 @@ namespace BillSync
             }
 
             return newItems;
-        }
-
-        private void button_removeContributors_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void populateList(IList<NewItem> items)
@@ -369,6 +369,18 @@ namespace BillSync
             {
                 //save group
             }
+        }
+
+        private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            ListPicker lp = (ListPicker)sender;
+            Member m = (Member)lp.SelectedItem;
+            MessageBox.Show(m.Name);
+        }
+
+        private void deleteMember_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         //private List<Member> memberIListToList(IList<Member> memb)
