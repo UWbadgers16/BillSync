@@ -400,6 +400,33 @@ namespace BillSync
             }
         }
 
+        public static decimal GetMemberTotal(int member_id)
+        {
+            IList<Transaction> transactionList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.MemberID == member_id select c;
+                transactionList = query.ToList();
+            }
+            decimal cost = 0;
+            foreach (Transaction transaction in transactionList)
+            {
+                cost += transaction.Amount;
+            }
+            return cost;
+        }
+
+        public static Dictionary<int, decimal> GetTotals(int group_id)
+        {
+            Dictionary<int, decimal> totals = new Dictionary<int, decimal>();
+            IList<Member> members = GetMembers();
+            foreach (Member member in members)
+            {
+                totals.Add(member.ID, GetMemberTotal(member.ID));
+            }
+            return totals;
+        }
+
         public static void PrintTransactions()
         {
             IList<Transaction> transactions = GetTransactions();
