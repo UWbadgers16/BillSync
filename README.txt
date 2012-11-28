@@ -7,4 +7,4 @@ Yue Weng - coordinate with Georgii to get the People page working
 
 Eric - get Notifications page working and make sure that when going ItemsList-->Add item to group-->back to ItemsList via the back button that the ItemsList is updated
 
-John - change item name, change group name, deactivate members, view page on item tap, save group and members, delete item from database, add a progress bar
+John - change group name, deactivate members, view page on item tap, save group and members, delete item from database, fix hold with jump list items, add a progress bar

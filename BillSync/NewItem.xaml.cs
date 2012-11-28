@@ -22,6 +22,19 @@ namespace BillSync
         Boolean isEditing = false;
         NewGroup group;
         int item_id = -1;
+        //int group_id = -1;
+
+        //public int Group_ID
+        //{
+        //    get { return group_id; }
+        //    set { group_id = value; }
+        //}
+
+        public NewGroup Group
+        {
+            get { return group; }
+            set { group = value; }
+        }
 
         public int Item_ID
         {
@@ -60,6 +73,7 @@ namespace BillSync
             if (GlobalVars.item != null)
             {
                 NewItem load = GlobalVars.item;
+                this.item_id = load.item_id;
                 this.group = load.group;
                 this.item_name.Text = load.item_name.Text;
                 this.textBox_description.Text = load.textBox_description.Text;
@@ -79,7 +93,7 @@ namespace BillSync
                 try
                 {
                     string msg = NavigationContext.QueryString["msg"];
-                    item_name.Text = msg;
+                    this.item_name.Text = msg;
                     this.listPicker.ItemsSource = group.Members;
                 }
                 catch (KeyNotFoundException ex)
@@ -87,6 +101,7 @@ namespace BillSync
                     //do nothing
                 }
             }
+            this.textBox_itemName.Text = this.item_name.Text;
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -197,15 +212,17 @@ namespace BillSync
         private void saveItem()
         {
             IList<Member> members = Database_Functions.GetMembers(group.Group_ID);
+            this.item_name.Text = textBox_itemName.Text;
+
             if (isEditing)
             {
                 GlobalVars.editItem = this;
                 isEditing = false;
-                Database_Functions.EditItem(item_id, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
+                Database_Functions.EditItem(item_id, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
             }
             else
             {
-                item_id = Database_Functions.AddItem(group.Group_ID, item_name.Text, textBox_description.Text, datePicker_date.Value.Value);
+                item_id = Database_Functions.AddItem(group.Group_ID, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
                 GlobalVars.item = this;
             }
 
@@ -248,7 +265,11 @@ namespace BillSync
                 if (checkBox_splitEven.IsChecked == true)
                     Database_Functions.AddTransaction(item_id, members[i].ID, split);
                 else
-                    Database_Functions.AddTransaction(item_id, members[i].ID, Decimal.Parse(textBoxes[i].Text));
+                {
+                    Decimal temp;
+                    Decimal.TryParse(textBoxes[i].Text, out temp);
+                    Database_Functions.AddTransaction(item_id, members[i].ID, temp);
+                }
             }
         }
     }

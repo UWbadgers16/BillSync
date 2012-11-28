@@ -61,7 +61,7 @@ namespace BillSync
                 }
                 else if (GlobalVars.editItem != null)
                 {
-                    int index = findItem(GlobalVars.editItem.item_name.Text);
+                    int index = findById(GlobalVars.editItem.Item_ID);
                     items[index] = GlobalVars.editItem;
                     GlobalVars.editItem = null;
                 }
@@ -70,6 +70,7 @@ namespace BillSync
                     first_load = false;
                     int temp_group_id = GlobalVars.group_id;
                     GlobalVars.group_id = -1;
+                    this.group_id = temp_group_id;
                     group_name.Text = Database_Functions.GetGroupName(temp_group_id);
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
                     items = populateGroup(temp_items, temp_group_id);
@@ -296,7 +297,6 @@ namespace BillSync
 
             foreach (Item i in items)
             {
-                GlobalVars.group = this;
                 NewItem newItem = new NewItem();
                 newItem.item_name.Text = i.Title;
                 newItem.textBox_description.Text = i.Description;
@@ -305,6 +305,8 @@ namespace BillSync
                 newItem.checkBox_splitEven.IsChecked = Database_Functions.IsSplitEvenly(i.ID);
                 newItem.listPicker.ItemsSource = memb;
                 newItem.Item_ID = i.ID;
+                //newItem.Group_ID = group_id;
+                newItem.Group = this;
                 newItem.loadAmounts();
                 newItems.Add(newItem);
             }
@@ -330,6 +332,7 @@ namespace BillSync
 
         private void Item_Hold(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            this.billListGroup.IsEnabled = false;
             TextBlock tapped = (TextBlock)sender;
             int index = findItem(tapped.Text);
             GlobalVars.item = items[index];
@@ -339,6 +342,7 @@ namespace BillSync
         private void editItem_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
+            this.billListGroup.IsEnabled = true;
         }
 
         private void deleteItem_Click(object sender, RoutedEventArgs e)
@@ -359,6 +363,8 @@ namespace BillSync
                     //delete from database
                 }
             }
+
+            this.billListGroup.IsEnabled = true;
         }
 
         private void saveGroup()
@@ -381,6 +387,19 @@ namespace BillSync
         private void deleteMember_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private int findById(int item_id)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].Item_ID == item_id)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         //private List<Member> memberIListToList(IList<Member> memb)
