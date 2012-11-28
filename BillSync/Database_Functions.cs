@@ -199,7 +199,8 @@ namespace BillSync
             int num_owers = 0;
             foreach (Transaction transaction in transactionList)
             {
-                if (!is_split_even && transaction.Amount < 0){ // if the transaction is for amount owned, hold onto the cost
+                if (!is_split_even && transaction.Amount < 0)
+                { // if the transaction is for amount owned, hold onto the cost
                     cost = transaction.Amount;
                     is_split_even = true;
                     num_owers = 1;
@@ -316,6 +317,18 @@ namespace BillSync
                 context.SubmitChanges();
 
                 return member.ID;
+            }
+        }
+
+        public static void EditMember(int member_id, String member_name)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Member member = (from c in context.Members where c.ID == member_id select c).Single();
+
+                member.Name = member_name;
+
+                context.SubmitChanges();
             }
         }
 
