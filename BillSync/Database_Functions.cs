@@ -277,7 +277,7 @@ namespace BillSync
          * Members
          ******************************* */
 
-        public static IList<Member> GetMembers()
+        public static IList<Member> GetAllMembers()
         {
             IList<Member> memberList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
@@ -288,12 +288,23 @@ namespace BillSync
             return memberList;
         }
 
-        public static IList<Member> GetMembers(int group_id)
+        public static IList<Member> GetActiveMembers(int group_id)
         {
             IList<Member> memberList = null;
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 IQueryable<Member> query = from c in context.Members where c.Group.ID == group_id && c.Active == true select c;
+                memberList = query.ToList();
+            }
+            return memberList;
+        }
+
+        public static IList<Member> GetAllMembers(int group_id)
+        {
+            IList<Member> memberList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Member> query = from c in context.Members where c.Group.ID == group_id select c;
                 memberList = query.ToList();
             }
             return memberList;
@@ -350,7 +361,7 @@ namespace BillSync
 
         public static void PrintMembers()
         {
-            IList<Member> members = GetMembers();
+            IList<Member> members = GetAllMembers();
 
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.AppendLine("Members: ");
@@ -419,7 +430,7 @@ namespace BillSync
         public static Dictionary<int, decimal> GetTotals(int group_id)
         {
             Dictionary<int, decimal> totals = new Dictionary<int, decimal>();
-            IList<Member> members = GetMembers();
+            IList<Member> members = GetAllMembers();
             foreach (Member member in members)
             {
                 totals.Add(member.ID, GetMemberTotal(member.ID));
@@ -534,8 +545,8 @@ namespace BillSync
             AddTransaction(item8, member1, -16.54m); //group1
             AddTransaction(item8, member4, -16.54m); //group1
             AddTransaction(item8, member5, -16.54m); //group1
-            AddTransaction(item8, member4, 1.54m);   //group1
-            AddTransaction(item8, member6, 3.54m);   //group1
+            AddTransaction(item8, member4, 49.62m);   //group1
+            //AddTransaction(item8, member6, 3.54m);   //group1
 
             //PrintGroups();
             //PrintItems();
