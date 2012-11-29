@@ -22,6 +22,7 @@ namespace BillSync
         Boolean first_load = true;
         int group_id;
         IList<Member> contributors = new List<Member>();
+        Boolean isEditing = false;
 
         public IList<Member> Members
         {
@@ -46,6 +47,7 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            //this.billListGroup.IsEnabled = true;
 
             if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1)
             {
@@ -67,6 +69,7 @@ namespace BillSync
                 }
                 else if (GlobalVars.group_id != -1)
                 {
+                    isEditing = true;
                     first_load = false;
                     int temp_group_id = GlobalVars.group_id;
                     GlobalVars.group_id = -1;
@@ -225,6 +228,13 @@ namespace BillSync
 
                 newItemName.IsOpen = false;
             }
+            else if (contextMenu_edit_delete.IsOpen || contextMenu_deactivate.IsOpen)
+            {
+                contextMenu_edit_delete.IsOpen = false;
+                contextMenu_deactivate.IsOpen = false;
+                e.Cancel = true;
+                this.billListGroup.IsEnabled = true;
+            }
             else
             {
                 MessageBoxResult m = MessageBox.Show("Would you like to save this group?", "Save group?", MessageBoxButton.OKCancel);
@@ -282,7 +292,7 @@ namespace BillSync
             //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
         }
 
-        private void button_removeContributors_Click(object sender, RoutedEventArgs e)
+        private void button_deactivateContributors_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -370,23 +380,27 @@ namespace BillSync
         private void saveGroup()
         {
             int newGroup = Database_Functions.AddGroup(group_name.Text);
+            this.group_name.Text = textBox_groupName.Text;
 
-            foreach (NewItem i in items)
+            if (isEditing)
             {
-                //save group
+                Database_Functions.EditGroup(group_id, textBox_groupName.Text);
+                isEditing = false;
             }
+
+            NavigationService.GoBack();
         }
 
         private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            ListPicker lp = (ListPicker)sender;
-            Member m = (Member)lp.SelectedItem;
-            MessageBox.Show(m.Name);
+            TextBlock tb = (TextBlock)sender;
+            string name = tb.Text;
+            contextMenu_deactivate.IsOpen = true;
         }
 
-        private void deleteMember_Click(object sender, RoutedEventArgs e)
+        private void deactivateMember_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("deactivated");
         }
 
         private int findById(int item_id)

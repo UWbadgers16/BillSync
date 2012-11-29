@@ -153,7 +153,12 @@ namespace BillSync
 
         private void ApplicationBarSaveButton_Click(object sender, EventArgs e)
         {
-            saveItem();
+            MessageBoxResult m = MessageBox.Show("Would you like to save this item?", "Save item?", MessageBoxButton.OKCancel);
+
+            if (m == MessageBoxResult.OK)
+            {
+                saveItem();
+            }
         }
 
         private void loadSpecifics(NewItem load)
@@ -211,23 +216,28 @@ namespace BillSync
 
         private void saveItem()
         {
-            IList<Member> members = Database_Functions.GetMembers(group.Group_ID);
-            this.item_name.Text = textBox_itemName.Text;
-
-            if (isEditing)
+            if (checkFields())
             {
-                GlobalVars.editItem = this;
-                isEditing = false;
-                Database_Functions.EditItem(item_id, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
+                IList<Member> members = Database_Functions.GetMembers(group.Group_ID);
+                this.item_name.Text = textBox_itemName.Text;
+
+                if (isEditing)
+                {
+                    GlobalVars.editItem = this;
+                    isEditing = false;
+                    Database_Functions.EditItem(item_id, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
+                }
+                else
+                {
+                    item_id = Database_Functions.AddItem(group.Group_ID, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
+                    GlobalVars.item = this;
+                }
+
+                addTransactions(members);
+                NavigationService.GoBack();
             }
             else
-            {
-                item_id = Database_Functions.AddItem(group.Group_ID, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
-                GlobalVars.item = this;
-            }
-
-            addTransactions(members);
-            NavigationService.GoBack();
+                MessageBox.Show("Please fill in all required fields", "Invalid fields", MessageBoxButton.OK);
         }
 
         public void loadAmounts()
@@ -271,6 +281,18 @@ namespace BillSync
                     Database_Functions.AddTransaction(item_id, members[i].ID, temp);
                 }
             }
+        }
+
+        private Boolean checkFields()
+        {
+            if (textBox_description.Text == "")
+                return false;
+            if (textBox_total.Text == "")
+                return false;
+            if (listPicker.Items.Count == 0)
+                return false;
+
+            return true;
         }
     }
 }

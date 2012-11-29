@@ -40,7 +40,7 @@ namespace BillSync
                 }
                 else
                 { // debug
-                    MessageBox.Show("deleting db");
+                    //MessageBox.Show("deleting db");
                     context.DeleteDatabase();
                     context.CreateDatabase();
                     Database_Functions.test();

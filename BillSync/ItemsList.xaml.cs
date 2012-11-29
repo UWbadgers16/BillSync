@@ -18,7 +18,12 @@ namespace BillSync
 		// Constructor
 		public Transactions()
         {
-			InitializeComponent();
+            InitializeComponent();
+		}
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
 
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
@@ -40,7 +45,8 @@ namespace BillSync
                               select new Group<ItemWrapper>(c.Key, c);
 
             this.transListGroup.ItemsSource = transByDate;
-		}
+        }
+
         //globalvars.groupid = mygroupid
         //navigate to new group page
         public String getDateString(DateTime date)
@@ -150,11 +156,6 @@ namespace BillSync
             //MessageBox.Show(group_id.ToString());
             GlobalVars.group_id = group_id;
             NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));
-        }
-
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
         }
 	}
 }

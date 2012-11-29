@@ -23,7 +23,7 @@
         </DataTemplate>
         <DataTemplate x:Name="ListPickerFullModeItemTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+                <TextBlock Text="{Binding Name}" FontSize="40"  Margin="10 20 0 0"/>
             </StackPanel>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
@@ -51,7 +51,7 @@
                 <toolkit:DatePicker Height="71" Name="datePicker_date" Width="460" Margin="-18,-5,0,0" />
                 <!--<Button Content="Add contributors" Height="71" Name="button_addContributors" Width="460" Padding="10,3,10,5" Margin="-18,0,0,0" Click="button_addContributors_Click" />-->
                 <TextBlock Height="36" Name="textBlock_contributors" Text="Contributors" FontSize="24" />
-                <toolkit:ListPicker x:Name="listPicker" SelectionChanged="listPicker_SelectionChanged" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" Margin="4,-10,12,12"/>
+                <toolkit:ListPicker x:Name="listPicker" SelectionChanged="listPicker_SelectionChanged" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="CONTRIBUTORS" Margin="4,-10,12,12"/>
                 <CheckBox Content="Split Even" Checked="checkBox_splitEven_Checked" Unchecked="checkBox_splitEven_Unchecked" Height="71" Name="checkBox_splitEven" Margin="-8,0,0,0" />
                 <Button Content="Specify amount" Height="Auto" Name="button_specifyAmount" Width="229" Margin="-248,0,0,0" Click="button_specifyAmount_Click" />
             </StackPanel>

@@ -48,7 +48,7 @@
 
         <DataTemplate x:Name="ListPickerFullModeItemTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+                <TextBlock Text="{Binding Name}" FontSize="40" Hold="listPicker_contributors_Hold" Margin="10 20 0 0"/>
             </StackPanel>
         </DataTemplate>
         
@@ -64,13 +64,17 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="group_name" Text="new group" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-            <Button Content="Add contributors" Height="71" Name="button_addContributors" Width="467" Click="button_addContributors_Click" Margin="0,20,0,0" />
-            <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24" Margin="12,0,0,0" />
-            <toolkit:ListPicker x:Name="listPicker_contributors" Hold="listPicker_contributors_Hold" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="Contributors" CacheMode="BitmapCache" Width="444" />
-            <Button Content="Remove contributors" Height="71" Name="button_removeContributors" Width="467" Click="button_removeContributors_Click"  Margin="0" />
+            <TextBlock Height="35" Name="textBlock_groupName" Text="Group name" FontSize="24" />
+            <TextBox InputScope="Text" Height="71" Name="textBox_groupName" Width="480" Margin="-10,0,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Add" Height="71" Name="button_addContributors" Width="239" Click="button_addContributors_Click" Margin="-10,0,0,0" />
+                <Button Content="Deactivate" Height="71" Name="button_deactivateContributors" Width="239" Click="button_deactivateContributors_Click" />
+            </StackPanel>
+            <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24"/>
+            <toolkit:ListPicker ItemCountThreshold="6" x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="CONTRIBUTORS" CacheMode="BitmapCache" Width="455" Margin="-10,0,0,0" />
             <toolkit:ContextMenuService.ContextMenu>
-                <toolkit:ContextMenu x:Name="contextMenu_delete" IsOpen="False">
-                    <toolkit:MenuItem Header="delete" Click="deleteMember_Click"/>
+                <toolkit:ContextMenu x:Name="contextMenu_deactivate" IsOpen="False">
+                    <toolkit:MenuItem Header="deactivate" Click="deactivateMember_Click"/>
                 </toolkit:ContextMenu>
             </toolkit:ContextMenuService.ContextMenu>
         </StackPanel>
