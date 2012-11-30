@@ -22,22 +22,25 @@ namespace BillSync
         }
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+            string msg = NavigationContext.QueryString["msg"];
+            IList<Member> members = Database_Functions.GetMembers();
+            Member memb = findMember(msg, members);
+            member_name.Text = memb.Name;
+            phone_number.Text = memb.Phone;
+            email_address.Text = memb.Email;
+            decimal trans = Database_Functions.GetMemberTotal(memb.ID);
+            money_owed.Text = "$ " + trans.ToString();
+        }
 
-            //Set the data context for this page to the selected contact
-            this.DataContext = App.con;
+        private Member findMember(string name, IList<Member> members)
+        {
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(name))
+                    return m;
+            }
 
-            try
-            {
-                //Try to get a picture of the contact
-                BitmapImage img = new BitmapImage();
-                img.SetSource(App.con.GetPicture());
-                Picture.Source = img;
-            }
-            catch (Exception)
-            {
-                //can't get a picture of the contact
-            }
+            return null;
         }
 
     }
