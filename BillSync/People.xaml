@@ -97,7 +97,16 @@
         </controls:Panorama>
         <ProgressBar Height="4" HorizontalAlignment="Left" Margin="524,325,0,0" Name="progressBar1" VerticalAlignment="Top" Width="460" />
     </Grid>
+    <toolkit:ContextMenuService.ContextMenu>
+            <toolkit:ContextMenu x:Name="contextMenu_edit" IsOpen="False">
+                <toolkit:MenuItem Header="edit" Click="editMember_Click"/>
+            </toolkit:ContextMenu>
+        </toolkit:ContextMenuService.ContextMenu>
 
     <!--Panorama-based applications should not show an ApplicationBar-->
-
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Click="ApplicationBarIconButton_Click"  Text="add member"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
