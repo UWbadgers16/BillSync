@@ -25,6 +25,11 @@ namespace BillSync
             get;
             set;
         }
+         public string SelectedComponentImage
+        {
+            get;
+            set;
+        }
         public string GroupHeader
         {
             get
