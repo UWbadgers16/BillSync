@@ -18,6 +18,7 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
+        Boolean needsMember = false;
    
         public People()
         {
@@ -68,19 +69,34 @@ namespace BillSync
       
         void tap_JumpListItem(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            
-            NavigationService.Navigate(new Uri("/ContactDetails.xaml", UriKind.Relative));
+            if (needsMember)
+            {
+                TextBlock tb = (TextBlock)sender;
+                GlobalVars.member_name = tb.Text;
+                NavigationService.GoBack();
+            }
+            else
+                NavigationService.Navigate(new Uri("/ContactDetails.xaml", UriKind.Relative));
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            string msg = NavigationContext.QueryString["msg"];
-            string this_page = NavigationContext.QueryString["this_page"];
+            try
+            {
+                string msg = NavigationContext.QueryString["msg"];
 
-            if(!int.TryParse(msg, out page))
-                panorama_people.DefaultItem = panorama_people.Items[page];
+                if (int.TryParse(msg, out page))
+                {
+                    panorama_people.DefaultItem = panorama_people.Items[page];
+                    needsMember = true;
+                }
+            }
+            catch (KeyNotFoundException ex)
+            {
+
+            }
         }
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)

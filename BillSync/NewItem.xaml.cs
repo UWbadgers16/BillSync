@@ -216,9 +216,11 @@ namespace BillSync
 
         private void saveItem()
         {
+            addMissingMembers();
+
             if (checkFields())
             {
-                IList<Member> members = Database_Functions.GetMembers(group.Group_ID);
+                IList<Member> members = Database_Functions.GetActiveMembers(group.Group_ID);
                 this.item_name.Text = textBox_itemName.Text;
 
                 if (isEditing)
@@ -293,6 +295,18 @@ namespace BillSync
                 return false;
 
             return true;
+        }
+
+        private void addMissingMembers()
+        {
+            IList<Member> activeMembers = Database_Functions.GetActiveMembers(group.Group_ID);
+
+            for (int i = 0; i < listPicker.Items.Count; i++)
+            {
+                Member m = (Member)listPicker.Items[i];
+                if (!activeMembers.Contains(m))
+                    Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone);
+            }
         }
     }
 }

@@ -20,5 +20,6 @@ namespace BillSync
         public static IList<NewItem> items;
         public static NewGroup group;
         public static int group_id = -1;
+        public static string member_name;
     }
 }

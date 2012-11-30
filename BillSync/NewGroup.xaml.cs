@@ -37,19 +37,19 @@ namespace BillSync
         public NewGroup()
         {
             InitializeComponent();
-            contributors.Add(new Member() { Name = "John" });
-            contributors.Add(new Member() { Name = "Eric" });
-            contributors.Add(new Member() { Name = "Yue Weng" });
-            contributors.Add(new Member() { Name = "Georgii" });
-            this.listPicker_contributors.ItemsSource = contributors;
+            //contributors.Add(new Member() { Name = "John" });
+            //contributors.Add(new Member() { Name = "Eric" });
+            //contributors.Add(new Member() { Name = "Yue Weng" });
+            //contributors.Add(new Member() { Name = "Georgii" });
+            //this.listPicker_contributors.ItemsSource = contributors;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            //this.billListGroup.IsEnabled = true;
+            this.billListGroup.IsEnabled = true;
 
-            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1)
+            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1 || GlobalVars.member_name != null)
             {
                 if (GlobalVars.item != null)
                 {
@@ -78,6 +78,18 @@ namespace BillSync
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
                     items = populateGroup(temp_items, temp_group_id);
                 }
+                else if (GlobalVars.member_name != null)
+                {
+                    IList<Member> temp_memb = Database_Functions.GetActiveMembers(group_id);
+                    Member m = getMemberByName(GlobalVars.member_name);
+                    GlobalVars.member_name = null;
+                    temp_memb.Add(m);
+                    //temp_memb.Add(findMissingMember(m));
+                    listPicker_contributors.ItemsSource = temp_memb;
+                    contributors = temp_memb;
+                }
+
+                textBox_groupName.Text = group_name.Text;
                 //List<ItemWrapper> source = new List<ItemWrapper>();
                 //foreach (NewItem item in items)
                 //{
@@ -120,12 +132,20 @@ namespace BillSync
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (first_load && items.Count == 0)
+            if (first_load && listPicker_contributors.Items.Count == 0)
             {
-                MessageBoxResult m = MessageBox.Show("Add a new item", "Add Item", MessageBoxButton.OKCancel);
-                if (m == MessageBoxResult.OK)
+                MessageBoxResult m1 = MessageBox.Show("Add a new member", "Add member", MessageBoxButton.OKCancel);
+                if (m1 == MessageBoxResult.OK)
+                    NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+                else if(m1 == MessageBoxResult.Cancel)
+                    NavigationService.GoBack();
+            }
+            else if (first_load && items.Count == 0)
+            {
+                MessageBoxResult m2 = MessageBox.Show("Add a new item", "Add Item", MessageBoxButton.OKCancel);
+                if (m2 == MessageBoxResult.OK)
                     addItem();
-                else if (m == MessageBoxResult.Cancel)
+                else if (m2 == MessageBoxResult.Cancel)
                     NavigationService.GoBack();
             }
         }
@@ -228,13 +248,13 @@ namespace BillSync
 
                 newItemName.IsOpen = false;
             }
-            else if (contextMenu_edit_delete.IsOpen || contextMenu_deactivate.IsOpen)
-            {
-                contextMenu_edit_delete.IsOpen = false;
-                contextMenu_deactivate.IsOpen = false;
-                e.Cancel = true;
-                this.billListGroup.IsEnabled = true;
-            }
+            //else if (contextMenu_edit_delete.IsOpen || contextMenu_deactivate.IsOpen)
+            //{
+            //    contextMenu_edit_delete.IsOpen = false;
+            //    contextMenu_deactivate.IsOpen = false;
+            //    e.Cancel = true;
+            //    this.billListGroup.IsEnabled = true;
+            //}
             else
             {
                 MessageBoxResult m = MessageBox.Show("Would you like to save this group?", "Save group?", MessageBoxButton.OKCancel);
@@ -286,20 +306,20 @@ namespace BillSync
 
         private void button_addContributors_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2" + "&this_page=" + pivot_bill.SelectedIndex.ToString(), UriKind.Relative));
+            NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
         }
 
         private void button_deactivateContributors_Click(object sender, RoutedEventArgs e)
         {
             Member selected = (Member)listPicker_contributors.SelectedItem;
             Database_Functions.setMemberActivity(selected.ID, false);
-            listPicker_contributors.ItemsSource = Database_Functions.GetMembers(group_id);
+            listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
         }
 
         private IList<NewItem> populateGroup(IList<Item> items, int group_id)
         {
             IList<NewItem> newItems = new List<NewItem>();
-            IList<Member> memb = Database_Functions.GetMembers(group_id);
+            IList<Member> memb = Database_Functions.GetActiveMembers(group_id);
             //contributors = memberIListToList(memb);
             contributors = memb;
             this.listPicker_contributors.ItemsSource = memb;
@@ -344,8 +364,9 @@ namespace BillSync
             this.billListGroup.IsEnabled = false;
             TextBlock tapped = (TextBlock)sender;
             int index = findItem(tapped.Text);
+            NewItem n = items[index];
             GlobalVars.item = items[index];
-            contextMenu_edit_delete.IsOpen = true;
+            //contextMenu_edit_delete.IsOpen = true;
         }
 
         private void editItem_Click(object sender, RoutedEventArgs e)
@@ -369,7 +390,7 @@ namespace BillSync
                         items.RemoveAt(i);
                     found = true;
                     populateList(items);
-                    //delete from database
+                    Database_Functions.removeItem(temp.Item_ID);
                 }
             }
 
@@ -380,6 +401,10 @@ namespace BillSync
         {
             int newGroup = Database_Functions.AddGroup(group_name.Text);
             this.group_name.Text = textBox_groupName.Text;
+            Member missing = findMissingMember(contributors);
+
+            if (missing != null)
+                Database_Functions.AddMember(group_id, missing.Name, missing.Email, missing.Phone);
 
             if (isEditing)
             {
@@ -415,6 +440,29 @@ namespace BillSync
             return -1;
         }
 
+        private Member getMemberByName(string name)
+        {
+            foreach (Member m in Database_Functions.GetAllMembers())
+            {
+                if(m.Name.Equals(name))
+                    return m;
+            }
+
+            return null;
+        }
+
+        private Member findMissingMember(IList<Member> members)
+        {
+            IList<Member> temp = Database_Functions.GetActiveMembers(group_id);
+
+            foreach (Member m in members)
+            {
+                if (!temp.Contains(m))
+                    return m;
+            }
+
+            return null;
+        }
         //private List<Member> memberIListToList(IList<Member> memb)
         //{
         //    List<Member> members = new List<Member>();
