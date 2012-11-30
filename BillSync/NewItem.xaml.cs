@@ -181,6 +181,8 @@ namespace BillSync
                 newBox.Margin = new Thickness(-18, -5, 0, 0);
                 newBox.Visibility = Visibility.Collapsed;
                 newBox.Text = load.textBoxes[i].Text;
+                InputScope asdf = new InputScope();
+                newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
                 stackPanel_main.Children.Add(newBox);
@@ -270,7 +272,11 @@ namespace BillSync
 
         private void addTransactions(IList<Member> members)
         {
-            decimal total = Decimal.Parse(textBox_total.Text);
+            decimal total;
+            if(textBox_total.Text.Contains("$"))
+                total = Decimal.Parse(textBox_total.Text.Substring(1));
+            else
+                total = Decimal.Parse(textBox_total.Text);
             decimal split = total / members.Count;
             for (int i = 0; i < members.Count; i++)
             {

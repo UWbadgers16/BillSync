@@ -288,7 +288,10 @@ namespace BillSync
 
         private void Item_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            //view item
+            TextBlock tb = (TextBlock)sender;
+            int index = findItem(tb.Text);
+            GlobalVars.item = items[index];
+            NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
         }
 
         private int findItem(string name)
@@ -329,7 +332,7 @@ namespace BillSync
                 NewItem newItem = new NewItem();
                 newItem.item_name.Text = i.Title;
                 newItem.textBox_description.Text = i.Description;
-                newItem.textBox_total.Text = Database_Functions.GetItemCost(i.ID).ToString();
+                newItem.textBox_total.Text = Database_Functions.GetItemCost(i.ID).ToString("c");
                 newItem.datePicker_date.Value = i.Due;
                 newItem.checkBox_splitEven.IsChecked = Database_Functions.IsSplitEvenly(i.ID);
                 newItem.listPicker.ItemsSource = memb;
@@ -415,12 +418,12 @@ namespace BillSync
             NavigationService.GoBack();
         }
 
-        private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            TextBlock tb = (TextBlock)sender;
-            string name = tb.Text;
-            contextMenu_deactivate.IsOpen = true;
-        }
+        //private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        //{
+        //    TextBlock tb = (TextBlock)sender;
+        //    string name = tb.Text;
+        //    contextMenu_deactivate.IsOpen = true;
+        //}
 
         private void deactivateMember_Click(object sender, RoutedEventArgs e)
         {

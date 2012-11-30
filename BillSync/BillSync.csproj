@@ -51,7 +51,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalVars.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Group2.cs" />
+    <Compile Include="ItemDetails.xaml.cs">
+      <DependentUpon>ItemDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ItemState.cs" />
     <Compile Include="Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
@@ -63,7 +69,6 @@
     <Compile Include="DeleteBill.xaml.cs">
       <DependentUpon>DeleteBill.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalVars.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupDataContext.cs" />
     <Compile Include="Item.cs" />
@@ -71,7 +76,9 @@
       <DependentUpon>ItemsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="ItemWrapper.cs" />
-    <Compile Include="JumpList.cs" />
+    <Compile Include="JumpList.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -115,6 +122,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ItemDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ItemsList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,7 +160,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LongListSelectorDemo.csproj.vs10x" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
@@ -176,7 +186,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\tile.png" />
-    <Content Include="LongListSelectorDemo.csproj" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
