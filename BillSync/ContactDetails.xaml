@@ -23,8 +23,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,0">
-            <TextBlock x:Name="ApplicationTitle" Text="Contacts and Calendar Test App" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="contact details" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="member_name" Text="member" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -32,48 +31,15 @@
 
             <TextBlock Text="{Binding Path=DisplayName, Mode=OneWay}" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" />
 
-            <Border BorderThickness="2" HorizontalAlignment="Left" BorderBrush="{StaticResource PhoneAccentBrush}" >
-                <Image Name="Picture" Height="85" Width="85" HorizontalAlignment="Left" />
-            </Border>
+           
 
             <TextBlock Text="Phone Numbers" Margin="12,12,0,0"/>
-            <ListBox ItemsSource="{Binding Path=PhoneNumbers}" Height="60"  Margin="36,0,0,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Path=Kind, Mode=OneWay}" />
-                            <TextBlock Grid.Column="1" Text=":  " />
-                            <TextBlock Grid.Column="2" Text="{Binding Path=PhoneNumber, Mode=OneWay}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
+            <TextBlock x:Name="phone_number" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
             <TextBlock Text="Email Addresses" Margin="12,12,0,0" />
-            <ListBox ItemsSource="{Binding Path=EmailAddresses}" Height="60"  Margin="36,0,0,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Path=Kind, Mode=OneWay}" />
-                            <TextBlock Grid.Column="1" Text=":  " />
-                            <TextBlock Grid.Column="2" Text="{Binding Path=EmailAddress, Mode=OneWay}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <TextBlock x:Name="email_address" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
 
             <TextBlock Text="Money Owed" Margin="-300,12,0,0" Height="44" Width="153" />
-            <ListBox ItemsSource="{Binding Path=moneyowed}" Height="37"  Margin="-300,0,0,0" Width="79" />
+            <TextBlock x:Name="money_owed" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
 
 
         </StackPanel>
