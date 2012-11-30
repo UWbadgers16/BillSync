@@ -268,10 +268,7 @@ namespace BillSync
 
         private void Item_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            //TextBlock tapped = (TextBlock)sender;
-            //int index = findItem(tapped.Text);
-            //GlobalVars.item = items[index];
-            //NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
+            //view item
         }
 
         private int findItem(string name)
@@ -294,7 +291,9 @@ namespace BillSync
 
         private void button_deactivateContributors_Click(object sender, RoutedEventArgs e)
         {
-
+            Member selected = (Member)listPicker_contributors.SelectedItem;
+            Database_Functions.setMemberActivity(selected.ID, false);
+            listPicker_contributors.ItemsSource = Database_Functions.GetMembers(group_id);
         }
 
         private IList<NewItem> populateGroup(IList<Item> items, int group_id)
