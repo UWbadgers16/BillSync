@@ -411,6 +411,16 @@ namespace BillSync
             }
         }
 
+        public static void DeleteTransactions(int item_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                context.Transactions.DeleteAllOnSubmit(query);
+                context.SubmitChanges();
+            }
+        }
+
         public static decimal GetMemberTotal(int member_id)
         {
             IList<Transaction> transactionList = null;
