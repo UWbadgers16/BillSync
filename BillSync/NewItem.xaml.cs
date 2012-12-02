@@ -78,7 +78,7 @@ namespace BillSync
                 this.item_name.Text = load.item_name.Text;
                 this.textBox_description.Text = load.textBox_description.Text;
                 this.textBox_total.Text = load.textBox_total.Text;
-                this.checkBox_splitEven = load.checkBox_splitEven;
+                this.checkBox_splitEven.IsChecked = load.checkBox_splitEven.IsChecked;
                 this.datePicker_date = load.datePicker_date;
                 textBlocks.Clear();
                 textBoxes.Clear();
@@ -142,6 +142,13 @@ namespace BillSync
             }
         }
 
+        public void changeSpecifyAmount(Boolean open)
+        {
+            specify_amount = open;
+            if (specify_amount)
+                collapseAll();
+        }
+
         private void collapseAll()
         {
             for (int i = 0; i < listPicker.Items.Count; i++)
@@ -172,7 +179,7 @@ namespace BillSync
                 newBlock.Visibility = Visibility.Collapsed;
                 temp = (Member)listPicker.Items[i];
                 newBlock.Text = temp.Name;
-                newBlock.Text = load.textBlocks[i].Text;
+                //newBlock.Text = load.textBlocks[i].Text;
                 textBlocks.Add(newBlock);
                 TextBox newBox = new TextBox();
                 newBox.Height = 71;

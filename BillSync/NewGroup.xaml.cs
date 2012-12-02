@@ -23,6 +23,7 @@ namespace BillSync
         int group_id;
         IList<Member> contributors = new List<Member>();
         Boolean isEditing = false;
+        Boolean memberAdded = false;
 
         public IList<Member> Members
         {
@@ -87,6 +88,7 @@ namespace BillSync
                     //temp_memb.Add(findMissingMember(m));
                     listPicker_contributors.ItemsSource = temp_memb;
                     contributors = temp_memb;
+                    memberAdded = true;
                 }
 
                 textBox_groupName.Text = group_name.Text;
@@ -289,10 +291,20 @@ namespace BillSync
         private void Item_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock tb = (TextBlock)sender;
-            int index = findItem(tb.Text);
-            GlobalVars.item = items[index];
+            GlobalVars.item = items[findItem(tb.Text)];
             NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
         }
+
+        //private Item findDBItem(string name)
+        //{
+        //    foreach (Item i in Database_Functions.GetItems())
+        //    {
+        //        if (i.Title == name)
+        //            return i;
+        //    }
+
+        //    return null;
+        //}
 
         private int findItem(string name)
         {
@@ -367,13 +379,19 @@ namespace BillSync
             this.billListGroup.IsEnabled = false;
             TextBlock tapped = (TextBlock)sender;
             int index = findItem(tapped.Text);
-            NewItem n = items[index];
             GlobalVars.item = items[index];
             //contextMenu_edit_delete.IsOpen = true;
         }
 
         private void editItem_Click(object sender, RoutedEventArgs e)
         {
+            if (memberAdded)
+            {
+                GlobalVars.item.changeSpecifyAmount(false);
+                GlobalVars.item.listPicker.ItemsSource = contributors;
+                GlobalVars.item.loadAmounts();
+                memberAdded = false;
+            }
             NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
             this.billListGroup.IsEnabled = true;
         }
@@ -465,6 +483,17 @@ namespace BillSync
             }
 
             return null;
+        }
+
+        private int findItemID(string name, IList<Item> items)
+        {
+            foreach (Item i in items)
+            {
+                if (i.Title == name)
+                    return i.ID;
+            }
+
+            return -1;
         }
         //private List<Member> memberIListToList(IList<Member> memb)
         //{

@@ -15,7 +15,8 @@ namespace BillSync
 {
     public partial class ItemDetails : PhoneApplicationPage
     {
-        NewItem item = null;
+        NewItem newItem = null;
+        
         public ItemDetails()
         {
             InitializeComponent();
@@ -25,30 +26,50 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-            item = GlobalVars.item;
+            newItem = GlobalVars.item;
             GlobalVars.item = null;
-            item_name.Text = item.item_name.Text;
-            textBlock_description.Text = item.textBox_description.Text;
-            textBlock_total.Text = string.Format(item.textBox_total.Text, "c");
+            Item item = Database_Functions.GetItem(newItem.Item_ID);
+            this.item_name.Text = item.Title;
+            this.textBlock_description.Text = item.Description;
+            textBlock_total.Text = Database_Functions.GetItemCost(item.ID).ToString("c");
+            IList<Transaction> transactions = Database_Functions.GetItemTransactions(item.ID);
+            IList<TextBlock> names = new List<TextBlock>();
+            IList<TextBlock> amounts = new List<TextBlock>();
+            IList<string> names_only = new List<string>();
+            IList<Decimal> amounts_only = new List<Decimal>();
+            int index = -1;
 
-            Member temp;
-            for (int i = 0; i < item.listPicker.Items.Count; i++)
+            foreach (Transaction t in transactions)
             {
                 TextBlock name = new TextBlock();
                 name.FontSize = 20;
                 name.Margin = new Thickness(9, 64, 0, 0);
-                temp = (Member)item.listPicker.Items[i];
-                name.Text = temp.Name;
+                name.Text = Database_Functions.GetMember((int)t.MemberID).Name;
                 TextBlock amount = new TextBlock();
                 amount.FontSize = 28;
                 amount.Margin = new Thickness(9, 0, 0, 0);
-                amount.Text = String.Format(item.TextBoxes[i].Text, "c");
-                if (amount.Text == "")
-                    amount.Text = "$0";
-                else if (!amount.Text.Contains("$"))
-                    amount.Text = "$" + amount.Text;
-                ContentPanel.Children.Add(name);
-                ContentPanel.Children.Add(amount);
+                amounts_only.Add(t.Amount);
+                if (t.Amount < 0)
+                    amount.Text = "-" + (t.Amount * -1).ToString("c");
+                else
+                    amount.Text = t.Amount.ToString("c");
+                if (!names_only.Contains(name.Text))
+                {
+                    names_only.Add(name.Text);
+                    names.Add(name);
+                    ContentPanel.Children.Add(name);
+                    amounts.Add(amount);
+                    ContentPanel.Children.Add(amount);
+                }
+                else
+                {
+                    index = names_only.IndexOf(name.Text);
+                    Decimal temp = amounts_only[index] + t.Amount;
+                    if (temp < 0)
+                        amounts[index].Text = "-" + (temp * -1).ToString("c");
+                    else
+                        amounts[index].Text = temp.ToString("c");
+                }
             }
         }
     }

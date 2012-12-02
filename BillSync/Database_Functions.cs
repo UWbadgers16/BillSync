@@ -66,6 +66,16 @@ namespace BillSync
             }
         }
 
+        public static Item GetItem(int item_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Item item = (from c in context.Items where c.ID == item_id select c).Single();
+
+                return item;
+            }
+        }
+
         public static void PrintGroups()
         {
             IList<Group> groups = GetGroups();
@@ -286,6 +296,16 @@ namespace BillSync
                 memberList = query.ToList();
             }
             return memberList;
+        }
+
+         public static Member GetMember(int member_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Member member = (from c in context.Members where c.ID == member_id select c).Single();
+
+                return member;
+            }
         }
 
         public static IList<Member> GetActiveMembers(int group_id)

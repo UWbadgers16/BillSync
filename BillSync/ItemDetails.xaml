@@ -25,7 +25,7 @@
             <TextBlock x:Name="item_name" Text="item name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Height="Auto"  HorizontalAlignment="Left" Name="scrollViewer" VerticalAlignment="Top" Width="480">
-            <StackPanel Height="Auto" Name="ContentPanel" Width="473">
+            <StackPanel Name="ContentPanel" Width="473">
                 <TextBlock Height="Auto" HorizontalAlignment="Left" FontSize="28" Name="textBlock_description" Text="TextBlock" VerticalAlignment="Top" Width="Auto" Margin="9,0,0,0" />
                 <TextBlock FontSize="20" Height="Auto" HorizontalAlignment="Left" Name="textBlock_totalLabel" Text="Total" VerticalAlignment="Top" Width="Auto" Margin="9,64,0,0" />
                 <TextBlock FontSize="28" Height="Auto" Name="textBlock_total" Text="TextBlock" Width="Auto" Margin="9,0,0,0" />
