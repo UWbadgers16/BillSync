@@ -503,6 +503,7 @@ namespace BillSync
             int group1 = AddGroup("Apartment");
             int group2 = AddGroup("House");
             int group3 = AddGroup("Trip");
+            int group4 = AddGroup("House2");
             int item1 = AddItem(group1, "Groceries", "orange juice and bread", DateTime.Parse("2013-01-01 7:34:42Z"));
             int item2 = AddItem(group2, "Internet", "asfdfsd", DateTime.Parse("2013-01-05 7:34:42Z"));
             int item3 = AddItem(group3, "Power", "asdfasdfasdfs", DateTime.Parse("2013-01-10 7:34:42Z"));
@@ -511,6 +512,13 @@ namespace BillSync
             int item6 = AddItem(group1, "Booze", "halloween party", DateTime.Parse("2013-04-01 7:34:42Z"));
             int item7 = AddItem(group1, "N64", "", DateTime.Parse("2013-06-01 7:34:42Z"));
             int item8 = AddItem(group1, "Super Smash Bros 64", "", DateTime.Parse("2013-10-01 7:34:42Z"));
+            int item10 = AddItem(group4, "Uhaul", "", DateTime.Now);
+            int item11 = AddItem(group4, "Walmart", "", DateTime.Now);
+            int item12 = AddItem(group4, "Groceries", "", DateTime.Now);
+            int item13 = AddItem(group4, "Rice Cooker", "", DateTime.Now);
+            int item14 = AddItem(group4, "Internet", "", DateTime.Now);
+            int item15 = AddItem(group4, "Power", "", DateTime.Now);
+            int item16 = AddItem(group4, "Groceries", "", DateTime.Now);
 
             ChangeDate(item1, DateTime.Parse("2012-01-01 7:34:42Z"));
             ChangeDate(item2, DateTime.Parse("2012-01-05 7:34:42Z"));
@@ -527,6 +535,13 @@ namespace BillSync
             int member4 = AddMember(group1, "John Cabaj", "cabaj@wisc.edu", "920-208-9224");
             int member5 = AddMember(group1, "Eric Dargelies", "dargelies@wisc.edu", "920-733-9441");
             int member6 = AddMember(group1, "Yue Weng Mak", "ymak@wisc.edu", "608-770-6358");
+            int member10 = AddMember(group4, "A", "", "");
+            int member11 = AddMember(group4, "B", "", "");
+            int member12 = AddMember(group4, "C", "", "");
+            int member13 = AddMember(group4, "D", "", "");
+            int member14 = AddMember(group4, "E", "", "");
+            int member15 = AddMember(group4, "F", "", "");
+            int member16 = AddMember(group4, "G", "", "");
             int transaction1 = AddTransaction(item1, member1, 14.50m); //group1
             int transaction2 = AddTransaction(item2, member2, 20.33m); //group2
             int transaction3 = AddTransaction(item4, member3, 20.33m); //group3
@@ -534,6 +549,7 @@ namespace BillSync
 
             // group1 - items 1, 5-8
             AddTransaction(item2, member2, -13.54m); //group2
+            AddTransaction(item3, member3, -23.54m); //group2
             AddTransaction(item1, member4, -36.54m); //group1
             AddTransaction(item5, member5, 5.00m);   //group1
             AddTransaction(item6, member6, 10.04m);  //group1
@@ -547,6 +563,58 @@ namespace BillSync
             AddTransaction(item8, member5, -16.54m); //group1
             AddTransaction(item8, member4, 49.62m);   //group1
             //AddTransaction(item8, member6, 3.54m);   //group1
+
+            //group4
+            AddTransaction(item10, member10, -39.39m);
+            AddTransaction(item11, member11, -39.39m);
+            AddTransaction(item12, member12, 236.33m);
+            AddTransaction(item12, member12, -39.39m);
+            AddTransaction(item13, member13, -39.39m);
+            AddTransaction(item14, member14, -39.39m);
+            AddTransaction(item16, member16, -39.39m);
+
+            AddTransaction(item11, member10, -13.18m);
+            AddTransaction(item11, member11, -13.18m);
+            AddTransaction(item11, member12, -13.18m);
+            AddTransaction(item11, member13, -13.18m);
+            AddTransaction(item11, member14, 92.23m);
+            AddTransaction(item11, member14, -13.18m);
+            AddTransaction(item11, member15, -13.18m);
+            AddTransaction(item11, member16, -13.18m);
+
+            AddTransaction(item11, member10, -146.17m);
+            AddTransaction(item11, member10, 238.52m);
+            AddTransaction(item11, member12, -146.17m);
+            AddTransaction(item11, member12, 200.00m);
+            AddTransaction(item11, member13, -146.17m);
+
+            AddTransaction(item12, member10, -9.9967m);
+            AddTransaction(item12, member12, -9.9967m);
+            AddTransaction(item12, member13, 29.99m);
+            AddTransaction(item12, member13, -9.9967m);
+
+            AddTransaction(item13, member10, -14.31m);
+            AddTransaction(item13, member11, -14.31m);
+            AddTransaction(item13, member12, -14.31m);
+            AddTransaction(item13, member13, -14.31m);
+            AddTransaction(item13, member13, 100.20m);
+            AddTransaction(item13, member14, -14.31m);
+            AddTransaction(item13, member15, -14.31m);
+            AddTransaction(item13, member16, -14.31m);
+
+            AddTransaction(item14, member10, 129.34m);
+            AddTransaction(item14, member10, -18.48m);
+            AddTransaction(item14, member11, -18.48m);
+            AddTransaction(item14, member12, -18.48m);
+            AddTransaction(item14, member13, -18.48m);
+            AddTransaction(item14, member14, -18.48m);
+            AddTransaction(item14, member15, -18.48m);
+            AddTransaction(item14, member16, -18.48m);
+
+            AddTransaction(item14, member14, -30.98m);
+            AddTransaction(item14, member15, -30.98m);
+            AddTransaction(item14, member16, -30.98m);
+            AddTransaction(item14, member16, 92.94m);
 
             //PrintGroups();
             //PrintItems();
