@@ -23,7 +23,7 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             string msg = NavigationContext.QueryString["msg"];
-            IList<Member> members = Database_Functions.GetMembers();
+            IList<Member> members = Database_Functions.GetAllMembers();
             Member memb = findMember(msg, members);
             member_name.Text = memb.Name;
             phone_number.Text = memb.Phone;

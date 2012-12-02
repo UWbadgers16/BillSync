@@ -37,7 +37,7 @@ namespace BillSync
                 List
                     <JumpList> source = new List<JumpList>();
 
-                foreach (Member memb in Database_Functions.GetMembers())
+                foreach (Member memb in Database_Functions.GetAllMembers())
                 {
                     decimal trans = Database_Functions.GetMemberTotal(memb.ID);
                     
@@ -164,7 +164,7 @@ namespace BillSync
 
         private void Member_Hold(object sender, GestureEventArgs e)
         {
-            IList<Member> members = Database_Functions.GetMembers();
+            IList<Member> members = Database_Functions.GetAllMembers();
             TextBlock tapped = (TextBlock)sender;
             int index = findMember(tapped.Text, members);
          //   GlobalVars.member = memb[index];
