@@ -38,15 +38,19 @@ namespace BillSync
             {
                 List
                     <JumpList> source = new List<JumpList>();
-
+                  List  <JumpList> settled = new List<JumpList>();
+                  List<JumpList> all = new List<JumpList>();
                 foreach (Member memb in Database_Functions.GetAllMembers())
                 {
                     decimal trans = 0;
+                    
                     int numofSameMembers = findNumMember(memb, members);
                     IList<Member> mem = findMember(numofSameMembers, memb, members);
                     for (int i = 0; i < numofSameMembers; i++)
                     {
                         trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
+                        
+                        
                     }
                     if (!duplicates.Contains(memb.Name))
                     {
@@ -56,17 +60,41 @@ namespace BillSync
                             source.Add(new JumpList()
                             {
                                 Name = memb.Name,
-                                SelectedComponentImage = "Images/delete.png"
+                                SelectedComponentImage = "Images/delete.png",
+                                
+                            });
+                            all.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/delete.png",
+
                             });
 
                         }
-                        else
+                        else if (trans > 0)
                         {
                             source.Add(new JumpList()
                             {
 
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/add.png"
+                            });
+                            all.Add(new JumpList()
+                            {
+
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/add.png"
+                            });
+                        }
+                        else
+                        {
+                            settled.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                            });
+                            all.Add(new JumpList()
+                            {
+                                Name = memb.Name,
                             });
                         }
 
@@ -83,10 +111,19 @@ namespace BillSync
                               select new Group2<JumpList>(c.Key, c);
 
 
+                var groupSettled = from jumplist in settled
+                              group jumplist by jumplist.GroupHeader into c
+                              orderby c.Key
+                              select new Group2<JumpList>(c.Key, c);
+
+                var groupAll = from jumplist in all
+                                  group jumplist by jumplist.GroupHeader into c
+                                  orderby c.Key
+                                  select new Group2<JumpList>(c.Key, c);
 
                 this.outstandingListGroups.ItemsSource = groupBy;
-                this.settledListGroups.ItemsSource = groupBy;
-                this.allListGroups.ItemsSource = groupBy;
+                this.settledListGroups.ItemsSource = groupSettled;
+                this.allListGroups.ItemsSource = groupAll;
             }
             catch (System.Exception)
             {
