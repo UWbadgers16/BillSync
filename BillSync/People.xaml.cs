@@ -44,7 +44,6 @@ namespace BillSync
                     decimal trans = 0;
                     int numofSameMembers = findNumMember(memb, members);
                     IList<Member> mem = findMember(numofSameMembers, memb, members);
-                    //  int gp_id = findGroup(memb);
                     for (int i = 0; i < numofSameMembers; i++)
                     {
                         trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
