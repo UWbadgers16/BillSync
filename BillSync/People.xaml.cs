@@ -19,8 +19,8 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
-        List<NewMember> memb = new List<NewMember>();
-        
+        List<NewMember> mem = new List<NewMember>();
+        IList<Member> members = Database_Functions.GetAllMembers();
         public People()
         {
             InitializeComponent();
@@ -32,6 +32,8 @@ namespace BillSync
         void Contacts_SearchCompleted(object sender, ContactsSearchEventArgs e)
         {
            List<String> duplicates = new List<String>();
+           
+           
             try
             {
                 List
@@ -39,8 +41,14 @@ namespace BillSync
 
                 foreach (Member memb in Database_Functions.GetAllMembers())
                 {
-                    decimal trans = Database_Functions.GetMemberTotal(memb.ID);
-                    
+                    decimal trans = 0;
+                    int numofSameMembers = findNumMember(memb, members);
+                    IList<Member> mem = findMember(numofSameMembers, memb, members);
+                    //  int gp_id = findGroup(memb);
+                    for (int i = 0; i < numofSameMembers; i++)
+                    {
+                        trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
+                    }
                     if (!duplicates.Contains(memb.Name))
                     {
                         duplicates.Add(memb.Name);
@@ -69,26 +77,7 @@ namespace BillSync
                
                        
 
-                /*  foreach (var result in e.Results)
-                  {
- 
-                      source.Add(new JumpList() { Name = result.DisplayName });     
-                 }*/
-                /*
-                foreach (var trans in Database_Functions.GetTransactions())
-                {
-                    if (trans.Amount < 0)
-                    {
-
-                        source.Add(new JumpList() { SelectedComponentImage = "Images/minus.png" });
-                    }
-                    else
-                    {
-
-                        source.Add(new JumpList() { SelectedComponentImage = "Images/add.png" });
-                    }
-                }
-                */
+                
                 var groupBy = from jumplist in source
                               group jumplist by jumplist.GroupHeader into c
                               orderby c.Key
@@ -151,8 +140,9 @@ namespace BillSync
         {
             NavigationService.Navigate(new Uri("/NewMember.xaml?", UriKind.Relative));
         }
-        private int findMember(string name, IList<Member> members)
+        private int findMember(string name)
         {
+            IList<Member> members = new List<Member>();
             foreach (Member m in members)
             {
                 if (m.Name.Equals(name))
@@ -166,17 +156,45 @@ namespace BillSync
         {
             IList<Member> members = Database_Functions.GetAllMembers();
             TextBlock tapped = (TextBlock)sender;
-            int index = findMember(tapped.Text, members);
-         //   GlobalVars.member = memb[index];
+            int index = findMember(tapped.Text);
+            GlobalVars.member = mem[index];
             contextMenu_edit.IsOpen = true;
         }
 
+        private void Member_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            TextBlock tb = (TextBlock)sender;
+            GlobalVars.member = mem[findMember(tb.Text)];
+            NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
+        }
         private void editMember_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/NewMember.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/NewMember.xaml?", UriKind.Relative));
         }
+        private int findNumMember(Member mbr, IList<Member> members)
+        {
+            int count = 0;
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(mbr.Name))
+                    count++;
+            }
 
-        
+            return count;
+        }
+        private IList<Member> findMember(int count, Member mbr, IList<Member> members)
+        {
+            IList<Member> newMember = new List<Member>(count);
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(mbr.Name))
+                    newMember.Add(m);
+            }
+
+
+
+            return newMember;
+        }
         
     }
     
