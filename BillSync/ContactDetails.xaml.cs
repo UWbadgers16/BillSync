@@ -16,32 +16,56 @@ namespace BillSync
 {
     public partial class ContactDetails : PhoneApplicationPage
     {
+        IList<Member> members = Database_Functions.GetAllMembers();
+        IList<Group> group = Database_Functions.GetGroups();
         public ContactDetails()
         {
             InitializeComponent();
         }
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            decimal trans = 0;
+            IList<int> temp_id = new List<int>();
             string msg = NavigationContext.QueryString["msg"];
-            IList<Member> members = Database_Functions.GetAllMembers();
-            Member memb = findMember(msg, members);
-            member_name.Text = memb.Name;
-            phone_number.Text = memb.Phone;
-            email_address.Text = memb.Email;
-            decimal trans = Database_Functions.GetMemberTotal(memb.ID);
+            int numofSameMembers = findNumMember(msg, members);
+            IList<Member> memb = findMember(numofSameMembers, msg, members);
+          
+            for (int i = 0; i < numofSameMembers; i++)
+            {
+                member_name.Text = memb.ElementAt<Member>(i).Name;
+                phone_number.Text = memb.ElementAt<Member>(i).Phone;
+                email_address.Text = memb.ElementAt<Member>(i).Email;
+                trans += Database_Functions.GetMemberTotal(memb.ElementAt<Member>(i).ID);
+            }
+           
             money_owed.Text = "$ " + trans.ToString();
         }
 
-        private Member findMember(string name, IList<Member> members)
+        private IList<Member> findMember(int count, string name, IList<Member> members)
         {
+            IList<Member> newMember = new List<Member>(count);
+             foreach (Member m in members)
+              {
+                  if (m.Name.Equals(name))
+                      newMember.Add(m);
+               }
+           
+            
+
+            return newMember;
+        }
+
+        private int findNumMember(string name, IList<Member> members)
+        {
+            int count = 0;
             foreach (Member m in members)
             {
                 if (m.Name.Equals(name))
-                    return m;
+                    count++;
             }
 
-            return null;
+            return count;
         }
-
+       
     }
 }
