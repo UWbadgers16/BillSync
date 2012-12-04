@@ -457,6 +457,14 @@ namespace BillSync
             return cost;
         }
 
+        public static string GetMemberGroupName(int member_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                return (from c in context.Members where c.ID == member_id select c).FirstOrDefault().Group.Name;
+            }
+        }
+
         public static Dictionary<int, decimal> GetTotals(int group_id)
         {
             Dictionary<int, decimal> totals = new Dictionary<int, decimal>();
