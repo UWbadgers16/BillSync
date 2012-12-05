@@ -19,6 +19,7 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
+        
         List<NewMember> mem = new List<NewMember>();
         IList<Member> members = Database_Functions.GetAllMembers();
         public People()
@@ -32,103 +33,119 @@ namespace BillSync
         void Contacts_SearchCompleted(object sender, ContactsSearchEventArgs e)
         {
            List<String> duplicates = new List<String>();
-           
-           
-            try
-            {
-                List
-                    <JumpList> source = new List<JumpList>();
-                  List  <JumpList> settled = new List<JumpList>();
-                  List<JumpList> all = new List<JumpList>();
-                foreach (Member memb in Database_Functions.GetAllMembers())
-                {
-                    decimal trans = 0;
-                    
-                    int numofSameMembers = findNumMember(memb, members);
-                    IList<Member> mem = findMember(numofSameMembers, memb, members);
-                    for (int i = 0; i < numofSameMembers; i++)
-                    {
-                        trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
-                        
-                        
-                    }
-                    if (!duplicates.Contains(memb.Name))
-                    {
-                        duplicates.Add(memb.Name);
-                        if (trans < 0)
-                        {
-                            source.Add(new JumpList()
-                            {
-                                Name = memb.Name,
-                                SelectedComponentImage = "Images/delete.png",
-                                
-                            });
-                            all.Add(new JumpList()
-                            {
-                                Name = memb.Name,
-                                SelectedComponentImage = "Images/delete.png",
 
-                            });
+           try
+           {
+               List
+                   <JumpList> source = new List<JumpList>();
+               List<JumpList> settled = new List<JumpList>();
+               List<JumpList> all = new List<JumpList>();
+             
+                   foreach (Member memb in Database_Functions.GetAllMembers())
+                   {
+                       decimal trans = 0;
+                       string group_name = "";
+                       int numofSameMembers = findNumMember(memb, members);
+                       IList<Member> mem = findMember(numofSameMembers, memb, members);
+                       for (int i = 0; i < numofSameMembers; i++)
+                       {
+                           trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
+                           if (numofSameMembers == 1)
+                           {
+                               group_name = Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
+                           }
+                           else
+                           {
+                               group_name += "   " + Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
+                           }
 
-                        }
-                        else if (trans > 0)
-                        {
-                            source.Add(new JumpList()
-                            {
+                       }
+                       if (!duplicates.Contains(memb.Name))
+                       {
+                           duplicates.Add(memb.Name);
+                           if (trans < 0)
+                           {
+                               source.Add(new JumpList()
+                               {
+                                   Name = memb.Name,
+                                   SelectedComponentImage = "Images/delete.png",
+                                   GroupName = group_name
+                               });
+                               all.Add(new JumpList()
+                               {
+                                   Name = memb.Name,
+                                   SelectedComponentImage = "Images/delete.png",
+                                   GroupName = group_name
+                               });
 
-                                Name = memb.Name,
-                                SelectedComponentImage = "Images/add.png"
-                            });
-                            all.Add(new JumpList()
-                            {
+                           }
+                           else if (trans > 0)
+                           {
+                               source.Add(new JumpList()
+                               {
 
-                                Name = memb.Name,
-                                SelectedComponentImage = "Images/add.png"
-                            });
-                        }
-                        else
-                        {
-                            settled.Add(new JumpList()
-                            {
-                                Name = memb.Name,
-                            });
-                            all.Add(new JumpList()
-                            {
-                                Name = memb.Name,
-                            });
-                        }
+                                   Name = memb.Name,
+                                   SelectedComponentImage = "Images/add.png",
+                                   GroupName = group_name
 
-                    }
-                    
-                  }
-               
-                       
+                               });
+                               all.Add(new JumpList()
+                               {
 
-                
-                var groupBy = from jumplist in source
-                              group jumplist by jumplist.GroupHeader into c
-                              orderby c.Key
-                              select new Group2<JumpList>(c.Key, c);
+                                   Name = memb.Name,
+                                   SelectedComponentImage = "Images/add.png",
+                                   GroupName = group_name
+                               });
+                           }
+                           else
+                           {
+                               settled.Add(new JumpList()
+                               {
+                                   Name = memb.Name,
+                                   GroupName = group_name
+                               });
+                               all.Add(new JumpList()
+                               {
+                                   Name = memb.Name,
+                                   GroupName = group_name
+                               });
+                           }
+
+                       }
+
+                   }
 
 
-                var groupSettled = from jumplist in settled
-                              group jumplist by jumplist.GroupHeader into c
-                              orderby c.Key
-                              select new Group2<JumpList>(c.Key, c);
 
-                var groupAll = from jumplist in all
+
+                   var groupBy = from jumplist in source
+                                 group jumplist by jumplist.GroupHeader into c
+                                 orderby c.Key
+                                 select new Group2<JumpList>(c.Key, c);
+
+
+                   var groupSettled = from jumplist in settled
+                                      group jumplist by jumplist.GroupHeader into c
+                                      orderby c.Key
+                                      select new Group2<JumpList>(c.Key, c);
+
+                   var groupAll = from jumplist in all
                                   group jumplist by jumplist.GroupHeader into c
                                   orderby c.Key
                                   select new Group2<JumpList>(c.Key, c);
 
-                this.outstandingListGroups.ItemsSource = groupBy;
-                this.settledListGroups.ItemsSource = groupSettled;
-                this.allListGroups.ItemsSource = groupAll;
-            }
-            catch (System.Exception)
-            {
-                //That's okay, no results
-            }
+                   this.outstandingListGroups.ItemsSource = groupBy;
+                   this.settledListGroups.ItemsSource = groupSettled;
+                   this.allListGroups.ItemsSource = groupAll;
+
+               
+              
+           }
+
+           catch (System.Exception)
+           {
+               //That's okay, no results
+           }
 
         }
       /*   
@@ -143,6 +160,7 @@ namespace BillSync
         void tap_JumpListItem(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock temp = (TextBlock)sender;
+            GlobalVars.member = mem[findMember(temp.Text)];
             NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
         }
 
@@ -150,11 +168,12 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-        //    string msg = NavigationContext.QueryString["msg"];
-       //     string this_page = NavigationContext.QueryString["this_page"];
+        //   string msg = NavigationContext.QueryString["msg"];
+        //   string this_page = NavigationContext.QueryString["this_page"];
 
         //    if(!int.TryParse(msg, out page))
                 panorama_people.DefaultItem = panorama_people.Items[page];
+               
         }
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -195,6 +214,7 @@ namespace BillSync
             int index = findMember(tapped.Text);
             GlobalVars.member = mem[index];
             contextMenu_edit.IsOpen = true;
+            //NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + tapped.Text, UriKind.Relative));
         }
 
         private void Member_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -231,6 +251,8 @@ namespace BillSync
 
             return newMember;
         }
+
+       
         
     }
     
