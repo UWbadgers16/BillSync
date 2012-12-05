@@ -51,6 +51,7 @@
                     <Image Source = "{Binding SelectedComponentImage}" Width="20" Height="20">    
                     </Image>
                     <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
+                    <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
                 </StackPanel>
              </Border>
         </DataTemplate>
@@ -59,6 +60,7 @@
             <Border Margin="0">
                 <StackPanel Orientation="Horizontal" Width="460" Height="50">
                     <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
+                    <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -77,8 +79,6 @@
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         <controls:Panorama Title="people" HorizontalAlignment="Left" Width="480" Name="panorama_people">
-
-            
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Outstanding">
                     <toolkit:LongListSelector x:Name="outstandingListGroups" SelectionChanged="outstandingListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
