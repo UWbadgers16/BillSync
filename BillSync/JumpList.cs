@@ -30,6 +30,11 @@ namespace BillSync
             get;
             set;
         }
+          public string GroupName
+         {
+             get;
+             set;
+         }
         public string GroupHeader
         {
             get
