@@ -333,5 +333,10 @@ namespace BillSync
 
             return false;
         }
+
+        private void button_takePicture_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Camera.xaml?msg=" + textBox_itemName.Text, UriKind.Relative));
+        }
     }
 }

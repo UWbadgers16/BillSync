@@ -20,6 +20,8 @@ namespace BillSync
 {
     public partial class Camera : PhoneApplicationPage
     {
+        string filename = null;
+
         // Variables
         private int savedCounter = 0;
         PhotoCamera cam;
@@ -37,6 +39,7 @@ namespace BillSync
         //Code for initialization, capture completed, image availability events; also setting the source for the viewfinder.
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            filename = NavigationContext.QueryString["msg"];
 
             // Check to see if the camera is available on the device.
             if (PhotoCamera.IsCameraTypeSupported(CameraType.Primary) == true)
@@ -159,7 +162,7 @@ namespace BillSync
         // Informs when full resolution picture has been taken, saves to local media library and isolated storage.
         void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
         {
-            string fileName = "BillSync" + savedCounter + ".jpg";
+            string completeName = filename + ".jpg";
 
             try
             {   // Write message to the UI thread.
@@ -169,7 +172,7 @@ namespace BillSync
                 });
 
                 // Save picture to the library camera roll.
-                library.SavePictureToCameraRoll(fileName, e.ImageStream);
+                library.SavePictureToCameraRoll(completeName, e.ImageStream);
 
                 // Write message to the UI thread.
                 Deployment.Current.Dispatcher.BeginInvoke(delegate()
@@ -184,7 +187,7 @@ namespace BillSync
                 // Save picture as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(fileName, FileMode.Create, FileAccess.Write))
+                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(completeName, FileMode.Create, FileAccess.Write))
                     {
                         // Initialize the buffer for 4KB disk pages.
                         byte[] readBuffer = new byte[4096];

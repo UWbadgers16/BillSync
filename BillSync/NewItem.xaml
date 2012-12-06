@@ -41,6 +41,7 @@
                 <TextBlock x:Name="item_name" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
             </StackPanel>
             <StackPanel Margin="20,150,0,0" Name="stackPanel_main">
+                <Button Content="Take photo" Height="71" Name="button_takePicture" Width="460" Margin="-18, -10, 0, 0" Click="button_takePicture_Click" />
                 <TextBlock Height="35" Name="textBlock_itemName" Text="Item name" FontSize="24" />
                 <TextBox InputScope="Text" Height="71" Name="textBox_itemName" Width="460" Margin="-18,-10,0,0" />
                 <TextBlock Height="35" Name="textBlock_description" Text="Description" FontSize="24" />

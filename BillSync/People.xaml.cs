@@ -19,11 +19,9 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
-<<<<<<< HEAD
-=======
+
         List<NewMember> memb = new List<NewMember>();
         Boolean adding_member = false;
->>>>>>> Update to Sync Changes
         
         List<NewMember> mem = new List<NewMember>();
         IList<Member> members = Database_Functions.GetAllMembers();
@@ -54,7 +52,6 @@ namespace BillSync
         void Contacts_SearchCompleted(object sender, ContactsSearchEventArgs e)
         {
            List<String> duplicates = new List<String>();
-<<<<<<< HEAD
 
            try
            {
@@ -168,7 +165,7 @@ namespace BillSync
            {
                //That's okay, no results
            }
-=======
+
             try
             {
                 List
@@ -242,8 +239,6 @@ namespace BillSync
             {
                 //That's okay, no results
             }
->>>>>>> Update to Sync Changes
-
         }
       /*   
         private void ContactResultsData_Tap(object sender, GestureEventArgs e)
@@ -257,10 +252,10 @@ namespace BillSync
         void tap_JumpListItem(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock temp = (TextBlock)sender;
-<<<<<<< HEAD
+
             GlobalVars.member = mem[findMember(temp.Text)];
             NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
-=======
+
             if (adding_member)
             {
                 GlobalVars.member_name = temp.Text;
@@ -268,29 +263,23 @@ namespace BillSync
             }
             else
                 NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
->>>>>>> Update to Sync Changes
+
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-<<<<<<< HEAD
-        //   string msg = NavigationContext.QueryString["msg"];
-        //   string this_page = NavigationContext.QueryString["this_page"];
-=======
+
             string msg = NavigationContext.QueryString["msg"];
->>>>>>> Update to Sync Changes
 
             if (int.TryParse(msg, out page))
             {
                 panorama_people.DefaultItem = panorama_people.Items[page];
-<<<<<<< HEAD
-               
-=======
+
                 adding_member = true;
             }
->>>>>>> Update to Sync Changes
+
         }
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -331,14 +320,22 @@ namespace BillSync
             int index = findMember(tapped.Text);
             GlobalVars.member = mem[index];
             contextMenu_edit.IsOpen = true;
-            //NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + tapped.Text, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + tapped.Text, UriKind.Relative));
         }
 
         private void Member_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock tb = (TextBlock)sender;
-            GlobalVars.member = mem[findMember(tb.Text)];
-            NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
+            if (adding_member)
+            {
+                GlobalVars.member_name = tb.Text;
+                NavigationService.GoBack();
+            }
+            else
+            {
+                GlobalVars.member = mem[findMember(tb.Text)];
+                NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
+            }
         }
         private void editMember_Click(object sender, RoutedEventArgs e)
         {

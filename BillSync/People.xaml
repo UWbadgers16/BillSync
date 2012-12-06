@@ -79,11 +79,7 @@
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         <controls:Panorama Title="people" HorizontalAlignment="Left" Width="480" Name="panorama_people">
-<<<<<<< HEAD
-=======
             
-            
->>>>>>> Update to Sync Changes
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Outstanding">
                     <toolkit:LongListSelector x:Name="outstandingListGroups" SelectionChanged="outstandingListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
