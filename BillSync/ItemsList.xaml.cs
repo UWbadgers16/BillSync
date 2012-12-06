@@ -13,13 +13,29 @@ using Microsoft.Phone.Controls;
 
 namespace BillSync
 {
-	public partial class Transactions : PhoneApplicationPage
+	public partial class ItemsList : PhoneApplicationPage
     {
+        MainPage main;
+
 		// Constructor
-		public Transactions()
+		public ItemsList()
         {
             InitializeComponent();
 		}
+
+        //public void setProgressBar(Boolean on)
+        //{
+        //    if (on)
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = true;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = false;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Collapsed;
+        //    }
+        //}
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -45,6 +61,13 @@ namespace BillSync
                               select new Group<ItemWrapper>(c.Key, c);
 
             this.transListGroup.ItemsSource = transByDate;
+
+            //if (GlobalVars.main != null)
+            //{
+            //    main = GlobalVars.main;
+            //    GlobalVars.main = null;
+            //    main.setProgressBar(false);
+            //}
         }
 
         //globalvars.groupid = mygroupid
@@ -151,10 +174,12 @@ namespace BillSync
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
+            //setProgressBar(true);
             Button temp = (Button)sender;
             int group_id = Convert.ToInt32(temp.Tag);
             //MessageBox.Show(group_id.ToString());
             GlobalVars.group_id = group_id;
+            //GlobalVars.itemsList = this;
             NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));
         }
 	}

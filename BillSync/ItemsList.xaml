@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage 
-    x:Class="BillSync.Transactions"
+    x:Class="BillSync.ItemsList"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -61,17 +61,18 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">    			
-					<toolkit:LongListSelector x:Name="transListGroup" Background="Transparent" 
-                 ItemTemplate="{StaticResource transItemTemplate}"
-					GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
-                    GroupItemTemplate="{StaticResource groupItemTemplate}" >
-						<toolkit:LongListSelector.GroupItemsPanel>
-							<ItemsPanelTemplate>
-								<toolkit:WrapPanel/>
-							</ItemsPanelTemplate>
-						</toolkit:LongListSelector.GroupItemsPanel>
-					</toolkit:LongListSelector>	
-               </Grid>
+		    <toolkit:LongListSelector x:Name="transListGroup" Background="Transparent" 
+                ItemTemplate="{StaticResource transItemTemplate}"
+				GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
+                GroupItemTemplate="{StaticResource groupItemTemplate}" >
+				    <toolkit:LongListSelector.GroupItemsPanel>
+						<ItemsPanelTemplate>
+							<toolkit:WrapPanel/>
+						</ItemsPanelTemplate>
+					</toolkit:LongListSelector.GroupItemsPanel>
+            </toolkit:LongListSelector>
+            <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed"/>-->
+        </Grid>
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

@@ -27,6 +27,7 @@ namespace BillSync
             decimal trans = 0;
             IList<int> temp_id = new List<int>();
             string msg = NavigationContext.QueryString["msg"];
+<<<<<<< HEAD
             int numofSameMembers = findNumMember(msg, members);
             IList<Member> memb = findMember(numofSameMembers, msg, members);
           
@@ -38,6 +39,14 @@ namespace BillSync
                 trans += Database_Functions.GetMemberTotal(memb.ElementAt<Member>(i).ID);
             }
            
+=======
+            IList<Member> members = Database_Functions.GetAllMembers();
+            Member memb = findMember(msg, members);
+            member_name.Text = memb.Name;
+            phone_number.Text = memb.Phone;
+            email_address.Text = memb.Email;
+            decimal trans = Database_Functions.GetMemberTotal(memb.ID);
+>>>>>>> Update to Sync Changes
             money_owed.Text = "$ " + trans.ToString();
         }
 

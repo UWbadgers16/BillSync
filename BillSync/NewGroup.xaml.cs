@@ -78,18 +78,21 @@ namespace BillSync
                     group_name.Text = Database_Functions.GetGroupName(temp_group_id);
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
                     items = populateGroup(temp_items, temp_group_id);
+                    //GlobalVars.itemsList.setProgressBar(false);
+                    //GlobalVars.itemsList = null;
                 }
                 else if (GlobalVars.member_name != null)
                 {
-                    IList<Member> temp_memb = Database_Functions.GetActiveMembers(group_id);
+                    //IList<Member> temp_memb = Database_Functions.GetActiveMembers(group_id);
                     Member m = getMemberByName(GlobalVars.member_name);
                     GlobalVars.member_name = null;
-                    temp_memb.Add(m);
+                    contributors.Add(m);
                     //temp_memb.Add(findMissingMember(m));
-                    listPicker_contributors.ItemsSource = temp_memb;
-                    contributors = temp_memb;
+                    listPicker_contributors.ItemsSource = null;
+                    listPicker_contributors.ItemsSource = contributors;
+                    //contributors = temp_memb;
                     memberAdded = true;
-                }
+               } 
 
                 textBox_groupName.Text = group_name.Text;
                 //List<ItemWrapper> source = new List<ItemWrapper>();
@@ -388,7 +391,7 @@ namespace BillSync
             if (memberAdded)
             {
                 GlobalVars.item.changeSpecifyAmount(false);
-                GlobalVars.item.listPicker.ItemsSource = contributors;
+                GlobalVars.item.listPicker.ItemsSource = listPicker_contributors.ItemsSource;
                 GlobalVars.item.loadAmounts();
                 memberAdded = false;
             }

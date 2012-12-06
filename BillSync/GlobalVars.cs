@@ -22,5 +22,7 @@ namespace BillSync
         public static NewMember member;
         public static int group_id = -1;
         public static string member_name;
+        public static MainPage main;
+        public static ItemsList itemsList;
     }
 }

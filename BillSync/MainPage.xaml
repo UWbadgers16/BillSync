@@ -35,15 +35,16 @@
                 <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="325*" />
             </Grid.ColumnDefinitions>
-            <Rectangle Height="133" HorizontalAlignment="Center" Tap="newBill_Tap" Margin="32,6,38,362" Name="newItem" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Center" Width="386" Grid.ColumnSpan="3" />
-            <Rectangle Height="152" HorizontalAlignment="Left" Tap="transactions_Tap" Margin="32,145,0,0" Name="recent" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
-            <Rectangle Height="222" HorizontalAlignment="Left" Tap="people_Tap" Margin="155,145,0,0" Name="list" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="132" Grid.Column="2" />
-            <Rectangle Height="113" HorizontalAlignment="Left" Tap="notifications_Tap" Margin="32,303,0,0" Name="notifications" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
-            <TextBlock Height="Auto" HorizontalAlignment="Right" Margin="0,101,47,0" Name="textBlock_newGroup"  Text="new group" VerticalAlignment="Top" Width="Auto" FontFamily="Segoe WP" Grid.Column="2" FontSize="28" />
-            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,259,34,0" Name="textBlock_bills" Text="bills" VerticalAlignment="Top" Width="Auto" FontSize="28" />
-            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,378,179,0" Name="textBlock_notifications" Text="notifications" VerticalAlignment="Top" Width="Auto" FontSize="28" Grid.ColumnSpan="2" Grid.Column="1" />
-            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,329,47,0" Name="textBlock_people" Text="people" VerticalAlignment="Top" Width="Auto" Grid.Column="2" FontSize="28" />
+            <Rectangle Height="133" HorizontalAlignment="Center" Tap="newBill_Tap" Margin="34,30,36,338" Name="newItem" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Center" Width="386" Grid.ColumnSpan="3" />
+            <Rectangle Height="152" HorizontalAlignment="Left" Tap="transactions_Tap" Margin="34,169,0,0" Name="recent" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
+            <Rectangle Height="222" HorizontalAlignment="Left" Tap="people_Tap" Margin="157,169,0,0" Name="list" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="132" Grid.Column="2" />
+            <Rectangle Height="113" HorizontalAlignment="Left" Tap="notifications_Tap" Margin="34,327,0,0" Name="notifications" Fill="{StaticResource PhoneAccentBrush}" Stroke="{StaticResource PhoneAccentBrush}" StrokeThickness="1" VerticalAlignment="Top" Width="248" Grid.ColumnSpan="3" />
+            <TextBlock Height="Auto" HorizontalAlignment="Right" Margin="0,125,45,0" Name="textBlock_newGroup"  Text="new group" VerticalAlignment="Top" Width="Auto" FontFamily="Segoe WP" Grid.Column="2" FontSize="28" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,283,32,0" Name="textBlock_bills" Text="bills" VerticalAlignment="Top" Width="Auto" FontSize="28" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,402,177,0" Name="textBlock_notifications" Text="notifications" VerticalAlignment="Top" Width="Auto" FontSize="28" Grid.ColumnSpan="2" Grid.Column="1" />
+            <TextBlock FontFamily="Segoe WP" Height="Auto" HorizontalAlignment="Right" Margin="0,353,45,0" Name="textBlock_people" Text="people" VerticalAlignment="Top" Width="Auto" Grid.Column="2" FontSize="28" />
         </Grid>
+        <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed" Height="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="456" Margin="12,12,0,0" Grid.Row="1" />-->
     </Grid>
  
     <phone:PhoneApplicationPage.ApplicationBar>

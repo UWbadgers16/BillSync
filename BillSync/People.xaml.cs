@@ -19,20 +19,42 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
+<<<<<<< HEAD
+=======
+        List<NewMember> memb = new List<NewMember>();
+        Boolean adding_member = false;
+>>>>>>> Update to Sync Changes
         
         List<NewMember> mem = new List<NewMember>();
         IList<Member> members = Database_Functions.GetAllMembers();
         public People()
         {
+            //setProgressBar(true);
             InitializeComponent();
             Contacts objContacts = new Contacts();
             objContacts.SearchCompleted += new EventHandler<ContactsSearchEventArgs>(Contacts_SearchCompleted);
             objContacts.SearchAsync(string.Empty, FilterKind.None, null);
             
         }
+
+        //public void setProgressBar(Boolean on)
+        //{
+        //    if (on)
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = true;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = false;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Collapsed;
+        //    }
+        //}
+
         void Contacts_SearchCompleted(object sender, ContactsSearchEventArgs e)
         {
            List<String> duplicates = new List<String>();
+<<<<<<< HEAD
 
            try
            {
@@ -146,6 +168,81 @@ namespace BillSync
            {
                //That's okay, no results
            }
+=======
+            try
+            {
+                List
+                    <JumpList> source = new List<JumpList>();
+
+                foreach (Member memb in Database_Functions.GetAllMembers())
+                {
+                    decimal trans = Database_Functions.GetMemberTotal(memb.ID);
+                    
+                    if (!duplicates.Contains(memb.Name))
+                    {
+                        duplicates.Add(memb.Name);
+                        if (trans < 0)
+                        {
+                            source.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/delete.png"
+                            });
+
+                        }
+                        else
+                        {
+                            source.Add(new JumpList()
+                            {
+
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/add.png"
+                            });
+                        }
+
+                    }
+                    
+                  }
+               
+                       
+
+                /*  foreach (var result in e.Results)
+                  {
+ 
+                      source.Add(new JumpList() { Name = result.DisplayName });     
+                 }*/
+                /*
+                foreach (var trans in Database_Functions.GetTransactions())
+                {
+                    if (trans.Amount < 0)
+                    {
+
+                        source.Add(new JumpList() { SelectedComponentImage = "Images/minus.png" });
+                    }
+                    else
+                    {
+
+                        source.Add(new JumpList() { SelectedComponentImage = "Images/add.png" });
+                    }
+                }
+                */
+                var groupBy = from jumplist in source
+                              group jumplist by jumplist.GroupHeader into c
+                              orderby c.Key
+                              select new Group2<JumpList>(c.Key, c);
+
+
+
+                this.outstandingListGroups.ItemsSource = groupBy;
+                this.settledListGroups.ItemsSource = groupBy;
+                this.allListGroups.ItemsSource = groupBy;
+                //setProgressBar(false);
+            }
+            catch (System.Exception)
+            {
+                //That's okay, no results
+            }
+>>>>>>> Update to Sync Changes
 
         }
       /*   
@@ -160,20 +257,40 @@ namespace BillSync
         void tap_JumpListItem(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock temp = (TextBlock)sender;
+<<<<<<< HEAD
             GlobalVars.member = mem[findMember(temp.Text)];
             NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
+=======
+            if (adding_member)
+            {
+                GlobalVars.member_name = temp.Text;
+                NavigationService.GoBack();
+            }
+            else
+                NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
+>>>>>>> Update to Sync Changes
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
+<<<<<<< HEAD
         //   string msg = NavigationContext.QueryString["msg"];
         //   string this_page = NavigationContext.QueryString["this_page"];
+=======
+            string msg = NavigationContext.QueryString["msg"];
+>>>>>>> Update to Sync Changes
 
-        //    if(!int.TryParse(msg, out page))
+            if (int.TryParse(msg, out page))
+            {
                 panorama_people.DefaultItem = panorama_people.Items[page];
+<<<<<<< HEAD
                
+=======
+                adding_member = true;
+            }
+>>>>>>> Update to Sync Changes
         }
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)

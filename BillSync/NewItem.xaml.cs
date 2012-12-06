@@ -279,6 +279,7 @@ namespace BillSync
 
         private void addTransactions(IList<Member> members)
         {
+            Database_Functions.DeleteTransactions(item_id);
             decimal total;
             if(textBox_total.Text.Contains("$"))
                 total = Decimal.Parse(textBox_total.Text.Substring(1));
@@ -317,9 +318,20 @@ namespace BillSync
             for (int i = 0; i < listPicker.Items.Count; i++)
             {
                 Member m = (Member)listPicker.Items[i];
-                if (!activeMembers.Contains(m))
+                if (!findMember(m.Name, activeMembers))
                     Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone);
             }
+        }
+
+        private Boolean findMember(string name, IList<Member> members)
+        {
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(name))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

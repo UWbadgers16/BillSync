@@ -17,6 +17,7 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 
 namespace BillSync
 {
@@ -48,6 +49,20 @@ namespace BillSync
             }
         }
 
+        //public void setProgressBar(Boolean on)
+        //{
+        //    if (on)
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = true;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        customIndeterminateProgressBar.IsIndeterminate = false;
+        //        customIndeterminateProgressBar.Visibility = Visibility.Collapsed;
+        //    }
+        //}
+
         //handle new item tap
         private void newBill_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
@@ -69,12 +84,16 @@ namespace BillSync
         //handle recent tap
         private void transactions_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            //setProgressBar(true);
+            //GlobalVars.main = this;
             NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
         }
 
         //handle list tap
         private void people_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            //setProgressBar(true);
+            GlobalVars.main = this;
             NavigationService.Navigate(new Uri("/People.xaml", UriKind.Relative));
         }
 
