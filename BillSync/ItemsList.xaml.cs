@@ -180,7 +180,7 @@ namespace BillSync
         private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             //setProgressBar(true);
-            Button temp = (Button)sender;
+            TextBlock temp = (TextBlock)sender;
             int group_id = Convert.ToInt32(temp.Tag);
             //MessageBox.Show(group_id.ToString());
             GlobalVars.group_id = group_id;

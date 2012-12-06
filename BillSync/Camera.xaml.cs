@@ -220,7 +220,7 @@ namespace BillSync
         // User will select this image in the pictures application to bring up the full-resolution picture. 
         public void cam_CaptureThumbnailAvailable(object sender, ContentReadyEventArgs e)
         {
-            string fileName = savedCounter + "_th.jpg";
+            string completeName = filename + "_th.jpg";
 
             try
             {
@@ -233,7 +233,7 @@ namespace BillSync
                 // Save thumbnail as JPEG to isolated storage.
                 using (IsolatedStorageFile isStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(fileName, FileMode.Create, FileAccess.Write))
+                    using (IsolatedStorageFileStream targetStream = isStore.OpenFile(completeName, FileMode.Create, FileAccess.Write))
                     {
                         // Initialize the buffer for 4KB disk pages.
                         byte[] readBuffer = new byte[4096];

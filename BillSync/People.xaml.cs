@@ -270,16 +270,21 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
 
-
-            string msg = NavigationContext.QueryString["msg"];
-
-            if (int.TryParse(msg, out page))
+            try
             {
-                panorama_people.DefaultItem = panorama_people.Items[page];
+                string msg = NavigationContext.QueryString["msg"];
 
-                adding_member = true;
+                if (int.TryParse(msg, out page))
+                {
+                    panorama_people.DefaultItem = panorama_people.Items[page];
+
+                    adding_member = true;
+                }
             }
-
+            catch (KeyNotFoundException ex)
+            {
+                //do nothing
+            }
         }
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)

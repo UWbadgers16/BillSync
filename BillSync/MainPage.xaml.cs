@@ -17,7 +17,6 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Threading;
 
 namespace BillSync
 {
@@ -93,7 +92,7 @@ namespace BillSync
         private void people_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             //setProgressBar(true);
-            GlobalVars.main = this;
+            //GlobalVars.main = this;
             NavigationService.Navigate(new Uri("/People.xaml", UriKind.Relative));
         }
 
