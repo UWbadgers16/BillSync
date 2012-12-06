@@ -20,10 +20,10 @@ namespace BillSync
     {
         int page = 0;
 
-        List<NewMember> memb = new List<NewMember>();
+        List<NewMember> member = new List<NewMember>();
         Boolean adding_member = false;
-        
-        List<NewMember> mem = new List<NewMember>();
+
+       // List<NewMember> mem = new List<NewMember>();
         IList<Member> members = Database_Functions.GetAllMembers();
         public People()
         {
@@ -32,7 +32,7 @@ namespace BillSync
             Contacts objContacts = new Contacts();
             objContacts.SearchCompleted += new EventHandler<ContactsSearchEventArgs>(Contacts_SearchCompleted);
             objContacts.SearchAsync(string.Empty, FilterKind.None, null);
-            
+
         }
 
         //public void setProgressBar(Boolean on)
@@ -51,135 +51,138 @@ namespace BillSync
 
         void Contacts_SearchCompleted(object sender, ContactsSearchEventArgs e)
         {
-           List<String> duplicates = new List<String>();
+            List<String> duplicates = new List<String>();
 
-           try
-           {
-               List
-                   <JumpList> source = new List<JumpList>();
-               List<JumpList> settled = new List<JumpList>();
-               List<JumpList> all = new List<JumpList>();
-             
-                   foreach (Member memb in Database_Functions.GetAllMembers())
-                   {
-                       decimal trans = 0;
-                       string group_name = "";
-                       int numofSameMembers = findNumMember(memb, members);
-                       IList<Member> mem = findMember(numofSameMembers, memb, members);
-                       for (int i = 0; i < numofSameMembers; i++)
-                       {
-                           trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
-                           if (numofSameMembers == 1)
-                           {
-                               group_name = Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
-                           }
-                           else
-                           {
-                               group_name += "   " + Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
-                           }
+            try
+            {
+                List
+                    <JumpList> source = new List<JumpList>();
+                List<JumpList> settled = new List<JumpList>();
+                List<JumpList> all = new List<JumpList>();
 
-                       }
-                       if (!duplicates.Contains(memb.Name))
-                       {
-                           duplicates.Add(memb.Name);
-                           if (trans < 0)
-                           {
-                               source.Add(new JumpList()
-                               {
-                                   Name = memb.Name,
-                                   SelectedComponentImage = "Images/delete.png",
-                                   GroupName = group_name
-                               });
-                               all.Add(new JumpList()
-                               {
-                                   Name = memb.Name,
-                                   SelectedComponentImage = "Images/delete.png",
-                                   GroupName = group_name
-                               });
-
-                           }
-                           else if (trans > 0)
-                           {
-                               source.Add(new JumpList()
-                               {
-
-                                   Name = memb.Name,
-                                   SelectedComponentImage = "Images/add.png",
-                                   GroupName = group_name
-
-                               });
-                               all.Add(new JumpList()
-                               {
-
-                                   Name = memb.Name,
-                                   SelectedComponentImage = "Images/add.png",
-                                   GroupName = group_name
-                               });
-                           }
-                           else
-                           {
-                               settled.Add(new JumpList()
-                               {
-                                   Name = memb.Name,
-                                   GroupName = group_name
-                               });
-                               all.Add(new JumpList()
-                               {
-                                   Name = memb.Name,
-                                   GroupName = group_name
-                               });
-                           }
-
-                       }
-
-                   }
-
-
-
-
-                   var groupBy = from jumplist in source
-                                 group jumplist by jumplist.GroupHeader into c
-                                 orderby c.Key
-                                 select new Group2<JumpList>(c.Key, c);
-
-
-                   var groupSettled = from jumplist in settled
-                                      group jumplist by jumplist.GroupHeader into c
-                                      orderby c.Key
-                                      select new Group2<JumpList>(c.Key, c);
-
-                   var groupAll = from jumplist in all
-                                  group jumplist by jumplist.GroupHeader into c
-                                  orderby c.Key
-                                  select new Group2<JumpList>(c.Key, c);
-
-                   this.outstandingListGroups.ItemsSource = groupBy;
-                   this.settledListGroups.ItemsSource = groupSettled;
-                   this.allListGroups.ItemsSource = groupAll;
-
+                foreach (Member memb in Database_Functions.GetAllMembers())
+                {
+                    decimal trans = 0;
+                    string group_name = "";
+                    int numofSameMembers = findNumMember(memb, members);
                
-              
-           }
+                    IList<Member> mem = Database_Functions.GetAllMembers();
+                    for (int i = 0; i < numofSameMembers; i++)
+                   {
+                        trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
+                        if (numofSameMembers == 1)
+                        {
+                           group_name = Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
+                       }
+                        else
+                        {
+                            group_name += "   " + Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
+                        }
 
-           catch (System.Exception)
-           {
-               //That's okay, no results
-           } 
-        }
-      /*   
-        private void ContactResultsData_Tap(object sender, GestureEventArgs e)
-        {
-            App.con = ((sender as ListBox).SelectedValue as Contact);
+                    }
+                    if (!duplicates.Contains(memb.Name))
+                    {
+                        duplicates.Add(memb.Name);
+                        if (trans < 0)
+                        {
+                            source.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/delete.png",
+                                GroupName = group_name
+                            });
+                            all.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/delete.png",
+                                GroupName = group_name
+                            });
 
-            NavigationService.Navigate(new Uri("/ContactDetails.xaml", UriKind.Relative));
+                        }
+                        else if (trans > 0)
+                        {
+                            source.Add(new JumpList()
+                            {
+
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/add.png",
+                                GroupName = group_name
+
+                            });
+                            all.Add(new JumpList()
+                            {
+
+                                Name = memb.Name,
+                                SelectedComponentImage = "Images/add.png",
+                                GroupName = group_name
+                            });
+                        }
+                        else
+                        {
+                            settled.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                GroupName = group_name
+                            });
+                            all.Add(new JumpList()
+                            {
+                                Name = memb.Name,
+                                GroupName = group_name
+                            });
+                        }
+
+                    }
+
+                }
+
+
+
+
+                var groupBy = from jumplist in source
+                              group jumplist by jumplist.GroupHeader into c
+                              orderby c.Key
+                              select new Group2<JumpList>(c.Key, c);
+
+
+                var groupSettled = from jumplist in settled
+                                   group jumplist by jumplist.GroupHeader into c
+                                   orderby c.Key
+                                   select new Group2<JumpList>(c.Key, c);
+
+                var groupAll = from jumplist in all
+                               group jumplist by jumplist.GroupHeader into c
+                               orderby c.Key
+                               select new Group2<JumpList>(c.Key, c);
+
+                this.outstandingListGroups.ItemsSource = groupBy;
+                this.settledListGroups.ItemsSource = groupSettled;
+                this.allListGroups.ItemsSource = groupAll;
+
+
+
+            }
+
+            catch (System.Exception)
+            {
+                //That's okay, no results
+            }
+
+            
         }
-        */
-      
+        /*   
+          private void ContactResultsData_Tap(object sender, GestureEventArgs e)
+          {
+              App.con = ((sender as ListBox).SelectedValue as Contact);
+
+              NavigationService.Navigate(new Uri("/ContactDetails.xaml", UriKind.Relative));
+          }
+          */
+
         void tap_JumpListItem(object sender, System.Windows.Input.GestureEventArgs e)
         {
             TextBlock temp = (TextBlock)sender;
 
-            GlobalVars.member = mem[findMember(temp.Text)];
+      //      GlobalVars.member = member[findMember(temp.Text)];
             NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
 
             if (adding_member)
@@ -215,17 +218,17 @@ namespace BillSync
 
         private void outstandingListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+
         }
 
         private void settledListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void allListGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -234,7 +237,7 @@ namespace BillSync
         }
         private int findMember(string name)
         {
-            IList<Member> members = new List<Member>();
+            IList<Member> members = Database_Functions.GetAllMembers();
             foreach (Member m in members)
             {
                 if (m.Name.Equals(name))
@@ -249,8 +252,8 @@ namespace BillSync
             IList<Member> members = Database_Functions.GetAllMembers();
             TextBlock tapped = (TextBlock)sender;
             int index = findMember(tapped.Text);
-            GlobalVars.member = mem[index];
-            contextMenu_edit.IsOpen = true;
+            GlobalVars.member = member[index];
+           // contextMenu_edit.IsOpen = true;
             NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + tapped.Text, UriKind.Relative));
         }
 
@@ -264,7 +267,7 @@ namespace BillSync
             }
             else
             {
-                GlobalVars.member = mem[findMember(tb.Text)];
+                GlobalVars.member = member[findMember(tb.Text)];
                 NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
             }
         }
@@ -283,22 +286,13 @@ namespace BillSync
 
             return count;
         }
-        private IList<Member> findMember(int count, Member mbr, IList<Member> members)
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-            IList<Member> newMember = new List<Member>(count);
-            foreach (Member m in members)
-            {
-                if (m.Name.Equals(mbr.Name))
-                    newMember.Add(m);
-            }
-
-
-
-            return newMember;
+                base.OnBackKeyPress(e);
         }
 
-       
-        
+
+
     }
-    
+
 }
