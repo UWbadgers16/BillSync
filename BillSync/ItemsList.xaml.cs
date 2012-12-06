@@ -174,6 +174,11 @@ namespace BillSync
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
+           //open larger picture
+        }
+
+        private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
             //setProgressBar(true);
             Button temp = (Button)sender;
             int group_id = Convert.ToInt32(temp.Tag);
