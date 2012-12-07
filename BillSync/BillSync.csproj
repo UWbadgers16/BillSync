@@ -60,7 +60,6 @@
     <Compile Include="GlobalVars.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Group2.cs" />
     <Compile Include="ItemDetails.xaml.cs">
       <DependentUpon>ItemDetails.xaml</DependentUpon>
     </Compile>
