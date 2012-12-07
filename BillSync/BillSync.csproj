@@ -54,6 +54,9 @@
     <Compile Include="Camera.xaml.cs">
       <DependentUpon>Camera.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FullPicture.xaml.cs">
+      <DependentUpon>FullPicture.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVars.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeleteBill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FullPicture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

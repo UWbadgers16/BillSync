@@ -50,6 +50,12 @@ namespace BillSync
             set;
         }
 
+        public string itemID
+        {
+            get;
+            set;
+        }
+
         public string DueDate
         {
             get;

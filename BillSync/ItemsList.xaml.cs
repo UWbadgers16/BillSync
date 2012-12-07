@@ -57,11 +57,9 @@ namespace BillSync
 
             foreach (Item bill in bills)
             {
-                ImageBrush thumb = new ImageBrush();
-                ImageBrush full = new ImageBrush();
-
                 source.Add(new ItemWrapper()
                 {
+                    itemID = bill.ID.ToString(),
                     thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
                     fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
                     Name = bill.Title,
@@ -190,6 +188,10 @@ namespace BillSync
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
+            Button temp = (Button)sender;
+            String pictureID = (String)temp.Tag;
+
+            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
            //open larger picture
         }
 
