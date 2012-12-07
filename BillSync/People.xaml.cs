@@ -19,6 +19,7 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
+        string returnPage = null;
 
         List<NewMember> member = new List<NewMember>();
         Boolean adding_member = false;
@@ -187,7 +188,10 @@ namespace BillSync
             if (adding_member)
             {
                 GlobalVars.member_name = temp.Text;
-                NavigationService.GoBack();
+                if (returnPage != null)
+                    NavigationService.Navigate(new Uri(returnPage, UriKind.Relative));
+                else
+                    NavigationService.GoBack();
             }
             else
                 NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
@@ -200,6 +204,7 @@ namespace BillSync
             try
             {
                 string msg = NavigationContext.QueryString["msg"];
+                returnPage = NavigationContext.QueryString["returnPage"];
 
                 if (int.TryParse(msg, out page))
                 {

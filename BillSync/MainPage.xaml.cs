@@ -85,7 +85,7 @@ namespace BillSync
 
         private void textBlock_submitPayment_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri("/People.xaml?msg=2&returnPage=/SubmitPayment.xaml", UriKind.Relative));
         }
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
