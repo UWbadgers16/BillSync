@@ -21,9 +21,7 @@
 		<!-- The template for transaction items -->
 		<DataTemplate x:Key="transItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="120">
-                <Button x:Name="GroupButton" Click="GroupButton_Click" Width="120" Height="120" DataContext="{Binding}" Visibility="Visible">
-                    <TextBlock Text="View" FontSize="26"/>
-                </Button>
+                <Button x:Name="GroupButton" Background="{Binding thumbnail}" Click="GroupButton_Click" Width="120" Height="120" DataContext="{Binding}" Visibility="Visible"/>
                 <StackPanel Orientation="Vertical" Height="80" Width="340">
                     <TextBlock Text="{Binding Name}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26"/>
                     <TextBlock Text="{Binding GroupName}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26"/>
@@ -60,8 +58,8 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">    			
-		    <toolkit:LongListSelector x:Name="transListGroup" Background="Transparent" 
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <toolkit:LongListSelector x:Name="transListGroup" Background="Transparent" 
                 ItemTemplate="{StaticResource transItemTemplate}"
 				GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
                 GroupItemTemplate="{StaticResource groupItemTemplate}" >

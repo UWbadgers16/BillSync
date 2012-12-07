@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Media.Imaging;
 
 namespace BillSync
 {
@@ -50,6 +51,16 @@ namespace BillSync
         }
 
         public string DueDate
+        {
+            get;
+            set;
+        }
+        public Brush thumbnail
+        {
+            get;
+            set;
+        }
+        public Brush fullSize
         {
             get;
             set;

@@ -11,11 +11,17 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 
+using Microsoft.Devices;
+using System.IO;
+using System.IO.IsolatedStorage;
+using Microsoft.Xna.Framework.Media;
+using System.Windows.Media.Imaging;
+
 namespace BillSync
 {
 	public partial class ItemsList : PhoneApplicationPage
     {
-        MainPage main;
+        //MainPage main;
 
 		// Constructor
 		public ItemsList()
@@ -44,10 +50,20 @@ namespace BillSync
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
             IList<Item> bills = Database_Functions.GetItems();
+
+            //ImageBrush i = new ImageBrush();
+            //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
+            //asdf.Background = i;
+
             foreach (Item bill in bills)
             {
+                ImageBrush thumb = new ImageBrush();
+                ImageBrush full = new ImageBrush();
+
                 source.Add(new ItemWrapper()
                 {
+                    thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
+                    fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
                     Name = bill.Title,
                     Date = getDateString(bill.Created),
                     GroupName = Database_Functions.GetGroupName(bill.ID),
@@ -186,6 +202,30 @@ namespace BillSync
             GlobalVars.group_id = group_id;
             //GlobalVars.itemsList = this;
             NavigationService.Navigate(new Uri("/NewGroup.xaml", UriKind.Relative));
+        }
+        private Brush getImageFromIsolatedStorage(string imageName)
+        {
+            ImageBrush temp = new ImageBrush();
+            BitmapImage bimg = new BitmapImage();
+
+            using (IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+
+                if (iso.FileExists(imageName))
+                {
+                    using (IsolatedStorageFileStream stream = iso.OpenFile(imageName, FileMode.Open, FileAccess.Read))
+                    {
+                        bimg.SetSource(stream);
+                    }
+                }
+                else
+                {
+                    bimg = null;
+                }
+            }
+
+            temp.ImageSource = bimg;
+            return temp;
         }
 	}
 }
