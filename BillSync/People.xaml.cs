@@ -183,7 +183,6 @@ namespace BillSync
             TextBlock temp = (TextBlock)sender;
 
       //      GlobalVars.member = member[findMember(temp.Text)];
-            NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
 
             if (adding_member)
             {
@@ -192,7 +191,6 @@ namespace BillSync
             }
             else
                 NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + temp.Text, UriKind.Relative));
-
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)

@@ -26,7 +26,6 @@ namespace BillSync
 
         private const String ConnectionString = @"isostore:/BillDB.sdf";
 
-        // Constructor
         public MainPage()
         {
             InitializeComponent();
@@ -47,23 +46,8 @@ namespace BillSync
                 }
             }
         }
-
-        //public void setProgressBar(Boolean on)
-        //{
-        //    if (on)
-        //    {
-        //        customIndeterminateProgressBar.IsIndeterminate = true;
-        //        customIndeterminateProgressBar.Visibility = Visibility.Visible;
-        //    }
-        //    else
-        //    {
-        //        customIndeterminateProgressBar.IsIndeterminate = false;
-        //        customIndeterminateProgressBar.Visibility = Visibility.Collapsed;
-        //    }
-        //}
-
-        //handle new item tap
-        private void newBill_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        
+        private void textBlock_newGroup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             this.IsEnabled = false;
             Prompt newGroup = new Prompt(Prompt.Type.Group);
@@ -80,37 +64,24 @@ namespace BillSync
             };
         }
 
-        //handle recent tap
-        private void transactions_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void textBlock_notifications_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            //setProgressBar(true);
-            //GlobalVars.main = this;
+            NavigationService.Navigate(new Uri("/Notifications.xaml", UriKind.Relative));
+        }
+
+        private void textBlock_bills_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
             NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
         }
 
-        //handle list tap
-        private void people_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void textBlock_people_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            //setProgressBar(true);
-            //GlobalVars.main = this;
             NavigationService.Navigate(new Uri("/People.xaml", UriKind.Relative));
         }
 
-        //handle notifications tap
-        private void notifications_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private void textBlock_submitPayment_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Notifications.xaml", UriKind.Relative));
-            //MessageBox.Show("NOTIFICATIONS");
-        }
 
-        private void ApplicationBarSearchButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("SEARCH");
-        }
-
-        private void ApplicationBarSettingsMenu_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("SETTINGS");
         }
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
