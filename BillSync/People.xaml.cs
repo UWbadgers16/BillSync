@@ -60,14 +60,14 @@ namespace BillSync
                     <JumpList> source = new List<JumpList>();
                 List<JumpList> settled = new List<JumpList>();
                 List<JumpList> all = new List<JumpList>();
+                IList<Member> mem = Database_Functions.GetAllMembers();
 
-                foreach (Member memb in Database_Functions.GetAllMembers())
+                foreach (Member memb in mem)
                 {
                     decimal trans = 0;
                     string group_name = "";
                     int numofSameMembers = findNumMember(memb, members);
                
-                    IList<Member> mem = Database_Functions.GetAllMembers();
                     for (int i = 0; i < numofSameMembers; i++)
                    {
                         trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
