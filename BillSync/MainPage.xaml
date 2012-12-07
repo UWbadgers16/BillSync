@@ -17,7 +17,9 @@
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         <controls:Panorama Title="billsync">
-
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="/BillSync;component/Images/panoramaBackground.jpg" Opacity=".5" />
+            </controls:Panorama.Background>
             <!--Panorama item one-->
             <!--Panorama item two-->
             <controls:PanoramaItem Header="home">
@@ -34,8 +36,15 @@
                     <Image Height="59" HorizontalAlignment="Left" Margin="6,256,0,0" Name="image5" Stretch="Fill" VerticalAlignment="Top" Width="64" Source="/BillSync;component/Images/payment.png"/>
                 </Grid>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="pictures">
-                <Grid />
+            <controls:PanoramaItem Loaded="PanoramaItem_Loaded" Header="pictures">
+                <Grid>
+                    <Image Height="150" Tap="image6_Tap" HorizontalAlignment="Left" Margin="5,5,0,0" Name="image6" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                    <Image Height="150" Tap="image7_Tap" HorizontalAlignment="Left" Margin="213,5,0,0" Name="image7" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                    <Image Height="150" Tap="image8_Tap" HorizontalAlignment="Left" Margin="5,164,0,0" Name="image8" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                    <Image Height="150" Tap="image9_Tap" HorizontalAlignment="Left" Margin="213,164,0,0" Name="image9" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                    <Image Height="150" Tap="image10_Tap" HorizontalAlignment="Left" Margin="5,320,0,0" Name="image10" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                    <Image Height="150" Tap="image11_Tap" HorizontalAlignment="Left" Margin="213,320,0,0" Name="image11" Stretch="Fill" VerticalAlignment="Top" Width="200" />
+                </Grid>
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="settings">
                 <Grid />
