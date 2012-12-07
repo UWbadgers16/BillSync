@@ -47,7 +47,10 @@
                 </Grid>
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="settings">
-                <Grid />
+                <Grid>
+                    <TextBlock FontSize="40" Height="Auto" HorizontalAlignment="Left" Margin="67,20,0,0" Tap="textBlock_syncing_Tap" Name="textBlock_syncing" Text="syncing" VerticalAlignment="Top" Width="Auto" />
+                    <Image Height="59" HorizontalAlignment="Left" Margin="6,20,0,0" Name="image12" Stretch="Fill" VerticalAlignment="Top" Width="64" Source="/BillSync;component/Images/refresh.png"/>
+                </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

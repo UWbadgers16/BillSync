@@ -29,6 +29,23 @@ namespace BillSync
             member_name = GlobalVars.member_name;
             GlobalVars.member_name = null;
             textBlock_name.Text = member_name;
+
+            Member m = findMember(member_name);
+
+        }
+
+        private Member findMember(string member_name)
+        {
+            Member temp = new Member();
+            IList<Member> members = Database_Functions.GetAllMembers();
+
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(member_name))
+                    temp = m;
+            }
+
+            return temp;
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
