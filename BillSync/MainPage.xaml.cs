@@ -201,5 +201,10 @@ namespace BillSync
         {
             NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + name, UriKind.Relative));
         }
+
+        private void textBlock_syncing_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+
+        }
     }
 }

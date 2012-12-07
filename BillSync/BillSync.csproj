@@ -219,6 +219,7 @@
     <Resource Include="Images\people.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\refresh.png" />
     <Content Include="Images\save.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
