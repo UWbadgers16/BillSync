@@ -27,7 +27,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <my:SignInButton Content="Button" Height="72" HorizontalAlignment="Left" Name="signInButton1" VerticalAlignment="Top" Width="160" />
+            <my:SignInButton Content="Button" Height="72" Width="160" Name="skydrive" Scopes="wl.basic wl.signin wl.offline_access wl.skydrive_update" SessionChanged="skydrive_SessionChanged" ClientId="000000004C0DDE16" />
         </Grid>
     </Grid>
  
