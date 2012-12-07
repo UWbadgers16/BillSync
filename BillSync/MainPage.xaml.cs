@@ -204,7 +204,7 @@ namespace BillSync
 
         private void textBlock_syncing_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri("/SkyDrive.xaml", UriKind.Relative));
         }
     }
 }
