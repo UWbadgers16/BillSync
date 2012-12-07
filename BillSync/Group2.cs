@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,55 +12,54 @@ using System.Collections.Generic;
 
 namespace BillSync
 {
-    
-public class Group2<T> : IEnumerable<T>
-{
-   public Group2(string name, IEnumerable<T> items)
-   {
-      this.Title = name;
-      this.Items = new List<T>(items);
-   }
- 
 
-   public override bool Equals(object obj)
-   {
-      Group2<T> that = obj as Group2<T>;
-      return (that != null) && (this.Title.Equals(that.Title));
-   }
- 
+    public class Group2<T> : IEnumerable<T>
+    {
+        public Group2(string name, IEnumerable<T> items)
+        {
+            this.Title = name;
+            this.Items = new List<T>(items);
+        }
 
-   public string Title
-   {
-      get;
-      set;
-   }
- 
 
-   public IList<T> Items
-   {
-      get;
-      set;
-   }
- 
+        public override bool Equals(object obj)
+        {
+            Group2<T> that = obj as Group2<T>;
+            return (that != null) && (this.Title.Equals(that.Title));
+        }
 
-   #region
 
- IEnumerable<T> Members;
-   public IEnumerator<T> GetEnumerator()
-   {
-      return this.Items.GetEnumerator();
-   }
-   #endregion
- 
+        public string Title
+        {
+            get;
+            set;
+        }
 
-   #region
 
-   System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-   {
-      return this.Items.GetEnumerator();
-   }
-   #endregion
+        public IList<T> Items
+        {
+            get;
+            set;
+        }
+
+
+        #region
+
+        IEnumerable<T> Members;
+        public IEnumerator<T> GetEnumerator()
+        {
+            return this.Items.GetEnumerator();
+        }
+        #endregion
+
+
+        #region
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.Items.GetEnumerator();
+        }
+        #endregion
+    }
+
 }
-
-}
-
