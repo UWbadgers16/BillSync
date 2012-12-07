@@ -15,7 +15,8 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
 	xmlns:local="clr-namespace:BillSync"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    Loaded="PhoneApplicationPage_Loaded">
 	<phone:PhoneApplicationPage.Resources>
 		
 		<!-- The template for transaction items -->
@@ -71,6 +72,7 @@
             </toolkit:LongListSelector>
             <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed"/>-->
         </Grid>
+        <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460"  />
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

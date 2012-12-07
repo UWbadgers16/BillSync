@@ -77,6 +77,8 @@ namespace BillSync
 
         private void textBlock_bills_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            //progressBar.Visibility = Visibility.Visible;
+            //GlobalVars.main = this;
             NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
         }
 

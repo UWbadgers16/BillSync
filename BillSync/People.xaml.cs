@@ -33,7 +33,7 @@ namespace BillSync
             Contacts objContacts = new Contacts();
             objContacts.SearchCompleted += new EventHandler<ContactsSearchEventArgs>(Contacts_SearchCompleted);
             objContacts.SearchAsync(string.Empty, FilterKind.None, null);
-
+            progressBar.Visibility = Visibility.Visible;
         }
 
         //public void setProgressBar(Boolean on)
@@ -158,7 +158,7 @@ namespace BillSync
                 this.outstandingListGroups.ItemsSource = groupBy;
                 this.settledListGroups.ItemsSource = groupSettled;
                 this.allListGroups.ItemsSource = groupAll;
-
+                progressBar.Visibility = Visibility.Collapsed;
 
 
             }

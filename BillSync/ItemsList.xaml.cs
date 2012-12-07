@@ -27,6 +27,7 @@ namespace BillSync
 		public ItemsList()
         {
             InitializeComponent();
+            progressBar.Visibility = Visibility.Visible;
 		}
 
         //public void setProgressBar(Boolean on)
@@ -43,46 +44,47 @@ namespace BillSync
         //    }
         //}
 
-        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+        //protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        //{
+            //base.OnNavigatedTo(e);
 
-            //Items must be added in order by correct date, otherwise they will appear out of order.
-            List<ItemWrapper> source = new List<ItemWrapper>();
-            IList<Item> bills = Database_Functions.GetItems();
+            ////Items must be added in order by correct date, otherwise they will appear out of order.
+            //List<ItemWrapper> source = new List<ItemWrapper>();
+            //IList<Item> bills = Database_Functions.GetItems();
 
-            //ImageBrush i = new ImageBrush();
-            //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
-            //asdf.Background = i;
+            ////ImageBrush i = new ImageBrush();
+            ////i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
+            ////asdf.Background = i;
 
-            foreach (Item bill in bills)
-            {
-                source.Add(new ItemWrapper()
-                {
-                    itemID = bill.ID.ToString(),
-                    thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
-                    fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
-                    Name = bill.Title,
-                    Date = getDateString(bill.Created),
-                    GroupName = Database_Functions.GetGroupName(bill.ID),
-                    GroupID = (int)bill.GroupID
-                });
-            }
+            //foreach (Item bill in bills)
+            //{
+            //    source.Add(new ItemWrapper()
+            //    {
+            //        itemID = bill.ID.ToString(),
+            //        thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
+            //        fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
+            //        Name = bill.Title,
+            //        Date = getDateString(bill.Created),
+            //        GroupName = Database_Functions.GetGroupName(bill.ID),
+            //        GroupID = (int)bill.GroupID
+            //    });
+            //}
 
-            var transByDate = from trans in source
-                              group trans by trans.Date into c
-                              //orderby c.Key
-                              select new Group<ItemWrapper>(c.Key, c);
+            //var transByDate = from trans in source
+            //                  group trans by trans.Date into c
+            //                  //orderby c.Key
+            //                  select new Group<ItemWrapper>(c.Key, c);
 
-            this.transListGroup.ItemsSource = transByDate;
-
+            //this.transListGroup.ItemsSource = transByDate;
+            //GlobalVars.main.progressBar.Visibility = Visibility.Collapsed;
+            //GlobalVars.main = null;
             //if (GlobalVars.main != null)
             //{
             //    main = GlobalVars.main;
             //    GlobalVars.main = null;
             //    main.setProgressBar(false);
             //}
-        }
+        //}
 
         //globalvars.groupid = mygroupid
         //navigate to new group page
@@ -228,6 +230,39 @@ namespace BillSync
 
             temp.ImageSource = bimg;
             return temp;
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Items must be added in order by correct date, otherwise they will appear out of order.
+            List<ItemWrapper> source = new List<ItemWrapper>();
+            IList<Item> bills = Database_Functions.GetItems();
+
+            //ImageBrush i = new ImageBrush();
+            //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
+            //asdf.Background = i;
+
+            foreach (Item bill in bills)
+            {
+                source.Add(new ItemWrapper()
+                {
+                    itemID = bill.ID.ToString(),
+                    thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
+                    fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
+                    Name = bill.Title,
+                    Date = getDateString(bill.Created),
+                    GroupName = Database_Functions.GetGroupName(bill.ID),
+                    GroupID = (int)bill.GroupID
+                });
+            }
+
+            var transByDate = from trans in source
+                              group trans by trans.Date into c
+                              //orderby c.Key
+                              select new Group<ItemWrapper>(c.Key, c);
+
+            this.transListGroup.ItemsSource = transByDate;
+            progressBar.Visibility = Visibility.Collapsed;
         }
 	}
 }

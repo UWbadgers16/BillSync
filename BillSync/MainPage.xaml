@@ -53,6 +53,7 @@
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>
+        <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460"  />
     </Grid>
 
     <!--Panorama-based applications should not show an ApplicationBar-->

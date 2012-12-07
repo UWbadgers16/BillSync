@@ -116,7 +116,7 @@
 
             </controls:PanoramaItem>
         </controls:Panorama>
-        <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed"/>-->
+        <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460" />
     </Grid>
     <toolkit:ContextMenuService.ContextMenu>
             <toolkit:ContextMenu x:Name="contextMenu_edit" IsOpen="False">
