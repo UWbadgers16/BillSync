@@ -20,6 +20,8 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using System.IO.IsolatedStorage;
 using System.IO;
+using Microsoft.Live;
+using Microsoft.Live.Controls;
 
 namespace BillSync
 {

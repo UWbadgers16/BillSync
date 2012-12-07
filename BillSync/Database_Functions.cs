@@ -407,6 +407,17 @@ namespace BillSync
             return transactionList;
         }
 
+        public static IList<Item> GetOwedItems(int member_id)
+        {
+            IList<Item> itemList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Item> query = from c in context.Transactions where (c.MemberID == member_id && c.Amount < 0) select c.Item;
+                itemList = query.ToList();
+            }
+            return itemList;
+        }
+
         public static int AddTransaction(int item_id, int member_id, decimal amount)
         {
             // Get associated Item for item_id and Member for member_id
