@@ -145,18 +145,19 @@ namespace BillSync
         private string[] pickImages(string[] files)
         {
             string[] filenames = new string[6];
+            IList<string> thumbnails = findThumbnails(files);
             Random rand = new Random();
             IList<int> index = new List<int>();
             int temp;
 
-            for (int i = 0; i < files.Length && i < filenames.Length; i++)
+            for (int i = 0; i < thumbnails.Count && i < filenames.Length; i++)
             {
-                temp = rand.Next(files.Length - 1);
+                temp = rand.Next(thumbnails.Count);
 
-                while (index.Contains(temp) || !files[temp].Contains("_th.jpg"))
-                    temp = rand.Next(files.Length - 1);
+                while (index.Contains(temp))
+                    temp = rand.Next(thumbnails.Count);
 
-                filenames[i] = files[temp];
+                filenames[i] = thumbnails[temp];
                 index.Add(temp);
             }
 
@@ -207,6 +208,19 @@ namespace BillSync
         private void textBlock_syncing_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             NavigationService.Navigate(new Uri("/SkyDrive.xaml", UriKind.Relative));
+        }
+
+        private IList<string> findThumbnails(string[] files)
+        {
+            IList<string> thumbnails = new List<string>();
+
+            foreach (string file in files)
+            {
+                if(file.Contains("_th.jpg"))
+                    thumbnails.Add(file);
+            }
+
+            return thumbnails;
         }
     }
 }

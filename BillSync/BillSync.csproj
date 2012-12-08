@@ -210,6 +210,7 @@
     <Content Include="Images\deleteItem.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\cloud.png" />
     <Resource Include="Images\group.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -223,9 +224,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\panoramaBackground.jpg" />
-    <Resource Include="Images\people.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\people.png" />
     <Resource Include="Images\refresh.png" />
     <Content Include="Images\save.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
