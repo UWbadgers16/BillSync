@@ -67,18 +67,22 @@ namespace BillSync
                     iso.DeleteFile(fileName + ".jpg");
                     iso.DeleteFile(fileName + "_th.jpg");
                     MessageBox.Show("File sucessfully deleted");
+                    NavigationService.GoBack();
                 }
                 else if (iso.FileExists(fileName + "_th.jpg"))
                 {
                     iso.DeleteFile(fileName + "_th.jpg");
                     MessageBox.Show("File sucessfully deleted");
+                    NavigationService.GoBack();
                 }                
                 else if (iso.FileExists(fileName + ".jpg"))
                 {
                     iso.DeleteFile(fileName + ".jpg");
                     MessageBox.Show("File sucessfully deleted");
+                    NavigationService.GoBack();
                 }
             }
+
         }
 
     }
