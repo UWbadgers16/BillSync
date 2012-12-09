@@ -25,6 +25,7 @@
                 <StackPanel Orientation="Vertical" Height="Auto" Width="340">
                     <TextBlock Text="{Binding Name}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding DueDate}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding Amount}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26" TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>

@@ -107,7 +107,6 @@ namespace BillSync
         private void PanoramaItem_Loaded(object sender, RoutedEventArgs e)
         {
             IList<BitmapImage> images = getImages();
-
             image6.Source = images[0];
             image7.Source = images[1];
             image8.Source = images[2];
@@ -136,6 +135,20 @@ namespace BillSync
                 else
                     bimg = null;
 
+                if (bimg != null)
+                {
+                    temp.ImageSource = bimg;
+
+                    RotateTransform aRotateTransform = new RotateTransform();
+                    aRotateTransform.CenterX = 0.5;
+                    aRotateTransform.CenterY = 0.5;
+                    aRotateTransform.Angle = 90;
+                    temp.RelativeTransform = aRotateTransform;
+                }
+                else
+                {
+                    temp = null;
+                }
                 images.Add(bimg);
             }
 

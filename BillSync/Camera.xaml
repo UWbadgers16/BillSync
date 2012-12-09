@@ -29,7 +29,7 @@
         <Button HorizontalAlignment="Right" Width="200" VerticalAlignment="Bottom" Name="FlashButton" Content="Flash On" Click="changeFlash_Clicked" FontSize="26" FontWeight="ExtraBold" Height="75"/>
 
         <!--Used for debugging >-->
-        <TextBlock Height="Auto" HorizontalAlignment="Left" Name="txtDebug" VerticalAlignment="Top" Width="Auto" FontSize="24" FontWeight="ExtraBold" />
+        <TextBlock Height="Auto" HorizontalAlignment="Left" Name="txtDebug" VerticalAlignment="Top" Width="Auto" FontSize="24" FontWeight="ExtraBold" TextWrapping="Wrap"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

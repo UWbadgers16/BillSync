@@ -191,9 +191,11 @@ namespace BillSync
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button temp = (Button)sender;
-            String pictureID = (String)temp.Tag;
-
-            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            if (temp.Background != null)
+            {
+                String pictureID = (String)temp.Tag;
+                NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            }
             //open larger picture
         }
 

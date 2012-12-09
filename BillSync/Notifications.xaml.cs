@@ -23,7 +23,8 @@ namespace BillSync
         {
             InitializeComponent();
             progressBar.Visibility = Visibility.Visible;
-        }/*
+        }
+        /*
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
             IList<Item> bills = Database_Functions.GetItemsSortByDueDate();
@@ -195,8 +196,11 @@ namespace BillSync
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button temp = (Button)sender;
-            String pictureID = (String)temp.Tag;
-            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            if (temp.Background != null)
+            {
+                String pictureID = (String)temp.Tag;
+                NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            }
             //open larger picture
         }
         private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -229,7 +233,6 @@ namespace BillSync
                     bimg = null;
                 }
             }
-            temp.ImageSource = bimg;
             if (bimg != null)
             {
                 temp.ImageSource = bimg;
@@ -254,16 +257,20 @@ namespace BillSync
             IList<Item> bills = Database_Functions.GetItemsSortByDueDate();
             foreach (Item bill in bills)
             {
-                source.Add(new ItemWrapper()
+                if ((Database_Functions.GetItemTotal(bill.ID) != 0) && (Database_Functions.GetItemCost(bill.ID) != 0))
                 {
-                    itemID = bill.ID.ToString(),
-                    thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
-                    Name = bill.Title,
-                    Date = getDateString(bill.Created),
-                    GroupName = Database_Functions.GetGroupName(bill.ID),
-                    GroupID = (int)bill.GroupID,
-                    DueDate = getDueDateString(bill.Due)
-                });
+                    source.Add(new ItemWrapper()
+                    {
+                        itemID = bill.ID.ToString(),
+                        thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
+                        Name = bill.Title,
+                        Date = getDateString(bill.Created),
+                        GroupName = Database_Functions.GetGroupName(bill.ID),
+                        GroupID = (int)bill.GroupID,
+                        DueDate = getDueDateString(bill.Due),
+                        Amount = stringCost(Database_Functions.GetItemCost(bill.ID))
+                    });
+                }
             }
 
             var transByDate = from trans in source
@@ -273,6 +280,12 @@ namespace BillSync
 
             this.notifListGroup.ItemsSource = transByDate;
             progressBar.Visibility = Visibility.Collapsed;
+        }
+
+        private string stringCost(decimal p)
+        {
+            decimal y = Math.Round(p, 2);
+            return "$" + y.ToString();
         }
     }
 }
