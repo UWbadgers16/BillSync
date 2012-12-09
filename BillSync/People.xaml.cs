@@ -19,6 +19,7 @@ namespace BillSync
     public partial class People : PhoneApplicationPage
     {
         int page = 0;
+        decimal trans = 0;
         string returnPage = null;
 
         List<Member> member = new List<Member>();
@@ -65,22 +66,13 @@ namespace BillSync
                 foreach (Member memb in mem)
                 {
                     member.Add(memb);
-                    decimal trans = 0;
+                    trans = 0;
                //     string group_name = "";
                     int numofSameMembers = findNumMember(memb, members);
-               
+                    IList<Member> membList = findMember(numofSameMembers, memb, members);
                     for (int i = 0; i < numofSameMembers; i++)
-                   {
-                        trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
-                    /*    if (numofSameMembers == 1)
-                        {
-                           group_name = Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
-                       }
-                        else
-                        {
-                            group_name += "   " + Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
-                        }*/
-
+                    {
+                        trans += Database_Functions.GetMemberTotal(membList.ElementAt<Member>(i).ID);
                     }
                     if (!duplicates.Contains(memb.Name))
                     {
@@ -91,13 +83,13 @@ namespace BillSync
                             {
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/delete.png",
-                                //GroupName = group_name
+                              //  GroupName = group_name
                             });
                             all.Add(new JumpList()
                             {
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/delete.png",
-                                //GroupName = group_name
+                            //    GroupName = group_name
                             });
 
                         }
@@ -108,7 +100,7 @@ namespace BillSync
 
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/add.png",
-                                //GroupName = group_name
+                           //     GroupName = group_name
 
                             });
                             all.Add(new JumpList()
@@ -116,7 +108,7 @@ namespace BillSync
 
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/add.png",
-                                //GroupName = group_name
+                           //     GroupName = group_name
                             });
                         }
                         else
@@ -124,12 +116,12 @@ namespace BillSync
                             settled.Add(new JumpList()
                             {
                                 Name = memb.Name,
-                                //GroupName = group_name
+                             //   GroupName = group_name
                             });
                             all.Add(new JumpList()
                             {
                                 Name = memb.Name,
-                                //GroupName = group_name
+                            //    GroupName = group_name
                             });
                         }
 
@@ -238,6 +230,7 @@ namespace BillSync
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
+            trans = 0;
             NavigationService.Navigate(new Uri("/NewMember.xaml?", UriKind.Relative));
         }
         private int findMember(string name)
