@@ -18,7 +18,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
@@ -28,10 +27,13 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <my:SignInButton Content="Button" Height="72" Width="160" Name="skydrive" Scopes="wl.basic wl.signin wl.offline_access wl.skydrive_update" SessionChanged="skydrive_SessionChanged" ClientId="000000004C0DDE16" />
-        </Grid>
-        <Grid x:Name="ContentPanel2" Grid.Row="2" Margin="12,0,12,0">
-            <Button Content="Upload" Click="uploadButton_Click" />
+            <RichTextBox Margin="0,0,0,488">
+                <Paragraph>To sync your database to SkyDrive, log in using the Sign in button below. Upload your database using the upload button. If you would like to share your database with other users, click on Share and enter  their email address.</Paragraph>
+            </RichTextBox>
+            <my:SignInButton Content="Button" Height="72" Width="160" Name="skydrive" Scopes="wl.basic wl.signin wl.offline_access wl.skydrive_update" SessionChanged="skydrive_SessionChanged" ClientId="000000004C0DDE16" Margin="148,189,148,383" />
+            <Button Content="Upload" Click="uploadButton_Click" Height="72" Width="160" Margin="148,293,148,279" />
+            <Button Content="Share" Click="shareButton_Click" Height="72" Width="160" Margin="148,394,148,178" />
+            <Button Content="Download" Click="shareButton_Click" Height="72" Width="160" Margin="148,483,148,89" />
         </Grid>
     </Grid>
  

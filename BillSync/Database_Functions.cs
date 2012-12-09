@@ -240,6 +240,22 @@ namespace BillSync
             return cost;
         }
 
+        public static decimal GetItemTotal(int item_id)
+        {
+            IList<Transaction> transactionList = null;
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
+                transactionList = query.ToList();
+            }
+            decimal cost = 0;
+            foreach (Transaction transaction in transactionList)
+            {
+                cost += transaction.Amount;
+            }
+            return cost;
+        }
+
         public static void ChangeDate(int item_id, DateTime datetime)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))

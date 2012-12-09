@@ -14,12 +14,14 @@ using Microsoft.Live;
 using Microsoft.Live.Controls;
 using System.IO.IsolatedStorage;
 using System.IO;
+using Microsoft.Phone.Tasks;
 
 namespace BillSync
 {
     public partial class SkyDrive : PhoneApplicationPage
     {
         private LiveConnectClient client;
+        private LiveConnectSession session;
 
         public SkyDrive()
         {
@@ -30,15 +32,16 @@ namespace BillSync
         {
             if (e.Session != null && e.Status == LiveConnectSessionStatus.Connected)
             {
+                session = e.Session;
                 client = new LiveConnectClient(e.Session);
-                MessageBox.Show("Signed in.");
+                //MessageBox.Show("Signed in.");
                 client.GetCompleted    += new EventHandler<LiveOperationCompletedEventArgs>(signin_GetCompleted);
                 client.UploadCompleted += new EventHandler<LiveOperationCompletedEventArgs>(uploadClient_UploadCompleted);
                 client.GetAsync("me", null);
             }
             else
             {
-                MessageBox.Show("Not signed in:" + e.Status.ToString());
+                //MessageBox.Show("Not signed in:" + e.Status.ToString());
                 client = null;
             } 
         }
@@ -47,7 +50,7 @@ namespace BillSync
         {
             if (e.Error == null)
             {
-                MessageBox.Show("Hello, signed-in user!");
+                //MessageBox.Show("Hello, signed-in user!");
             }
             else
             {
@@ -76,7 +79,7 @@ namespace BillSync
                 {
                     MessageBox.Show(ex.Message);
                 }
-                client.UploadAsync("me/SkyDrive", fileName, fileStream, OverwriteOption.Overwrite);
+                client.UploadAsync("me/SkyDrive/public_documents", fileName, fileStream, OverwriteOption.Overwrite);
             }
             else
             {
@@ -93,6 +96,59 @@ namespace BillSync
             else
             {
                 MessageBox.Show("File uploading failed!");
+            }
+        }
+        private void shareButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LiveConnectClient liveClient = new LiveConnectClient(session);
+                client.GetCompleted += new EventHandler<LiveOperationCompletedEventArgs>(clientDataFetch_GetCompleted);
+                client.GetAsync("/me/skydrive/public_documents/files");
+            }
+            catch (LiveConnectException exception)
+            {
+                MessageBox.Show("Error getting shared read link: " + exception.Message);
+            }
+        }
+        void clientDataFetch_GetCompleted(object sender, LiveOperationCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                List<object> data = (List<object>)e.Result["data"];
+                string file_id = "";
+                foreach (IDictionary<string, object> content in data)
+                {
+                    if ((string)content["name"] == "BillDB.sdf")
+                        file_id = (string)content["id"];
+                }
+                if (file_id == "")
+                    MessageBox.Show("No database file found.");
+                else
+                {
+                    MessageBox.Show("DB id: " + file_id + ";");
+                    try
+                    {
+                        LiveConnectClient liveClient = new LiveConnectClient(session);
+                        liveClient.GetCompleted += new EventHandler<LiveOperationCompletedEventArgs>(shareLink_completed);
+                        liveClient.GetAsync(file_id + "/shared_read_link");
+                    }
+                    catch (LiveConnectException exception)
+                    {
+                        MessageBox.Show("Error getting shared read link: " + exception.Message);
+                    }
+                }
+            }
+        }
+        void shareLink_completed(object sender, LiveOperationCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                EmailComposeTask email = new EmailComposeTask();
+                email.Body = "Click here to get the share link: " + (string)e.Result["link"];
+                email.Subject = "BillSync Share Link";
+                email.To = "georgii@saveliev.su";
+                email.Show();
             }
         }
     }
