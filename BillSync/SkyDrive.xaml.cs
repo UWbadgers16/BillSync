@@ -151,5 +151,36 @@ namespace BillSync
                 email.Show();
             }
         }
+
+        private void downloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (session == null)
+            {
+                MessageBox.Show("You must sign in first.");
+            }
+            else
+            {
+                LiveConnectClient client = new LiveConnectClient(session);
+                client.DownloadCompleted += new EventHandler<LiveDownloadCompletedEventArgs>(OnDownloadCompleted);
+                client.DownloadAsync("file.a6b2a7e8f2515e5e.A6B2A7E8F2515E5E!131/picture?type=thumbnail");
+            }
+        }
+
+        void OnDownloadCompleted(object sender, LiveDownloadCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                //imageFrame.Visibility = Visibility.Visible;
+                //BitmapImage imgSource = new BitmapImage();
+                //imgSource.SetSource(e.Result);
+                // imageFrame is a user-defined Image control.
+                //imageFrame.Source = imgSource;
+                e.Result.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error downloading image: " + e.Error.ToString());
+            }
+        }
     }
 }
