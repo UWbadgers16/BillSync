@@ -49,15 +49,6 @@
              </Border>
         </DataTemplate>
 
-        <DataTemplate x:Key="jumpListItemTemplate2">
-            <Border Margin="0">
-                <StackPanel Orientation="Horizontal" Width="460" Height="80">
-                    <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="30"
-                               Height="40" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
-                    <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
-                </StackPanel>
-            </Border>
-        </DataTemplate>
         <DataTemplate x:Key="groupItemTemplate">
             <Border Background="{StaticResource PhoneAccentBrush}" Width="99" Height="99" Margin="6">
                 <TextBlock Text="{Binding Title}"
@@ -88,7 +79,7 @@
             
             <!--Panorama item two-->
             <controls:PanoramaItem Header="Settled">
-                <toolkit:LongListSelector x:Name="settledListGroups" SelectionChanged="settledListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate2}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
+                <toolkit:LongListSelector x:Name="settledListGroups" SelectionChanged="settledListGroups_SelectionChanged" Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel/>
@@ -100,7 +91,7 @@
 
             <!--Panorama item three-->
             <controls:PanoramaItem Header="All">
-                <toolkit:LongListSelector x:Name="allListGroups" SelectionChanged="allListGroups_SelectionChanged"  Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate2}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
+                <toolkit:LongListSelector x:Name="allListGroups" SelectionChanged="allListGroups_SelectionChanged"  Background="Transparent" ItemTemplate="{StaticResource jumpListItemTemplate}" GroupHeaderTemplate="{StaticResource groupHeaderTemplate}" GroupItemTemplate="{StaticResource groupItemTemplate}" >
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel/>
