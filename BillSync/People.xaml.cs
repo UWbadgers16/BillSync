@@ -254,11 +254,11 @@ namespace BillSync
         private void Member_Hold(object sender, GestureEventArgs e)
         {
             IList<Member> members = Database_Functions.GetAllMembers();
+            Member temp = new Member();
             TextBlock tapped = (TextBlock)sender;
             int index = findMember(tapped.Text);
-            GlobalVars.member = member[index];
-           // contextMenu_edit.IsOpen = true;
-            NavigationService.Navigate(new Uri("/ContactDetails.xaml?msg=" + tapped.Text, UriKind.Relative));
+            temp = member[index-1];
+            GlobalVars.member = temp;
         }
 
         private void Member_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -275,9 +275,9 @@ namespace BillSync
                 NavigationService.Navigate(new Uri("/ItemDetails.xaml", UriKind.Relative));
             }
         }
-        private void editMember_Click(object sender, RoutedEventArgs e)
+          private void editMember_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/NewMember.xaml?", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/EditMember.xaml", UriKind.Relative));
         }
         private int findNumMember(Member mbr, IList<Member> members)
         {
@@ -290,13 +290,20 @@ namespace BillSync
 
             return count;
         }
+        private IList<Member> findMember(int count, Member mem, IList<Member> members)
+        {
+            IList<Member> newMember = new List<Member>(count);
+            foreach (Member m in members)
+            {
+                if (m.Name.Equals(mem.Name))
+                    newMember.Add(m);
+            }
+            return newMember;
+        }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-                base.OnBackKeyPress(e);
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
-
-
-
     }
 
 }
