@@ -40,7 +40,7 @@ namespace BillSync
             InputScopeName ScopeName = new InputScopeName();
             ScopeName.NameValue = InputScopeNameValue.Text;
             Keyboard.Names.Add(ScopeName);
-            textBox_phone.InputScope = Keyboard;
+            textBox_name.InputScope = Keyboard;
         }
         private void textBox_email_Tap(object sender, EventArgs e)
         {
@@ -48,7 +48,7 @@ namespace BillSync
             InputScopeName ScopeName = new InputScopeName();
             ScopeName.NameValue = InputScopeNameValue.EmailSmtpAddress;
             Keyboard.Names.Add(ScopeName);
-            textBox_phone.InputScope = Keyboard;
+            textBox_email.InputScope = Keyboard;
         }
         private void textBox_phone_Tap(object sender, EventArgs e)
         {
