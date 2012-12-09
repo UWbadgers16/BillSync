@@ -227,7 +227,6 @@ namespace BillSync
                     bimg = null;
                 }
             }
-
             temp.ImageSource = bimg;
             return temp;
         }
@@ -241,14 +240,17 @@ namespace BillSync
             //ImageBrush i = new ImageBrush();
             //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
             //asdf.Background = i;
-
+            //Brush b;
+            //RotateTransform aRotateTransform = new RotateTransform();
+            //aRotateTransform.Angle = 90;
             foreach (Item bill in bills)
             {
+                //b = getImageFromIsolatedStorage(bill.ID + "_th.jpg");
+                //b.RelativeTransform = aRotateTransform;
                 source.Add(new ItemWrapper()
                 {
                     itemID = bill.ID.ToString(),
                     thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
-                    fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
                     Name = bill.Title,
                     Date = getDateString(bill.Created),
                     GroupName = Database_Functions.GetGroupName(bill.ID),

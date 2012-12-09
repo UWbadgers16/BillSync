@@ -34,6 +34,9 @@ namespace BillSync
             base.OnNavigatedTo(e);
             string msg = NavigationContext.QueryString["msg"];
             fileName = msg;
+            RotateTransform aRotateTransform = new RotateTransform();
+            aRotateTransform.Angle = 90;
+            transform.Rotation = 90;
             this.thePicture.Source = getImageSourceFromIsolatedStorage(msg + ".jpg");
         }
         private void GestureListener_DragStarted(object sender, DragStartedGestureEventArgs e)

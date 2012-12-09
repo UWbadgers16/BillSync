@@ -29,6 +29,7 @@ namespace BillSync
 
         // Holds the current flash mode.
         private string currentFlashMode;
+        private string currentOrientation;
 
         // Constructor
         public Camera()
@@ -40,6 +41,7 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             filename = NavigationContext.QueryString["msg"];
+            currentOrientation = "pp";
             viewfinderBrush.RelativeTransform = new CompositeTransform() { CenterX = 0.5, CenterY = 0.5, Rotation = 90 };
 
             // Check to see if the camera is available on the device.
@@ -129,6 +131,7 @@ namespace BillSync
         {
             if (e.Orientation == PageOrientation.LandscapeLeft)
             {
+                currentOrientation = "ll";
                 viewfinderCanvas.Height = 480;
                 viewfinderCanvas.Width = 640;
                 viewfinderBrush.RelativeTransform =
@@ -136,6 +139,7 @@ namespace BillSync
             }
             else if (e.Orientation == PageOrientation.LandscapeRight)
             {
+                currentOrientation = "lr";
                 viewfinderCanvas.Height = 480;
                 viewfinderCanvas.Width = 640;
                 viewfinderBrush.RelativeTransform =
@@ -143,6 +147,7 @@ namespace BillSync
             }
             else
             {
+                currentOrientation = "pp";
                 viewfinderCanvas.Height = 640;
                 viewfinderCanvas.Width = 480;
                 viewfinderBrush.RelativeTransform =

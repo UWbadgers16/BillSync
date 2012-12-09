@@ -66,10 +66,5 @@ namespace BillSync
             get;
             set;
         }
-        public Brush fullSize
-        {
-            get;
-            set;
-        }
     }
 }
