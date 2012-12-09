@@ -19,7 +19,7 @@ namespace BillSync
         public static NewItem editItem;
         public static IList<NewItem> items;
         public static NewGroup group;
-        public static NewMember member;
+        public static Member member;
         public static int group_id = -1;
         public static string member_name;
         public static MainPage main;
