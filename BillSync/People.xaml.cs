@@ -65,20 +65,20 @@ namespace BillSync
                 foreach (Member memb in mem)
                 {
                     decimal trans = 0;
-                    string group_name = "";
+               //     string group_name = "";
                     int numofSameMembers = findNumMember(memb, members);
                
                     for (int i = 0; i < numofSameMembers; i++)
                    {
                         trans += Database_Functions.GetMemberTotal(mem.ElementAt<Member>(i).ID);
-                        if (numofSameMembers == 1)
+                    /*    if (numofSameMembers == 1)
                         {
                            group_name = Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
                        }
                         else
                         {
                             group_name += "   " + Database_Functions.GetMemberGroupName(mem.ElementAt<Member>(i).ID);
-                        }
+                        }*/
 
                     }
                     if (!duplicates.Contains(memb.Name))
