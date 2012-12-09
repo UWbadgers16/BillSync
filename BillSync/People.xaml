@@ -17,20 +17,7 @@
     
     
     <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Key="memberTemplate">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}" FontSize="34" Tap="Member_Tap" Hold="Member_Hold" TextWrapping="Wrap" Margin="0,10">
-                        <toolkit:ContextMenuService.ContextMenu>
-                            <toolkit:ContextMenu>
-                                <toolkit:MenuItem Header="edit"  Click="editMember_Click"/>
-                            </toolkit:ContextMenu>
-                        </toolkit:ContextMenuService.ContextMenu>
-                    </TextBlock>
-
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>
+     
         <DataTemplate x:Key="groupHeaderTemplate">
             <Grid Margin="12,0,0,0">
                 <Grid Width="60" Height="60" HorizontalAlignment="Left">
@@ -47,19 +34,26 @@
 
         <DataTemplate x:Key="jumpListItemTemplate">
             <Border Margin="0">
-                <StackPanel Orientation="Horizontal" Width="460" Height="50">
+                <StackPanel Orientation="Horizontal" Width="460" Height="80">
                     <Image Source = "{Binding SelectedComponentImage}" Width="20" Height="20">    
                     </Image>
-                    <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
-                    <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
+                    <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" Hold="Member_Hold" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="30"  Height="40" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" > 
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu>
+                            <toolkit:MenuItem Header="edit"  Click="editMember_Click"/>
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                    </TextBlock>
+                    <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="30"  Height="40" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>  
                 </StackPanel>
              </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="jumpListItemTemplate2">
             <Border Margin="0">
-                <StackPanel Orientation="Horizontal" Width="460" Height="50">
-                    <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <StackPanel Orientation="Horizontal" Width="460" Height="80">
+                    <TextBlock Text="{Binding Name}" Tap="tap_JumpListItem" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="30"
+                               Height="40" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}" />
                     <TextBlock Text="{Binding GroupName}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" FontSize="20"  Height="30" Margin="{StaticResource PhoneTouchTargetOverhang}" Foreground="{StaticResource PhoneForegroundBrush}"></TextBlock>
                 </StackPanel>
             </Border>
@@ -116,13 +110,8 @@
 
             </controls:PanoramaItem>
         </controls:Panorama>
-        <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460" />
+        <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed"/>-->
     </Grid>
-    <toolkit:ContextMenuService.ContextMenu>
-            <toolkit:ContextMenu x:Name="contextMenu_edit" IsOpen="False">
-                <toolkit:MenuItem Header="edit" Click="editMember_Click"/>
-            </toolkit:ContextMenu>
-        </toolkit:ContextMenuService.ContextMenu>
 
     <!--Panorama-based applications should not show an ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
