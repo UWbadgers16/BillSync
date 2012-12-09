@@ -21,7 +21,7 @@ namespace BillSync
         int page = 0;
         string returnPage = null;
 
-        List<NewMember> member = new List<NewMember>();
+        List<Member> member = new List<Member>();
         Boolean adding_member = false;
 
        // List<NewMember> mem = new List<NewMember>();
