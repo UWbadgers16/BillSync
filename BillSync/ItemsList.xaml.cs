@@ -227,9 +227,7 @@ namespace BillSync
                     bimg = null;
                 }
             }
-<<<<<<< HEAD
             temp.ImageSource = bimg;
-=======
             if (bimg != null)
             {
                 temp.ImageSource = bimg;
@@ -244,7 +242,6 @@ namespace BillSync
             {
                 temp = null;
             }
->>>>>>> Picture rotation and Camera portrait fixed
             return temp;
         }
 
@@ -253,17 +250,8 @@ namespace BillSync
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
             IList<Item> bills = Database_Functions.GetItems();
-
-            //ImageBrush i = new ImageBrush();
-            //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
-            //asdf.Background = i;
-            //Brush b;
-            //RotateTransform aRotateTransform = new RotateTransform();
-            //aRotateTransform.Angle = 90;
             foreach (Item bill in bills)
             {
-                //b = getImageFromIsolatedStorage(bill.ID + "_th.jpg");
-                //b.RelativeTransform = aRotateTransform;
                 source.Add(new ItemWrapper()
                 {
                     itemID = bill.ID.ToString(),

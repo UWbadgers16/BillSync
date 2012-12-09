@@ -14,20 +14,17 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
 	xmlns:local="clr-namespace:BillSync"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    Loaded="PhoneApplicationPage_Loaded">
     <phone:PhoneApplicationPage.Resources>
 
         <!-- The template for notification items -->
         <DataTemplate x:Key="notifItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="Auto">
-                <Button x:Name="GroupButton" Tag="{Binding GroupID}" Click="GroupButton_Click" Width="120" Height="120">
-                    <Button.Content>
-                        <TextBlock Text="View"/>
-                    </Button.Content>
-                </Button>
+                <Button x:Name="GroupButton" Background="{Binding thumbnail}" Tag="{Binding itemID}" Click="GroupButton_Click" Width="120" Height="120"/>
                 <StackPanel Orientation="Vertical" Height="Auto" Width="340">
-                    <TextBlock Text="{Binding Name}" FontSize="26" TextWrapping="Wrap"/>
-                    <TextBlock Text="{Binding DueDate}" FontSize="26" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding Name}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding DueDate}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26" TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -73,6 +70,7 @@
                 </toolkit:LongListSelector.GroupItemsPanel>
             </toolkit:LongListSelector>
         </Grid>
+        <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460"  />
     </Grid>
 
     <!--Sample code showing usage of ApplicationBar-->
