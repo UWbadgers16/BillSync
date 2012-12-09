@@ -19,6 +19,10 @@ namespace BillSync
     public partial class FullPicture : PhoneApplicationPage
     {
         string fileName;
+        double initialAngle;
+        double initialScale;
+        int i, j;
+
         public FullPicture()
         {
             InitializeComponent();
@@ -27,14 +31,26 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            i = 0;
+            j = 0;
             string msg = NavigationContext.QueryString["msg"];
             fileName = msg;
-            MessageBox.Show(msg);
-            this.LayoutRoot.Background = getImageFromIsolatedStorage(msg + ".jpg");
+            this.thePicture.Source = getImageSourceFromIsolatedStorage(msg + ".jpg");
         }
-        private Brush getImageFromIsolatedStorage(string imageName)
+        private void OnPinchStarted(object sender, PinchStartedGestureEventArgs e)
         {
-            ImageBrush temp = new ImageBrush();
+            initialAngle = transform.Rotation;
+            initialScale = transform.ScaleX;
+        }
+
+        private void OnPinchDelta(object sender, PinchGestureEventArgs e)
+        {
+            transform.Rotation = initialAngle + e.TotalAngleDelta;
+            transform.ScaleX = initialScale * e.DistanceRatio;
+            transform.ScaleY = initialScale * e.DistanceRatio;
+        }
+        private ImageSource getImageSourceFromIsolatedStorage(string imageName)
+        {
             BitmapImage bimg = new BitmapImage();
 
             using (IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication())
@@ -52,9 +68,7 @@ namespace BillSync
                     bimg = null;
                 }
             }
-
-            temp.ImageSource = bimg;
-            return temp;
+            return bimg;
         }
 
         private void ApplicationBarDeleteButton_Click(object sender, EventArgs e)
@@ -74,11 +88,16 @@ namespace BillSync
                     iso.DeleteFile(fileName + "_th.jpg");
                     MessageBox.Show("File sucessfully deleted");
                     NavigationService.GoBack();
-                }                
+                }
                 else if (iso.FileExists(fileName + ".jpg"))
                 {
                     iso.DeleteFile(fileName + ".jpg");
                     MessageBox.Show("File sucessfully deleted");
+                    NavigationService.GoBack();
+                }
+                else
+                {
+                    MessageBox.Show("Error: File was not found on isolated storage");
                     NavigationService.GoBack();
                 }
             }

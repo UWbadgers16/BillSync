@@ -9,7 +9,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Landscape" Orientation="LandscapeLeft"
+    SupportedOrientations="Landscape" Orientation="Landscape"
     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="480"
     shell:SystemTray.IsVisible="False">
 
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="160" />
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="viewfinderCanvas" Width="880" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="-80,0,0,0">
+        <Canvas x:Name="viewfinderCanvas" Width="640" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="-80,0,0,0">
 
             <!--Camera viewfinder -->
             <Canvas.Background>

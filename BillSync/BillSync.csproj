@@ -260,6 +260,7 @@
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Input.Touch" />
     <Reference Include="System" />
     <Reference Include="system.data.linq" />
     <Reference Include="System.Device" />
