@@ -88,7 +88,7 @@ namespace BillSync
                             all.Add(new JumpList()
                             {
                                 Name = memb.Name,
-                                SelectedComponentImage = "Images/delete.png",
+                               
                             //    GroupName = group_name
                             });
 
@@ -107,7 +107,7 @@ namespace BillSync
                             {
 
                                 Name = memb.Name,
-                                SelectedComponentImage = "Images/add.png",
+                              
                            //     GroupName = group_name
                             });
                         }
