@@ -64,6 +64,7 @@ namespace BillSync
 
                 foreach (Member memb in mem)
                 {
+                    member.Add(memb);
                     decimal trans = 0;
                //     string group_name = "";
                     int numofSameMembers = findNumMember(memb, members);
