@@ -192,8 +192,10 @@ namespace BillSync
         {
             Button temp = (Button)sender;
             String pictureID = (String)temp.Tag;
-
-            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            if (temp.Background != null)
+            {
+                NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            }
            //open larger picture
         }
 
@@ -227,7 +229,14 @@ namespace BillSync
                     bimg = null;
                 }
             }
-            temp.ImageSource = bimg;
+            if (bimg != null)
+            {
+                temp.ImageSource = bimg;
+            }
+            else
+            {
+                temp = null;
+            }
             return temp;
         }
 
