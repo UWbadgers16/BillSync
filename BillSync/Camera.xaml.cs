@@ -23,7 +23,7 @@ namespace BillSync
         string filename = null;
 
         // Variables
-        private int savedCounter = 0;
+        //private int savedCounter = 0;
         PhotoCamera cam;
         MediaLibrary library = new MediaLibrary();
 
@@ -40,6 +40,7 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             filename = NavigationContext.QueryString["msg"];
+            viewfinderBrush.RelativeTransform = new CompositeTransform() { CenterX = 0.5, CenterY = 0.5, Rotation = 90 };
 
             // Check to see if the camera is available on the device.
             if (PhotoCamera.IsCameraTypeSupported(CameraType.Primary) == true)
@@ -126,6 +127,34 @@ namespace BillSync
         // Ensure that the viewfinder is upright in LandscapeRight.
         protected override void OnOrientationChanged(OrientationChangedEventArgs e)
         {
+            if (e.Orientation == PageOrientation.LandscapeLeft)
+            {
+                viewfinderCanvas.Height = 480;
+                viewfinderCanvas.Width = 640;
+                viewfinderBrush.RelativeTransform =
+                    new CompositeTransform() { CenterX = 0.5, CenterY = 0.5, Rotation = 0 };
+            }
+            else if (e.Orientation == PageOrientation.LandscapeRight)
+            {
+                viewfinderCanvas.Height = 480;
+                viewfinderCanvas.Width = 640;
+                viewfinderBrush.RelativeTransform =
+                    new CompositeTransform() { CenterX = 0.5, CenterY = 0.5, Rotation = -180 };
+            }
+            else
+            {
+                viewfinderCanvas.Height = 640;
+                viewfinderCanvas.Width = 480;
+                viewfinderBrush.RelativeTransform =
+                    new CompositeTransform() { CenterX = 0.5, CenterY = 0.5, Rotation = 90 };
+            }
+
+
+            base.OnOrientationChanged(e);
+        }
+        /*
+        protected override void OnOrientationChanged(OrientationChangedEventArgs e)
+        {
             if (cam != null)
             {
                 // LandscapeRight rotation when camera is on back of device.
@@ -150,12 +179,12 @@ namespace BillSync
             }
 
             base.OnOrientationChanged(e);
-        }
+        }*/
 
         void cam_CaptureCompleted(object sender, CameraOperationCompletedEventArgs e)
         {
             // Increments the savedCounter variable used for generating JPEG file names.
-            savedCounter++;
+            //savedCounter++;
         }
 
 

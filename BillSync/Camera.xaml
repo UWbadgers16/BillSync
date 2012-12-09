@@ -9,33 +9,27 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Landscape" Orientation="Landscape"
-    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="480"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     shell:SystemTray.IsVisible="False">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="640" />
-            <ColumnDefinition Width="160" />
-        </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="viewfinderCanvas" Width="640" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="-80,0,0,0">
+        <Rectangle Width="480" Height="640" 
+           HorizontalAlignment="Center" VerticalAlignment="Center"
+           x:Name="viewfinderCanvas">
 
-            <!--Camera viewfinder -->
-            <Canvas.Background>
+            <Rectangle.Fill>
                 <VideoBrush x:Name="viewfinderBrush" />
-            </Canvas.Background>
-
-        </Canvas>
+            </Rectangle.Fill>
+        </Rectangle>
 
         <!--Button StackPanel to the right of viewfinder>-->
-        <StackPanel Grid.Column="1" VerticalAlignment="Bottom" >
-            <Button VerticalAlignment="Bottom" Name="FlashButton" Content="Flash On" Click="changeFlash_Clicked" FontSize="26" FontWeight="ExtraBold" Height="75"/>
-        </StackPanel>
+        <Button HorizontalAlignment="Right" Width="200" VerticalAlignment="Bottom" Name="FlashButton" Content="Flash On" Click="changeFlash_Clicked" FontSize="26" FontWeight="ExtraBold" Height="75"/>
 
         <!--Used for debugging >-->
-        <TextBlock Height="40" HorizontalAlignment="Left" Margin="8,428,0,0" Name="txtDebug" VerticalAlignment="Top" Width="626" FontSize="24" FontWeight="ExtraBold" />
+        <TextBlock Height="Auto" HorizontalAlignment="Left" Name="txtDebug" VerticalAlignment="Top" Width="Auto" FontSize="24" FontWeight="ExtraBold" />
     </Grid>
 
 </phone:PhoneApplicationPage>

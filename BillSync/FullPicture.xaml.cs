@@ -21,7 +21,8 @@ namespace BillSync
         string fileName;
         double initialAngle;
         double initialScale;
-        int i, j;
+        double initialTranslateX;
+        double initialTranslateY;
 
         public FullPicture()
         {
@@ -31,11 +32,19 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            i = 0;
-            j = 0;
             string msg = NavigationContext.QueryString["msg"];
             fileName = msg;
             this.thePicture.Source = getImageSourceFromIsolatedStorage(msg + ".jpg");
+        }
+        private void GestureListener_DragStarted(object sender, DragStartedGestureEventArgs e)
+        {
+            initialTranslateX = transform.TranslateX;
+            initialTranslateY = transform.TranslateY;
+        }
+        private void GestureListener_DragDelta(object sender, DragDeltaGestureEventArgs e)
+        {
+            transform.TranslateX += e.HorizontalChange;
+            transform.TranslateY += e.VerticalChange;
         }
         private void OnPinchStarted(object sender, PinchStartedGestureEventArgs e)
         {
@@ -103,7 +112,6 @@ namespace BillSync
             }
 
         }
-
     }
 
 }

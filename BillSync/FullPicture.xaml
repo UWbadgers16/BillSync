@@ -10,7 +10,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
 
@@ -23,7 +23,7 @@
                 <CompositeTransform x:Name="transform" />
             </Image.RenderTransform>
             <toolkit:GestureService.GestureListener>
-                <toolkit:GestureListener PinchStarted="OnPinchStarted" PinchDelta="OnPinchDelta" />
+                <toolkit:GestureListener DragStarted="GestureListener_DragStarted" DragDelta="GestureListener_DragDelta" PinchStarted="OnPinchStarted" PinchDelta="OnPinchDelta" />
             </toolkit:GestureService.GestureListener>
         </Image>
     </Grid>
