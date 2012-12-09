@@ -192,17 +192,9 @@ namespace BillSync
         {
             Button temp = (Button)sender;
             String pictureID = (String)temp.Tag;
-<<<<<<< HEAD
-            if (temp.Background != null)
-            {
-                NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
-            }
-           //open larger picture
-=======
 
             NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
             //open larger picture
->>>>>>> Update to syncc
         }
 
         private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -235,18 +227,7 @@ namespace BillSync
                     bimg = null;
                 }
             }
-<<<<<<< HEAD
-            if (bimg != null)
-            {
-                temp.ImageSource = bimg;
-            }
-            else
-            {
-                temp = null;
-            }
-=======
             temp.ImageSource = bimg;
->>>>>>> Update to syncc
             return temp;
         }
 

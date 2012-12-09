@@ -22,6 +22,7 @@ namespace BillSync
         Boolean isEditing = false;
         NewGroup group;
         int item_id = -1;
+        IList<Member> members;
         //int group_id = -1;
 
         //public int Group_ID
@@ -69,6 +70,8 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            members = GlobalVars.members;
+            GlobalVars.members = null;
 
             if (GlobalVars.item != null)
             {
@@ -87,6 +90,14 @@ namespace BillSync
                 loadSpecifics(load);
                 isEditing = true;
                 GlobalVars.item = null;
+            }
+            else if (GlobalVars.selectedMembers != null && GlobalVars.selectMode != null)
+            {
+                if (GlobalVars.selectMode.Equals("payers"))
+                    listPicker_payers.ItemsSource = GlobalVars.selectedMembers;
+                //else if(GlobalVars.selectMode.Equals("owers"))
+                GlobalVars.selectedMembers = null;
+                GlobalVars.selectMode = null;
             }
             else
             {
@@ -337,6 +348,17 @@ namespace BillSync
         private void button_takePicture_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Camera.xaml?msg=" + item_id, UriKind.Relative));
+        }
+
+        private void button_addPayer_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalVars.members = members;
+            NavigationService.Navigate(new Uri("/SelectMembers.xaml?msg=" + "payers", UriKind.Relative));
+        }
+
+        private void button_listPayers_Click(object sender, RoutedEventArgs e)
+        {
+            button_addPayer.Visibility = Visibility.Visible;
         }
     }
 }

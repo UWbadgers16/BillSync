@@ -79,7 +79,7 @@
                 <Button Content="Deactivate" Height="71" Name="button_deactivateContributors" Width="239" Click="button_deactivateContributors_Click" />
             </StackPanel>
             <TextBlock Height="30" Name="textBlock_contributors" Text="Contributors" FontSize="24"/>
-            <toolkit:ListPicker ItemCountThreshold="6" x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="CONTRIBUTORS" CacheMode="BitmapCache" Width="455" Margin="-10,0,0,0" />
+            <toolkit:ListPicker x:Name="listPicker_contributors" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="CONTRIBUTORS" CacheMode="BitmapCache" Width="455" Margin="-10,0,0,0" />
         </StackPanel>
 
         

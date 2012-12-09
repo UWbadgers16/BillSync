@@ -24,5 +24,8 @@ namespace BillSync
         public static string member_name;
         public static MainPage main;
         public static ItemsList itemsList;
+        public static IList<Member> members;
+        public static IList<Member> selectedMembers;
+        public static string selectMode;
     }
 }

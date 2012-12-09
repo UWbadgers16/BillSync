@@ -174,6 +174,7 @@ namespace BillSync
                 }
                 else
                 {
+                    GlobalVars.members = contributors;
                     GlobalVars.group = this;
                     this.IsEnabled = true;
                     newItemName.IsOpen = false;
