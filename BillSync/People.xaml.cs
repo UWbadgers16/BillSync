@@ -204,14 +204,15 @@ namespace BillSync
             try
             {
                 string msg = NavigationContext.QueryString["msg"];
-                returnPage = NavigationContext.QueryString["returnPage"];
-
+                
                 if (int.TryParse(msg, out page))
                 {
                     panorama_people.DefaultItem = panorama_people.Items[page];
 
                     adding_member = true;
                 }
+
+                returnPage = NavigationContext.QueryString["returnPage"];
             }
             catch (KeyNotFoundException ex)
             {
