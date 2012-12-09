@@ -227,7 +227,24 @@ namespace BillSync
                     bimg = null;
                 }
             }
+<<<<<<< HEAD
             temp.ImageSource = bimg;
+=======
+            if (bimg != null)
+            {
+                temp.ImageSource = bimg;
+                
+                RotateTransform aRotateTransform = new RotateTransform();
+                aRotateTransform.CenterX = 0.5; 
+                aRotateTransform.CenterY = 0.5;
+                aRotateTransform.Angle = 90;
+                temp.RelativeTransform = aRotateTransform;
+            }
+            else
+            {
+                temp = null;
+            }
+>>>>>>> Picture rotation and Camera portrait fixed
             return temp;
         }
 
