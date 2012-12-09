@@ -17,10 +17,10 @@
 	xmlns:local="clr-namespace:BillSync"
     shell:SystemTray.IsVisible="True"
     Loaded="PhoneApplicationPage_Loaded">
-	<phone:PhoneApplicationPage.Resources>
-		
-		<!-- The template for transaction items -->
-		<DataTemplate x:Key="transItemTemplate">
+    <phone:PhoneApplicationPage.Resources>
+
+        <!-- The template for transaction items -->
+        <DataTemplate x:Key="transItemTemplate">
             <StackPanel Orientation="Horizontal" Width="460" Height="120">
                 <Button x:Name="GroupButton" Tag="{Binding itemID}" Background="{Binding thumbnail}" Click="GroupButton_Click" Width="120" Height="120" DataContext="{Binding}" Visibility="Visible"/>
                 <StackPanel Orientation="Vertical" Height="80" Width="340">
@@ -28,25 +28,25 @@
                     <TextBlock Text="{Binding GroupName}" Tag="{Binding GroupID}" Tap="TextBlock_Tap" FontSize="26"/>
                 </StackPanel>
             </StackPanel>
-		</DataTemplate>
+        </DataTemplate>
 
 
-		<!-- The group header template, for groups in the main list -->
-		<DataTemplate x:Key="groupHeaderTemplate">
+        <!-- The group header template, for groups in the main list -->
+        <DataTemplate x:Key="groupHeaderTemplate">
             <Border Background="{StaticResource PhoneAccentBrush}" Width="460" Height="50" Margin="6">
-				<TextBlock Text="{Binding Title}" FontSize="40" Foreground="White"/>
-			</Border>
-		</DataTemplate>
+                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="White"/>
+            </Border>
+        </DataTemplate>
 
-		<DataTemplate x:Key="groupItemTemplate" >
+        <DataTemplate x:Key="groupItemTemplate" >
             <Border Background="{StaticResource PhoneAccentBrush}"  Width="99" Height="99" Margin="6">
-				<TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White"/>
-			</Border>
-		</DataTemplate>
+                <TextBlock Text="{Binding TileTitle}" FontSize="40" Foreground="White"/>
+            </Border>
+        </DataTemplate>
 
-	</phone:PhoneApplicationPage.Resources>
+    </phone:PhoneApplicationPage.Resources>
 
-		<!--LayoutRoot is the root grid where all page content is placed-->
+    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -64,17 +64,17 @@
                 ItemTemplate="{StaticResource transItemTemplate}"
 				GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
                 GroupItemTemplate="{StaticResource groupItemTemplate}" >
-				    <toolkit:LongListSelector.GroupItemsPanel>
-						<ItemsPanelTemplate>
-							<toolkit:WrapPanel/>
-						</ItemsPanelTemplate>
-					</toolkit:LongListSelector.GroupItemsPanel>
+                <toolkit:LongListSelector.GroupItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </toolkit:LongListSelector.GroupItemsPanel>
             </toolkit:LongListSelector>
             <!--<ProgressBar IsIndeterminate="False" x:Name="customIndeterminateProgressBar"  Style="{StaticResource PerformanceProgressBar}" Visibility="Collapsed"/>-->
         </Grid>
         <ProgressBar Style="{StaticResource PerformanceProgressBar}" IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource PhoneAccentBrush}" Height="4" HorizontalAlignment="Left" Margin="8,291,0,0" x:Name="progressBar" VerticalAlignment="Top" Width="460"  />
     </Grid>
- 
+
     <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">

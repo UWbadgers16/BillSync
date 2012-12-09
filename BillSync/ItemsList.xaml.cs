@@ -19,16 +19,16 @@ using System.Windows.Media.Imaging;
 
 namespace BillSync
 {
-	public partial class ItemsList : PhoneApplicationPage
+    public partial class ItemsList : PhoneApplicationPage
     {
         //MainPage main;
 
-		// Constructor
-		public ItemsList()
+        // Constructor
+        public ItemsList()
         {
             InitializeComponent();
             progressBar.Visibility = Visibility.Visible;
-		}
+        }
 
         //public void setProgressBar(Boolean on)
         //{
@@ -46,44 +46,44 @@ namespace BillSync
 
         //protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         //{
-            //base.OnNavigatedTo(e);
+        //base.OnNavigatedTo(e);
 
-            ////Items must be added in order by correct date, otherwise they will appear out of order.
-            //List<ItemWrapper> source = new List<ItemWrapper>();
-            //IList<Item> bills = Database_Functions.GetItems();
+        ////Items must be added in order by correct date, otherwise they will appear out of order.
+        //List<ItemWrapper> source = new List<ItemWrapper>();
+        //IList<Item> bills = Database_Functions.GetItems();
 
-            ////ImageBrush i = new ImageBrush();
-            ////i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
-            ////asdf.Background = i;
+        ////ImageBrush i = new ImageBrush();
+        ////i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
+        ////asdf.Background = i;
 
-            //foreach (Item bill in bills)
-            //{
-            //    source.Add(new ItemWrapper()
-            //    {
-            //        itemID = bill.ID.ToString(),
-            //        thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
-            //        fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
-            //        Name = bill.Title,
-            //        Date = getDateString(bill.Created),
-            //        GroupName = Database_Functions.GetGroupName(bill.ID),
-            //        GroupID = (int)bill.GroupID
-            //    });
-            //}
+        //foreach (Item bill in bills)
+        //{
+        //    source.Add(new ItemWrapper()
+        //    {
+        //        itemID = bill.ID.ToString(),
+        //        thumbnail = getImageFromIsolatedStorage(bill.ID + "_th.jpg"),
+        //        fullSize = getImageFromIsolatedStorage(bill.ID + ".jpg"),
+        //        Name = bill.Title,
+        //        Date = getDateString(bill.Created),
+        //        GroupName = Database_Functions.GetGroupName(bill.ID),
+        //        GroupID = (int)bill.GroupID
+        //    });
+        //}
 
-            //var transByDate = from trans in source
-            //                  group trans by trans.Date into c
-            //                  //orderby c.Key
-            //                  select new Group<ItemWrapper>(c.Key, c);
+        //var transByDate = from trans in source
+        //                  group trans by trans.Date into c
+        //                  //orderby c.Key
+        //                  select new Group<ItemWrapper>(c.Key, c);
 
-            //this.transListGroup.ItemsSource = transByDate;
-            //GlobalVars.main.progressBar.Visibility = Visibility.Collapsed;
-            //GlobalVars.main = null;
-            //if (GlobalVars.main != null)
-            //{
-            //    main = GlobalVars.main;
-            //    GlobalVars.main = null;
-            //    main.setProgressBar(false);
-            //}
+        //this.transListGroup.ItemsSource = transByDate;
+        //GlobalVars.main.progressBar.Visibility = Visibility.Collapsed;
+        //GlobalVars.main = null;
+        //if (GlobalVars.main != null)
+        //{
+        //    main = GlobalVars.main;
+        //    GlobalVars.main = null;
+        //    main.setProgressBar(false);
+        //}
         //}
 
         //globalvars.groupid = mygroupid
@@ -136,67 +136,73 @@ namespace BillSync
             return dateString + " " + theYear;
         }
 
-		public class Group<T> : IEnumerable<T>
-		{
-			public Group(string name, IEnumerable<T> items)
-			{
-				this.Title = name;
+        public class Group<T> : IEnumerable<T>
+        {
+            public Group(string name, IEnumerable<T> items)
+            {
+                this.Title = name;
                 this.TileTitle = name.Substring(0, 3) + "\n" + "'" + name.Substring(name.Length - 2);
-				this.Items = new List<T>(items);
-			}
+                this.Items = new List<T>(items);
+            }
 
-			public override bool Equals(object obj)
-			{
-				Group<T> that = obj as Group<T>;
+            public override bool Equals(object obj)
+            {
+                Group<T> that = obj as Group<T>;
 
-				return (that != null) && (this.Title.Equals(that.Title));
-			}
+                return (that != null) && (this.Title.Equals(that.Title));
+            }
 
             public string TileTitle
             {
                 get;
                 set;
             }
-			public string Title
-			{
-				get;
-				set;
-			}
+            public string Title
+            {
+                get;
+                set;
+            }
 
-			public IList<T> Items
-			{
-				get;
-				set;
-			}
+            public IList<T> Items
+            {
+                get;
+                set;
+            }
 
-			#region IEnumerable<T> Members
+            #region IEnumerable<T> Members
 
-			public IEnumerator<T> GetEnumerator()
-			{
-				return this.Items.GetEnumerator();
-			}
+            public IEnumerator<T> GetEnumerator()
+            {
+                return this.Items.GetEnumerator();
+            }
 
-			#endregion
+            #endregion
 
-			#region IEnumerable Members
+            #region IEnumerable Members
 
-			System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-			{
-				return this.Items.GetEnumerator();
-			}
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return this.Items.GetEnumerator();
+            }
 
-			#endregion
-		}
+            #endregion
+        }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button temp = (Button)sender;
             String pictureID = (String)temp.Tag;
+<<<<<<< HEAD
             if (temp.Background != null)
             {
                 NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
             }
            //open larger picture
+=======
+
+            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
+            //open larger picture
+>>>>>>> Update to syncc
         }
 
         private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -229,6 +235,7 @@ namespace BillSync
                     bimg = null;
                 }
             }
+<<<<<<< HEAD
             if (bimg != null)
             {
                 temp.ImageSource = bimg;
@@ -237,6 +244,9 @@ namespace BillSync
             {
                 temp = null;
             }
+=======
+            temp.ImageSource = bimg;
+>>>>>>> Update to syncc
             return temp;
         }
 
@@ -275,5 +285,5 @@ namespace BillSync
             this.transListGroup.ItemsSource = transByDate;
             progressBar.Visibility = Visibility.Collapsed;
         }
-	}
+    }
 }
