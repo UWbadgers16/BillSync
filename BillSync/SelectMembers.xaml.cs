@@ -27,13 +27,26 @@ namespace BillSync
             base.OnNavigatedTo(e);
 
             msg = NavigationContext.QueryString["msg"];
-            memberSelectList.ItemsSource = GlobalVars.members;
+            foreach (Member m in GlobalVars.members)
+            {
+                memberSelectList.Items.Add(new MultiselectItem() { Content = m.Name, FontSize = 28 });
+            }
             GlobalVars.members = null;
         }
 
         private void ApplicationBarSelectButton_Click(object sender, EventArgs e)
         {
-            GlobalVars.selectedMembers = (IList<Member>)memberSelectList.SelectedItems;
+            IList<Member> members = Database_Functions.GetAllMembers();
+            IList<Member> selectedMembers = new List<Member>();
+            for (int i = 0; i < memberSelectList.SelectedItems.Count; i++)
+            {
+                foreach (Member m in members)
+                {
+                    if (m.Name.Equals((string)memberSelectList.SelectedItems[i]))
+                        selectedMembers.Add(m);
+                }
+            }
+            GlobalVars.selectedMembers = selectedMembers;
             GlobalVars.selectMode = msg;
             NavigationService.GoBack();
         }

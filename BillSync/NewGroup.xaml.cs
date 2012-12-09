@@ -396,6 +396,7 @@ namespace BillSync
                 GlobalVars.item.loadAmounts();
                 memberAdded = false;
             }
+            GlobalVars.members = contributors;
             NavigationService.Navigate(new Uri("/NewItem.xaml", UriKind.Relative));
             this.billListGroup.IsEnabled = true;
         }

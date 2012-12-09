@@ -358,7 +358,16 @@ namespace BillSync
 
         private void button_listPayers_Click(object sender, RoutedEventArgs e)
         {
-            button_addPayer.Visibility = Visibility.Visible;
+            if (button_addPayer.Visibility == Visibility.Visible)
+            {
+                button_addPayer.Visibility = Visibility.Collapsed;
+                listPicker_payers.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                button_addPayer.Visibility = Visibility.Visible;
+                listPicker_payers.Visibility = Visibility.Visible;
+            }
         }
     }
 }
