@@ -227,9 +227,7 @@ namespace BillSync
                     bimg = null;
                 }
             }
-<<<<<<< HEAD
             temp.ImageSource = bimg;
-=======
             if (bimg != null)
             {
                 temp.ImageSource = bimg;
@@ -244,7 +242,6 @@ namespace BillSync
             {
                 temp = null;
             }
->>>>>>> Picture rotation and Camera portrait fixed
             return temp;
         }
 

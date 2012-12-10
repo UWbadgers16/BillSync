@@ -28,13 +28,13 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <toolkit:MultiselectList x:Name="memberSelectList"/>
+            <!--<toolkit:MultiselectList x:Name="memberSelectList"/>-->
         </Grid>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/check.png" Click="ApplicationBarSelectButton_Click"  Text="select"/>
+            <!--<shell:ApplicationBarIconButton IconUri="/Images/check.png" Click="ApplicationBarSelectButton_Click"  Text="select"/>-->
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
