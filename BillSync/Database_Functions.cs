@@ -27,6 +27,14 @@ namespace BillSync
          * Groups
          ******************************* */
 
+        public static string GetGroupNameByGroupID(int group_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                return (from c in context.Groups where c.ID == group_id select c).Single().Name;
+            }
+        }
+
         public static IList<Group> GetGroups()
         {
             IList<Group> groupList = null;
@@ -234,26 +242,10 @@ namespace BillSync
             decimal cost = 0;
             foreach (Transaction transaction in transactionList)
             {
-                if (transaction.Amount > 0)
+                if (transaction.Amount < 0)
                     cost += transaction.Amount;
             }
-            return cost;
-        }
-
-        public static decimal GetItemTotal(int item_id)
-        {
-            IList<Transaction> transactionList = null;
-            using (GroupDataContext context = new GroupDataContext(ConnectionString))
-            {
-                IQueryable<Transaction> query = from c in context.Transactions where c.ItemID == item_id select c;
-                transactionList = query.ToList();
-            }
-            decimal cost = 0;
-            foreach (Transaction transaction in transactionList)
-            {
-                cost += transaction.Amount;
-            }
-            return cost;
+            return cost * -1;
         }
 
         public static void ChangeDate(int item_id, DateTime datetime)
@@ -314,11 +306,21 @@ namespace BillSync
             return memberList;
         }
 
-         public static Member GetMember(int member_id)
+        public static Member GetMember(int member_id)
         {
             using (GroupDataContext context = new GroupDataContext(ConnectionString))
             {
                 Member member = (from c in context.Members where c.ID == member_id select c).Single();
+
+                return member;
+            }
+        }
+
+        public static Member GetMemberByGroupID(int group_id)
+        {
+            using (GroupDataContext context = new GroupDataContext(ConnectionString))
+            {
+                Member member = (from c in context.Members where c.Group.ID == group_id select c).Single();
 
                 return member;
             }

@@ -15,8 +15,7 @@ namespace BillSync
 {
     public partial class SubmitPayment : PhoneApplicationPage
     {
-        string member_name = null;
-        Member mem = null;
+        Member mem;
 
         public SubmitPayment()
         {
@@ -26,28 +25,18 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            member_name = GlobalVars.member_name;
-            GlobalVars.member_name = null;
-            textBlock_name.Text = member_name;
-
-            mem = findMember(member_name);
-            IList<Item> items = Database_Functions.GetOwedItems(mem.ID);
-            listPicker_items.ItemsSource = items;
-        }
-
-        private Member findMember(string member_name)
-        {
-            Member temp = new Member();
-            IList<Member> members = Database_Functions.GetAllMembers();
-
-            foreach (Member m in members)
+            IList<Member> allMembers = Database_Functions.GetAllMembers();
+            IList<string> memberNames = new List<string>();
+            IList<Member> members = new List<Member>();
+            foreach (Member m in allMembers)
             {
-                if (m.Name.Equals(member_name))
-                    temp = m;
+                if (!memberNames.Contains(m.Name))
+                {
+                    memberNames.Add(m.Name);
+                    members.Add(m);
+                }
             }
-
-            return temp;
+            listPicker_members.ItemsSource = members;
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -59,7 +48,27 @@ namespace BillSync
                 decimal amount = 0;
                 decimal.TryParse(textBox_payment.Text, out amount);
                 Database_Functions.AddTransaction(i.ID, mem.ID, amount);
+                NavigationService.GoBack();
             }
+        }
+
+        private void listPicker_members_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mem = (Member)listPicker_members.SelectedItem;
+            IList<Item> items = new List<Item>();
+            IList<Member> allMembers = Database_Functions.GetAllMembers();
+            for (int i = 0; i < allMembers.Count; i++)
+            {
+                if (allMembers[i].Name.Equals(mem.Name))
+                {
+                    foreach (Item item in Database_Functions.GetOwedItems(allMembers[i].ID))
+                    {
+                        items.Add(item);
+                    }
+                }
+            }
+
+            listPicker_items.ItemsSource = items;
         }
     }
 }

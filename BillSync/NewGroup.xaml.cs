@@ -75,7 +75,7 @@ namespace BillSync
                     int temp_group_id = GlobalVars.group_id;
                     GlobalVars.group_id = -1;
                     this.group_id = temp_group_id;
-                    group_name.Text = Database_Functions.GetGroupName(temp_group_id);
+                    group_name.Text = Database_Functions.GetGroupNameByGroupID(temp_group_id);
                     IList<Item> temp_items = Database_Functions.GetItems(temp_group_id);
                     items = populateGroup(temp_items, temp_group_id);
                     //GlobalVars.itemsList.setProgressBar(false);
@@ -92,7 +92,7 @@ namespace BillSync
                     listPicker_contributors.ItemsSource = contributors;
                     //contributors = temp_memb;
                     memberAdded = true;
-               } 
+                }
 
                 textBox_groupName.Text = group_name.Text;
                 //List<ItemWrapper> source = new List<ItemWrapper>();
@@ -142,7 +142,7 @@ namespace BillSync
                 MessageBoxResult m1 = MessageBox.Show("Add a new member", "Add member", MessageBoxButton.OKCancel);
                 if (m1 == MessageBoxResult.OK)
                     NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
-                else if(m1 == MessageBoxResult.Cancel)
+                else if (m1 == MessageBoxResult.Cancel)
                     NavigationService.GoBack();
             }
             else if (first_load && items.Count == 0)
@@ -189,7 +189,7 @@ namespace BillSync
         {
             public BillGroup(string name, IEnumerable<T> items)
             {
-                this.Title = name.Substring(0,1);
+                this.Title = name.Substring(0, 1);
                 this.TileTitle = name.Substring(0, 1);
                 this.Items = new List<T>(items);
             }
@@ -427,10 +427,10 @@ namespace BillSync
         {
             int newGroup = Database_Functions.AddGroup(group_name.Text);
             this.group_name.Text = textBox_groupName.Text;
-            Member missing = findMissingMember(contributors);
+            //Member missing = findMissingMember(contributors);
 
-            if (missing != null)
-                Database_Functions.AddMember(group_id, missing.Name, missing.Email, missing.Phone);
+            //if (missing != null)
+            //    Database_Functions.AddMember(group_id, missing.Name, missing.Email, missing.Phone);
 
             if (isEditing)
             {
@@ -470,25 +470,25 @@ namespace BillSync
         {
             foreach (Member m in Database_Functions.GetAllMembers())
             {
-                if(m.Name.Equals(name))
+                if (m.Name.Equals(name))
                     return m;
             }
 
             return null;
         }
 
-        private Member findMissingMember(IList<Member> members)
-        {
-            IList<Member> temp = Database_Functions.GetActiveMembers(group_id);
+        //private Member findMissingMember(IList<Member> members)
+        //{
+        //    IList<Member> temp = Database_Functions.GetActiveMembers(group_id);
 
-            foreach (Member m in members)
-            {
-                if (!temp.Contains(m))
-                    return m;
-            }
+        //    foreach (Member m in members)
+        //    {
+        //        if (!temp.Contains(m))
+        //            return m;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         private int findItemID(string name, IList<Item> items)
         {

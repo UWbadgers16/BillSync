@@ -191,11 +191,9 @@ namespace BillSync
         private void GroupButton_Click(object sender, RoutedEventArgs e)
         {
             Button temp = (Button)sender;
-            if (temp.Background != null)
-            {
-                String pictureID = (String)temp.Tag;
-                NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
-            }
+            String pictureID = (String)temp.Tag;
+
+            NavigationService.Navigate(new Uri("/FullPicture.xaml?msg=" + pictureID, UriKind.Relative));
             //open larger picture
         }
 
@@ -233,9 +231,9 @@ namespace BillSync
             if (bimg != null)
             {
                 temp.ImageSource = bimg;
-                
+
                 RotateTransform aRotateTransform = new RotateTransform();
-                aRotateTransform.CenterX = 0.5; 
+                aRotateTransform.CenterX = 0.5;
                 aRotateTransform.CenterY = 0.5;
                 aRotateTransform.Angle = 90;
                 temp.RelativeTransform = aRotateTransform;
@@ -252,8 +250,17 @@ namespace BillSync
             //Items must be added in order by correct date, otherwise they will appear out of order.
             List<ItemWrapper> source = new List<ItemWrapper>();
             IList<Item> bills = Database_Functions.GetItems();
+
+            //ImageBrush i = new ImageBrush();
+            //i.ImageSource = getImageFromIsolatedStorage(6 + "_th.jpg");
+            //asdf.Background = i;
+            //Brush b;
+            //RotateTransform aRotateTransform = new RotateTransform();
+            //aRotateTransform.Angle = 90;
             foreach (Item bill in bills)
             {
+                //b = getImageFromIsolatedStorage(bill.ID + "_th.jpg");
+                //b.RelativeTransform = aRotateTransform;
                 source.Add(new ItemWrapper()
                 {
                     itemID = bill.ID.ToString(),

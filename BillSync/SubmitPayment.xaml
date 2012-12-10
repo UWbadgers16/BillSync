@@ -15,7 +15,7 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
-        
+
         <DataTemplate x:Name="ListPickerItemTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Title}" Margin="10 0 0 0"/>
@@ -25,6 +25,18 @@
         <DataTemplate x:Name="ListPickerFullModeItemTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Title}" FontSize="40" Margin="10 20 0 0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ListPickerMemberTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Margin="10 0 0 0"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ListPickerFullModeMemberTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" FontSize="40" Margin="10 20 0 0"/>
             </StackPanel>
         </DataTemplate>
 
@@ -44,9 +56,10 @@
 
         <!--ContentPanel - place additional content here-->
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBlock FontSize="48" Name="textBlock_name" Style="{StaticResource PhoneTextTitle1Style}" Text="name" />
+            <TextBlock Height="30" Name="textBlock0" Text="Members" Margin="12,30,0,0" FontSize="24" />
+            <toolkit:ListPicker x:Name="listPicker_members" ItemTemplate="{StaticResource ListPickerMemberTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeMemberTemplate}" FullModeHeader="MEMBERS" CacheMode="BitmapCache" Width="455" Margin="12,0,0,0" SelectionChanged="listPicker_members_SelectionChanged" />
             <TextBlock Height="30" Name="textBlock1" Text="Items" Margin="12,30,0,0" FontSize="24" />
-            <toolkit:ListPicker ItemCountThreshold="6" x:Name="listPicker_items" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="CONTRIBUTORS" CacheMode="BitmapCache" Width="455" Margin="12,0,0,0" />
+            <toolkit:ListPicker x:Name="listPicker_items" ItemTemplate="{StaticResource ListPickerItemTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeItemTemplate}" FullModeHeader="ITEMS" CacheMode="BitmapCache" Width="455" Margin="12,0,0,0" />
             <TextBlock Height="30" Name="textBlock2" Text="Payment" Margin="12,30,0,0" FontSize="24" />
             <TextBox InputScope="Number" Height="71" Name="textBox_payment" Text="" Width="467" />
         </StackPanel>

@@ -52,7 +52,7 @@ namespace BillSync
                 }
             }
         }
-        
+
         private void textBlock_newGroup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             this.IsEnabled = false;
@@ -89,7 +89,7 @@ namespace BillSync
 
         private void textBlock_submitPayment_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/People.xaml?msg=2&returnPage=/SubmitPayment.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/SubmitPayment.xaml", UriKind.Relative));
         }
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
@@ -107,6 +107,7 @@ namespace BillSync
         private void PanoramaItem_Loaded(object sender, RoutedEventArgs e)
         {
             IList<BitmapImage> images = getImages();
+
             image6.Source = images[0];
             image7.Source = images[1];
             image8.Source = images[2];
@@ -121,7 +122,7 @@ namespace BillSync
             IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
             filenames = pickImages(iso.GetFileNames());
             IList<BitmapImage> images = new List<BitmapImage>();
-            
+
             foreach (string file in filenames)
             {
                 BitmapImage bimg = new BitmapImage();
@@ -135,20 +136,6 @@ namespace BillSync
                 else
                     bimg = null;
 
-                if (bimg != null)
-                {
-                    temp.ImageSource = bimg;
-
-                    RotateTransform aRotateTransform = new RotateTransform();
-                    aRotateTransform.CenterX = 0.5;
-                    aRotateTransform.CenterY = 0.5;
-                    aRotateTransform.Angle = 90;
-                    temp.RelativeTransform = aRotateTransform;
-                }
-                else
-                {
-                    temp = null;
-                }
                 images.Add(bimg);
             }
 
@@ -229,7 +216,7 @@ namespace BillSync
 
             foreach (string file in files)
             {
-                if(file.Contains("_th.jpg"))
+                if (file.Contains("_th.jpg"))
                     thumbnails.Add(file);
             }
 

@@ -257,7 +257,7 @@ namespace BillSync
             IList<Item> bills = Database_Functions.GetItemsSortByDueDate();
             foreach (Item bill in bills)
             {
-                if ((Database_Functions.GetItemTotal(bill.ID) != 0) && (Database_Functions.GetItemCost(bill.ID) != 0))
+                if ((Database_Functions.GetItemCost(bill.ID) != 0) && (Database_Functions.GetItemCost(bill.ID) != 0))
                 {
                     source.Add(new ItemWrapper()
                     {

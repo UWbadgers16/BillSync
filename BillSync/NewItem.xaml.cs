@@ -17,12 +17,13 @@ namespace BillSync
     {
         IList<TextBlock> textBlocks = new List<TextBlock>();
         IList<TextBox> textBoxes = new List<TextBox>();
+        IList<ToggleSwitch> toggleSwitches = new List<ToggleSwitch>();
         Boolean specify_amount = false;
         //List<Member> source = new List<Member>();
         Boolean isEditing = false;
         NewGroup group;
         int item_id = -1;
-        IList<Member> members;
+        //IList<Member> members;
         //int group_id = -1;
 
         //public int Group_ID
@@ -70,8 +71,8 @@ namespace BillSync
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            members = GlobalVars.members;
-            GlobalVars.members = null;
+            //members = GlobalVars.members;
+            //GlobalVars.members = null;
 
             if (GlobalVars.item != null)
             {
@@ -91,14 +92,14 @@ namespace BillSync
                 isEditing = true;
                 GlobalVars.item = null;
             }
-            else if (GlobalVars.selectedMembers != null && GlobalVars.selectMode != null)
-            {
-                if (GlobalVars.selectMode.Equals("payers"))
-                    listPicker_payers.ItemsSource = GlobalVars.selectedMembers;
-                //else if(GlobalVars.selectMode.Equals("owers"))
-                GlobalVars.selectedMembers = null;
-                GlobalVars.selectMode = null;
-            }
+            //else if (GlobalVars.selectedMembers != null && GlobalVars.selectMode != null)
+            //{
+            //    if (GlobalVars.selectMode.Equals("payers"))
+            //        listPicker_payers.ItemsSource = GlobalVars.selectedMembers;
+            //    //else if(GlobalVars.selectMode.Equals("owers"))
+            //    GlobalVars.selectedMembers = null;
+            //    GlobalVars.selectMode = null;
+            //}
             else
             {
                 try
@@ -132,12 +133,14 @@ namespace BillSync
             if (!specify_amount)
             {
                 textBlocks[index].Visibility = Visibility.Visible;
+                toggleSwitches[index].Visibility = Visibility.Visible;
                 textBoxes[index].Visibility = Visibility.Visible;
                 specify_amount = true;
             }
             else
             {
                 textBlocks[index].Visibility = Visibility.Collapsed;
+                toggleSwitches[index].Visibility = Visibility.Collapsed;
                 textBoxes[index].Visibility = Visibility.Collapsed;
                 specify_amount = false;
             }
@@ -149,6 +152,7 @@ namespace BillSync
             {
                 collapseAll();
                 textBlocks[listPicker.SelectedIndex].Visibility = Visibility.Visible;
+                toggleSwitches[listPicker.SelectedIndex].Visibility = Visibility.Visible;
                 textBoxes[listPicker.SelectedIndex].Visibility = Visibility.Visible;
             }
         }
@@ -165,6 +169,7 @@ namespace BillSync
             for (int i = 0; i < listPicker.Items.Count; i++)
             {
                 textBlocks[i].Visibility = Visibility.Collapsed;
+                toggleSwitches[i].Visibility = Visibility.Collapsed;
                 textBoxes[i].Visibility = Visibility.Collapsed;
             }
         }
@@ -192,6 +197,13 @@ namespace BillSync
                 newBlock.Text = temp.Name;
                 //newBlock.Text = load.textBlocks[i].Text;
                 textBlocks.Add(newBlock);
+                ToggleSwitch toggle = new ToggleSwitch();
+                toggle.Content = "owe";
+                toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
+                toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
+                toggle.IsChecked = load.toggleSwitches[i].IsChecked;
+                toggle.Visibility = Visibility.Collapsed;
+                toggleSwitches.Add(toggle);
                 TextBox newBox = new TextBox();
                 newBox.Height = 71;
                 newBox.Width = 460;
@@ -203,9 +215,10 @@ namespace BillSync
                 newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
+                stackPanel_main.Children.Add(toggle);
                 stackPanel_main.Children.Add(newBox);
             }
-        } 
+        }
 
         private void checkBox_splitEven_Checked(object sender, RoutedEventArgs e)
         {
@@ -214,6 +227,7 @@ namespace BillSync
             if (index != -1)
             {
                 textBlocks[index].Visibility = Visibility.Collapsed;
+                toggleSwitches[index].Visibility = Visibility.Collapsed;
                 textBoxes[index].Visibility = Visibility.Collapsed;
                 specify_amount = false;
             }
@@ -227,7 +241,7 @@ namespace BillSync
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult m = MessageBox.Show("Would you like to save this item?", "Save item?", MessageBoxButton.OKCancel);
-           
+
             if (m == MessageBoxResult.OK)
                 saveItem();
             else
@@ -236,11 +250,20 @@ namespace BillSync
 
         private void saveItem()
         {
-            addMissingMembers();
-
+            //addMissingMembers();
+            IList<int> addMembers = new List<int>();
+            IList<Member> activeMembers = Database_Functions.GetActiveMembers(group.Group_ID);
+            IList<string> activeNames = new List<string>();
+            foreach (Member m in activeMembers)
+            {
+                activeNames.Add(m.Name);
+            }
+            foreach (Member m in activeMembers)
+            {
+                activeNames.Add(m.Name);
+            }
             if (checkFields())
             {
-                IList<Member> members = Database_Functions.GetActiveMembers(group.Group_ID);
                 this.item_name.Text = textBox_itemName.Text;
 
                 if (isEditing)
@@ -248,14 +271,27 @@ namespace BillSync
                     GlobalVars.editItem = this;
                     isEditing = false;
                     Database_Functions.EditItem(item_id, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
+                    foreach (Member m in (IList<Member>)listPicker.ItemsSource)
+                    {
+                        if (!activeNames.Contains(m.Name))
+                            addMembers.Add(Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone));
+                    }
+
+                    if(addMembers.Count != 0)
+                        addNewTransactions(addMembers);
                 }
                 else
                 {
                     item_id = Database_Functions.AddItem(group.Group_ID, textBox_itemName.Text, textBox_description.Text, datePicker_date.Value.Value);
                     GlobalVars.item = this;
+                    foreach (Member m in (IList<Member>)listPicker.ItemsSource)
+                    {
+                        addMembers.Add(Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone));
+                    }
+
+                    addTransactions(addMembers);
                 }
 
-                addTransactions(members);
                 NavigationService.GoBack();
             }
             else
@@ -274,6 +310,12 @@ namespace BillSync
                 temp = (Member)listPicker.Items[i];
                 newBlock.Text = temp.Name;
                 textBlocks.Add(newBlock);
+                ToggleSwitch toggle = new ToggleSwitch();
+                toggle.Content = "owe";
+                toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
+                toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
+                toggle.Visibility = Visibility.Collapsed;
+                toggleSwitches.Add(toggle);
                 TextBox newBox = new TextBox();
                 newBox.Height = 71;
                 newBox.Width = 460;
@@ -284,55 +326,97 @@ namespace BillSync
                 newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
+                stackPanel_main.Children.Add(toggle);
                 stackPanel_main.Children.Add(newBox);
             }
         }
 
-        private void addTransactions(IList<Member> members)
+        void toggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggle = (ToggleSwitch)sender;
+            toggle.Content = "owes";
+        }
+
+        void toggle_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggle = (ToggleSwitch)sender;
+            toggle.Content = "pays";
+        }
+
+        private void addTransactions(IList<int> members)
         {
             Database_Functions.DeleteTransactions(item_id);
             decimal total;
-            if(textBox_total.Text.Contains("$"))
+            if (textBox_total.Text.Contains("$"))
                 total = Decimal.Parse(textBox_total.Text.Substring(1));
             else
                 total = Decimal.Parse(textBox_total.Text);
             decimal split = total / members.Count;
+            decimal amount = split * -1;
             for (int i = 0; i < members.Count; i++)
             {
                 if (checkBox_splitEven.IsChecked == true)
-                    Database_Functions.AddTransaction(item_id, members[i].ID, split);
+                    Database_Functions.AddTransaction(item_id, members[i], split * -1);
                 else
                 {
                     Decimal temp;
                     Decimal.TryParse(textBoxes[i].Text, out temp);
-                    Database_Functions.AddTransaction(item_id, members[i].ID, temp);
+                    Database_Functions.AddTransaction(item_id, members[i], temp * -1);
+                }
+            }
+        }
+
+        private void addNewTransactions(IList<int> members)
+        {
+            decimal total;
+            if (textBox_total.Text.Contains("$"))
+                total = Decimal.Parse(textBox_total.Text.Substring(1));
+            else
+                total = Decimal.Parse(textBox_total.Text);
+            decimal split = total / members.Count;
+            decimal amount = split * -1;
+            for (int i = 0; i < members.Count; i++)
+            {
+                if (checkBox_splitEven.IsChecked == true)
+                    Database_Functions.AddTransaction(item_id, members[i], split * -1);
+                else
+                {
+                    Decimal temp;
+                    Decimal.TryParse(textBoxes[i].Text, out temp);
+                    Database_Functions.AddTransaction(item_id, members[i], temp * -1);
                 }
             }
         }
 
         private Boolean checkFields()
         {
+            Boolean allEmpty = true;
             if (textBox_description.Text == "")
                 return false;
             if (textBox_total.Text == "")
                 return false;
             if (listPicker.Items.Count == 0)
                 return false;
+            for (int i = 0; i < textBoxes.Count && allEmpty; i++)
+            {
+                if (textBoxes[i].Text != "")
+                    allEmpty = false;
+            }
+            if (checkBox_splitEven.IsChecked == false && allEmpty == true)
+                return false;
 
             return true;
         }
 
-        private void addMissingMembers()
-        {
-            IList<Member> activeMembers = Database_Functions.GetActiveMembers(group.Group_ID);
-
-            for (int i = 0; i < listPicker.Items.Count; i++)
-            {
-                Member m = (Member)listPicker.Items[i];
-                if (!findMember(m.Name, activeMembers))
-                    Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone);
-            }
-        }
+        //private void addMissingMembers()
+        //{
+        //    for (int i = 0; i < listPicker.Items.Count; i++)
+        //    {
+        //        Member m = (Member)listPicker.Items[i];
+        //        if (!findMember(m.Name, members))
+        //            Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone);
+        //    }
+        //}
 
         private Boolean findMember(string name, IList<Member> members)
         {
@@ -350,24 +434,24 @@ namespace BillSync
             NavigationService.Navigate(new Uri("/Camera.xaml?msg=" + item_id, UriKind.Relative));
         }
 
-        private void button_addPayer_Click(object sender, RoutedEventArgs e)
-        {
-            GlobalVars.members = members;
-            NavigationService.Navigate(new Uri("/SelectMembers.xaml?msg=" + "payers", UriKind.Relative));
-        }
+        //private void button_addPayer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    GlobalVars.members = members;
+        //    NavigationService.Navigate(new Uri("/SelectMembers.xaml?msg=" + "payers", UriKind.Relative));
+        //}
 
-        private void button_listPayers_Click(object sender, RoutedEventArgs e)
-        {
-            if (button_addPayer.Visibility == Visibility.Visible)
-            {
-                button_addPayer.Visibility = Visibility.Collapsed;
-                listPicker_payers.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                button_addPayer.Visibility = Visibility.Visible;
-                listPicker_payers.Visibility = Visibility.Visible;
-            }
-        }
+        //private void button_listPayers_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (button_addPayer.Visibility == Visibility.Visible)
+        //    {
+        //        button_addPayer.Visibility = Visibility.Collapsed;
+        //        listPicker_payers.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        button_addPayer.Visibility = Visibility.Visible;
+        //        listPicker_payers.Visibility = Visibility.Visible;
+        //    }
+        //}
     }
 }
