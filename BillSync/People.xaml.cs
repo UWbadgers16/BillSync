@@ -83,13 +83,22 @@ namespace BillSync
                             {
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/delete.png",
+<<<<<<< HEAD
                               //  GroupName = group_name
+=======
+                                //GroupName = group_name
+>>>>>>> Nothing
                             });
                             all.Add(new JumpList()
                             {
                                 Name = memb.Name,
+<<<<<<< HEAD
                                
                             //    GroupName = group_name
+=======
+                                SelectedComponentImage = "Images/delete.png",
+                                //GroupName = group_name
+>>>>>>> Nothing
                             });
 
                         }
@@ -100,15 +109,24 @@ namespace BillSync
 
                                 Name = memb.Name,
                                 SelectedComponentImage = "Images/add.png",
+<<<<<<< HEAD
                            //     GroupName = group_name
+=======
+                                //GroupName = group_name
+>>>>>>> Nothing
 
                             });
                             all.Add(new JumpList()
                             {
 
                                 Name = memb.Name,
+<<<<<<< HEAD
                               
                            //     GroupName = group_name
+=======
+                                SelectedComponentImage = "Images/add.png",
+                                //GroupName = group_name
+>>>>>>> Nothing
                             });
                         }
                         else
@@ -116,12 +134,20 @@ namespace BillSync
                             settled.Add(new JumpList()
                             {
                                 Name = memb.Name,
+<<<<<<< HEAD
                              //   GroupName = group_name
+=======
+                                //GroupName = group_name
+>>>>>>> Nothing
                             });
                             all.Add(new JumpList()
                             {
                                 Name = memb.Name,
+<<<<<<< HEAD
                             //    GroupName = group_name
+=======
+                                //GroupName = group_name
+>>>>>>> Nothing
                             });
                         }
 
