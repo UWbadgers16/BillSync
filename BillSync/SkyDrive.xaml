@@ -32,12 +32,9 @@
             </RichTextBox>
             
             <my:SignInButton Content="Button" Height="72" Width="160" Name="skydrive" Scopes="wl.basic wl.signin wl.offline_access wl.skydrive_update" SessionChanged="skydrive_SessionChanged" ClientId="000000004C0DDE16" Margin="148,189,148,383" />
-            <Button Content="Upload" Click="uploadButton_Click" Height="72" Width="160" Margin="148,293,148,279" />
-            <Button Content="Share" Click="shareButton_Click" Height="72" Width="160" Margin="148,394,148,178" />
-            <Button Content="Download" Click="shareButton_Click" Height="72" Width="180" Margin="148,483,148,89" />
-            <Button Content="Upload" Click="uploadButton_Click" Height="72" Width="180" Margin="0,293,0,279" />
-            <Button Content="Share" Click="shareButton_Click" Height="72" Width="180" Margin="0,394,0,178" />
-            <Button Content="Download" Click="shareButton_Click" Height="72" Width="180" Margin="0,483,0,89" />
+            <Button Content="Upload" Click="uploadButton_Click" Height="72" Width="160" Margin="148,292,148,280" />
+            <Button Content="Share" Click="shareButton_Click" Height="72" Width="160" Margin="148,396,148,176" />
+            <Button Content="Download" Click="shareButton_Click" Height="72" Width="200" Margin="128,497,128,75" />
         </Grid>
     </Grid>
  
