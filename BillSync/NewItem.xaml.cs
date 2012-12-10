@@ -277,8 +277,8 @@ namespace BillSync
                             addMembers.Add(Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone));
                     }
 
-                    if(addMembers.Count != 0)
-                        addNewTransactions(addMembers);
+                    //if(addMembers.Count != 0)
+                    //    addNewTransactions(addMembers);
                 }
                 else
                 {
@@ -289,9 +289,11 @@ namespace BillSync
                         addMembers.Add(Database_Functions.AddMember(group.Group_ID, m.Name, m.Email, m.Phone));
                     }
 
-                    addTransactions(addMembers);
+
+                    //addTransactions(addMembers);
                 }
 
+                addTransactions(Database_Functions.GetActiveMembers(group.Group_ID));
                 NavigationService.GoBack();
             }
             else
@@ -343,7 +345,7 @@ namespace BillSync
             toggle.Content = "pays";
         }
 
-        private void addTransactions(IList<int> members)
+        private void addTransactions(IList<Member> members)
         {
             Database_Functions.DeleteTransactions(item_id);
             decimal total;
@@ -356,12 +358,12 @@ namespace BillSync
             for (int i = 0; i < members.Count; i++)
             {
                 if (checkBox_splitEven.IsChecked == true)
-                    Database_Functions.AddTransaction(item_id, members[i], split * -1);
+                    Database_Functions.AddTransaction(item_id, members[i].ID, split * -1);
                 else
                 {
                     Decimal temp;
                     Decimal.TryParse(textBoxes[i].Text, out temp);
-                    Database_Functions.AddTransaction(item_id, members[i], temp * -1);
+                    Database_Functions.AddTransaction(item_id, members[i].ID, temp * -1);
                 }
             }
         }
