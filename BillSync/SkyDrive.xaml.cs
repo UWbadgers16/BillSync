@@ -15,6 +15,7 @@ using Microsoft.Live.Controls;
 using System.IO.IsolatedStorage;
 using System.IO;
 using Microsoft.Phone.Tasks;
+using System.Text.RegularExpressions;
 
 namespace BillSync
 {
@@ -22,6 +23,8 @@ namespace BillSync
     {
         private LiveConnectClient client;
         private LiveConnectSession session;
+        private string cid;
+        private string resid;
 
         public SkyDrive()
         {
@@ -131,11 +134,11 @@ namespace BillSync
                     {
                         LiveConnectClient liveClient = new LiveConnectClient(session);
                         liveClient.GetCompleted += new EventHandler<LiveOperationCompletedEventArgs>(shareLink_completed);
-                        liveClient.GetAsync(file_id + "/shared_read_link");
+                        liveClient.GetAsync(file_id + "/shared_edit_link");
                     }
                     catch (LiveConnectException exception)
                     {
-                        MessageBox.Show("Error getting shared read link: " + exception.Message);
+                        MessageBox.Show("Error getting shared edit link: " + exception.Message);
                     }
                 }
             }
@@ -144,6 +147,11 @@ namespace BillSync
         {
             if (e.Error == null)
             {
+                Regex regex = new Regex(@"cid=([^&]*)&resid=([^&]*)", RegexOptions.Compiled);
+                MatchCollection matches = regex.Matches((string)e.Result["link"]);
+                cid = matches[0].Groups[0].Value;
+                resid = matches[0].Groups[1].Value;
+                MessageBox.Show("cid: " + cid + "; resid: " + resid + ";");
                 EmailComposeTask email = new EmailComposeTask();
                 email.Body = "Click here to get the share link: " + (string)e.Result["link"];
                 email.Subject = "BillSync Share Link";
