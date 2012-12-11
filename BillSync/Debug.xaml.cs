@@ -44,5 +44,9 @@ namespace BillSync
             Database_Functions.test();
             MessageBox.Show("Successfully populated database.");
         }
+        private void emailButton_Click(object sender, EventArgs e)
+        {
+            Database_Functions.sendLedgerEmail(4);
+        }
     }
 }
