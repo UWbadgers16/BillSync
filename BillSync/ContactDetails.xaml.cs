@@ -38,7 +38,7 @@ namespace BillSync
                 trans += Database_Functions.GetMemberTotal(memb.ElementAt<Member>(i).ID);
             }
 
-            money_owed.Text = "$ " + trans.ToString();
+            money_owed.Text = "$ " + Math.Round(trans, 2);
         }
 
         private IList<Member> findMember(int count, string name, IList<Member> members)

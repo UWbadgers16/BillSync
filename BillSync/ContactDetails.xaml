@@ -23,7 +23,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,0">
-            <TextBlock x:Name="member_name" Text="member" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="member_name" Height="Auto" TextWrapping="Wrap" Text="member" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -33,12 +33,11 @@
 
            
 
-            <TextBlock Text="Phone Numbers" Margin="12,12,0,0"/>
+            <TextBlock Text="Phone Numbers" FontSize="24" Margin="12,12,0,0"/>
             <TextBlock x:Name="phone_number" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
-            <TextBlock Text="Email Addresses" Margin="12,12,0,0" />
+            <TextBlock Text="Email Addresses" FontSize="24" Margin="12,12,0,0" />
             <TextBlock x:Name="email_address" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
-
-            <TextBlock Text="Money Owed" Margin="-300,12,0,0" Height="44" Width="153" />
+            <TextBlock Text="Money Owed" Margin="12,12,0,0" FontSize="24" />
             <TextBlock x:Name="money_owed" Text=" " Margin="9,10,0,0" Height ="60" FontSize ="30" Style="{StaticResource PhoneTextTitle1Style}"/>
 
 
