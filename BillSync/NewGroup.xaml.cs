@@ -145,14 +145,14 @@ namespace BillSync
                 else if (m1 == MessageBoxResult.Cancel)
                     NavigationService.GoBack();
             }
-            else if (first_load && items.Count == 0)
-            {
-                MessageBoxResult m2 = MessageBox.Show("Add a new item", "Add Item", MessageBoxButton.OKCancel);
-                if (m2 == MessageBoxResult.OK)
-                    addItem();
-                else if (m2 == MessageBoxResult.Cancel)
-                    NavigationService.GoBack();
-            }
+            //else if (first_load && items.Count == 0)
+            //{
+            //    MessageBoxResult m2 = MessageBox.Show("Add a new item", "Add Item", MessageBoxButton.OKCancel);
+            //    if (m2 == MessageBoxResult.OK)
+            //        addItem();
+            //    else if (m2 == MessageBoxResult.Cancel)
+            //        NavigationService.GoBack();
+            //}
         }
 
         private void addItem()

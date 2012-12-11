@@ -17,7 +17,7 @@ namespace BillSync
     {
         IList<TextBlock> textBlocks = new List<TextBlock>();
         IList<TextBox> textBoxes = new List<TextBox>();
-        IList<ToggleSwitch> toggleSwitches = new List<ToggleSwitch>();
+        //IList<ToggleSwitch> toggleSwitches = new List<ToggleSwitch>();
         Boolean specify_amount = false;
         //List<Member> source = new List<Member>();
         Boolean isEditing = false;
@@ -133,14 +133,14 @@ namespace BillSync
             if (!specify_amount)
             {
                 textBlocks[index].Visibility = Visibility.Visible;
-                toggleSwitches[index].Visibility = Visibility.Visible;
+                //toggleSwitches[index].Visibility = Visibility.Visible;
                 textBoxes[index].Visibility = Visibility.Visible;
                 specify_amount = true;
             }
             else
             {
                 textBlocks[index].Visibility = Visibility.Collapsed;
-                toggleSwitches[index].Visibility = Visibility.Collapsed;
+                //toggleSwitches[index].Visibility = Visibility.Collapsed;
                 textBoxes[index].Visibility = Visibility.Collapsed;
                 specify_amount = false;
             }
@@ -152,7 +152,7 @@ namespace BillSync
             {
                 collapseAll();
                 textBlocks[listPicker.SelectedIndex].Visibility = Visibility.Visible;
-                toggleSwitches[listPicker.SelectedIndex].Visibility = Visibility.Visible;
+                //toggleSwitches[listPicker.SelectedIndex].Visibility = Visibility.Visible;
                 textBoxes[listPicker.SelectedIndex].Visibility = Visibility.Visible;
             }
         }
@@ -169,7 +169,7 @@ namespace BillSync
             for (int i = 0; i < listPicker.Items.Count; i++)
             {
                 textBlocks[i].Visibility = Visibility.Collapsed;
-                toggleSwitches[i].Visibility = Visibility.Collapsed;
+                //toggleSwitches[i].Visibility = Visibility.Collapsed;
                 textBoxes[i].Visibility = Visibility.Collapsed;
             }
         }
@@ -197,13 +197,13 @@ namespace BillSync
                 newBlock.Text = temp.Name;
                 //newBlock.Text = load.textBlocks[i].Text;
                 textBlocks.Add(newBlock);
-                ToggleSwitch toggle = new ToggleSwitch();
-                toggle.Content = "owe";
-                toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
-                toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
-                toggle.IsChecked = load.toggleSwitches[i].IsChecked;
-                toggle.Visibility = Visibility.Collapsed;
-                toggleSwitches.Add(toggle);
+                //ToggleSwitch toggle = new ToggleSwitch();
+                //toggle.Content = "owe";
+                //toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
+                //toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
+                //toggle.IsChecked = load.toggleSwitches[i].IsChecked;
+                //toggle.Visibility = Visibility.Collapsed;
+                //toggleSwitches.Add(toggle);
                 TextBox newBox = new TextBox();
                 newBox.Height = 71;
                 newBox.Width = 460;
@@ -215,7 +215,7 @@ namespace BillSync
                 newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
-                stackPanel_main.Children.Add(toggle);
+                //stackPanel_main.Children.Add(toggle);
                 stackPanel_main.Children.Add(newBox);
             }
         }
@@ -227,7 +227,7 @@ namespace BillSync
             if (index != -1)
             {
                 textBlocks[index].Visibility = Visibility.Collapsed;
-                toggleSwitches[index].Visibility = Visibility.Collapsed;
+                //toggleSwitches[index].Visibility = Visibility.Collapsed;
                 textBoxes[index].Visibility = Visibility.Collapsed;
                 specify_amount = false;
             }
@@ -312,12 +312,12 @@ namespace BillSync
                 temp = (Member)listPicker.Items[i];
                 newBlock.Text = temp.Name;
                 textBlocks.Add(newBlock);
-                ToggleSwitch toggle = new ToggleSwitch();
-                toggle.Content = "owe";
-                toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
-                toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
-                toggle.Visibility = Visibility.Collapsed;
-                toggleSwitches.Add(toggle);
+                //ToggleSwitch toggle = new ToggleSwitch();
+                //toggle.Content = "owe";
+                //toggle.Checked += new EventHandler<RoutedEventArgs>(toggle_Checked);
+                //toggle.Unchecked += new EventHandler<RoutedEventArgs>(toggle_Unchecked);
+                //toggle.Visibility = Visibility.Collapsed;
+                //toggleSwitches.Add(toggle);
                 TextBox newBox = new TextBox();
                 newBox.Height = 71;
                 newBox.Width = 460;
@@ -328,22 +328,22 @@ namespace BillSync
                 newBox.InputScope = new InputScope() { Names = { new InputScopeName() { NameValue = InputScopeNameValue.Number } } };
                 textBoxes.Add(newBox);
                 stackPanel_main.Children.Add(newBlock);
-                stackPanel_main.Children.Add(toggle);
+                //stackPanel_main.Children.Add(toggle);
                 stackPanel_main.Children.Add(newBox);
             }
         }
 
-        void toggle_Unchecked(object sender, RoutedEventArgs e)
-        {
-            ToggleSwitch toggle = (ToggleSwitch)sender;
-            toggle.Content = "owes";
-        }
+        //void toggle_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    ToggleSwitch toggle = (ToggleSwitch)sender;
+        //    toggle.Content = "owes";
+        //}
 
-        void toggle_Checked(object sender, RoutedEventArgs e)
-        {
-            ToggleSwitch toggle = (ToggleSwitch)sender;
-            toggle.Content = "pays";
-        }
+        //void toggle_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    ToggleSwitch toggle = (ToggleSwitch)sender;
+        //    toggle.Content = "pays";
+        //}
 
         private void addTransactions(IList<Member> members)
         {
