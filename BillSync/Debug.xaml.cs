@@ -38,7 +38,7 @@ namespace BillSync
         private void populateButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Populating database.");
-            deleteDB();
+            populateDB();
         }
         private void populateDB(){
             Database_Functions.test();
