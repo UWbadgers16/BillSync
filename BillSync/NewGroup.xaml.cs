@@ -24,6 +24,7 @@ namespace BillSync
         IList<Member> contributors = new List<Member>();
         Boolean isEditing = false;
         Boolean memberAdded = false;
+        Boolean backButtonPressed = false;
 
         public IList<Member> Members
         {
@@ -251,6 +252,7 @@ namespace BillSync
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
+            backButtonPressed = true;
             if (newItemName.IsOpen)
             {
                 if (!first_load)
@@ -274,7 +276,7 @@ namespace BillSync
                 if (m == MessageBoxResult.OK)
                     saveGroup();
                 else
-                    base.OnBackKeyPress(e);
+                    NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
 
                 //base.OnBackKeyPress(e);
             }
@@ -468,10 +470,14 @@ namespace BillSync
             if (isEditing)
             {
                 isEditing = false;
-                NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
+                if (backButtonPressed)
+                    NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
             }
             else
-                NavigationService.GoBack();
+            {
+                if (backButtonPressed)
+                    NavigationService.GoBack();
+            }
         }
 
         //private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)
