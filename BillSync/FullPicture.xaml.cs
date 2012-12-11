@@ -23,6 +23,12 @@ namespace BillSync
         double initialScale;
         double initialTranslateX;
         double initialTranslateY;
+        double startTranslateX;
+        double startTranslateY;
+        double startAngle;
+        double startScaleX;
+        double startScaleY;
+        System.Windows.Thickness startMargin;
 
         public FullPicture()
         {
@@ -38,6 +44,23 @@ namespace BillSync
             aRotateTransform.Angle = 90;
             transform.Rotation = 90;
             this.thePicture.Source = getImageSourceFromIsolatedStorage(msg + ".jpg");
+            startMargin = this.thePicture.Margin;
+            startTranslateX = transform.TranslateX;
+            startTranslateY = transform.TranslateY;
+            startAngle = transform.Rotation;
+            startScaleX = transform.ScaleX;
+            startScaleY = transform.ScaleY;
+
+        }
+
+        private void GestureListener_DoubleTap(object sender, Microsoft.Phone.Controls.GestureEventArgs e)
+        {
+            this.thePicture.Margin = startMargin;
+            transform.TranslateX = startTranslateX;
+            transform.TranslateX = startTranslateY;
+            transform.Rotation = startAngle;
+            transform.ScaleX = startScaleX;
+            transform.ScaleY = startScaleY;
         }
         private void GestureListener_DragStarted(object sender, DragStartedGestureEventArgs e)
         {

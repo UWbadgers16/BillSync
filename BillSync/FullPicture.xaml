@@ -17,6 +17,9 @@
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <toolkit:GestureService.GestureListener>
+           <toolkit:GestureListener DoubleTap="GestureListener_DoubleTap"/>
+        </toolkit:GestureService.GestureListener>
         <!--<Image x:Name="thePicture" Height="360" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Center" Width="480" />-->
         <Image x:Name="thePicture" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
             <Image.RenderTransform>
