@@ -16,7 +16,6 @@ namespace BillSync
     public partial class NewMember : PhoneApplicationPage
     {
         Group new_group = new Group();
-        bool newMem;
         IList<Group> grp = Database_Functions.GetGroups();
         public NewMember()
         {
@@ -37,11 +36,12 @@ namespace BillSync
             //    //new_group = (Group)listPicker_group.SelectedItem;
             //    Database_Functions.AddMember(new_group.ID, textBox_name.Text, textBox_email.Text, textBox_phone.Text);
             //    NavigationService.Navigate(new Uri("/People.xaml", UriKind.Relative));
-            //}    
-            GlobalVars.member = new Member();
-            GlobalVars.member.Name = textBox_name.Text;
-            GlobalVars.member.Email = textBox_email.Text;
-            GlobalVars.member.Phone = textBox_phone.Text;
+            //} 
+            Member m = new Member();
+            m.Name = textBox_name.Text;
+            m.Email = textBox_email.Text;
+            m.Phone = textBox_phone.Text;
+            GlobalVars.member = m;
             NavigationService.GoBack();
         }
         private void textBox_name_Tap(object sender, EventArgs e)

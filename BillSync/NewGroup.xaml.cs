@@ -49,6 +49,7 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
             this.billListGroup.IsEnabled = true;
+            listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
 
             if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1 || GlobalVars.member != null)
             {
@@ -331,8 +332,33 @@ namespace BillSync
         private void button_deactivateContributors_Click(object sender, RoutedEventArgs e)
         {
             Member selected = (Member)listPicker_contributors.SelectedItem;
-            Database_Functions.setMemberActivity(selected.ID, false);
-            listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
+            IList<Item> memberItems = Database_Functions.GetOwedItems(selected.ID);
+            Boolean canDeactivate = false;
+            Boolean stop = false;
+            for (int i = 0; i < memberItems.Count && !stop; i++)
+            {
+                if (memberItems[i].GroupID == group_id)
+                {
+                    IList<Transaction> itemTransactions = Database_Functions.GetItemTransactions(memberItems[i].ID);
+                    foreach (Transaction t in itemTransactions)
+                    {
+                        if (t.MemberID == selected.ID)
+                        {
+                            stop = true;
+                            if (t.Amount >= 0)
+                                canDeactivate = true;
+                        }
+                    }
+                }
+            }
+
+            if (canDeactivate)
+            {
+                Database_Functions.setMemberActivity(selected.ID, false);
+                listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
+            }
+            else
+                MessageBox.Show("Member still owes in this group", "Member owes", MessageBoxButton.OK);
         }
 
         private IList<NewItem> populateGroup(IList<Item> items, int group_id)

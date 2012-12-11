@@ -310,8 +310,11 @@ namespace BillSync
                 {
                     IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
 
-                    iso.MoveFile(fileNameFull, item_id.ToString() + ".jpg");
-                    iso.MoveFile(fileNameThumb, item_id.ToString() + "_th.jpg");
+                    if (!(iso.FileExists(item_id.ToString() + ".jpg") || iso.FileExists(item_id.ToString() + "_th.jpg")))
+                    {
+                        iso.MoveFile(fileNameFull, item_id.ToString() + ".jpg");
+                        iso.MoveFile(fileNameThumb, item_id.ToString() + "_th.jpg");
+                    }
                 }
                 NavigationService.GoBack();
             }
