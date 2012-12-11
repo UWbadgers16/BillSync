@@ -257,7 +257,10 @@ namespace BillSync
             if (m == MessageBoxResult.OK)
                 saveItem();
             else
+            {
+                GlobalVars.members = (IList<Member>)listPicker.ItemsSource;
                 base.OnBackKeyPress(e);
+            }
         }
 
         private void saveItem()

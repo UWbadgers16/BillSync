@@ -49,7 +49,13 @@ namespace BillSync
         {
             base.OnNavigatedTo(e);
             this.billListGroup.IsEnabled = true;
-            listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
+            if (GlobalVars.members != null)
+            {
+                listPicker_contributors.ItemsSource = GlobalVars.members;
+                GlobalVars.members = null;
+            }
+            else
+                listPicker_contributors.ItemsSource = Database_Functions.GetActiveMembers(group_id);
 
             if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1 || GlobalVars.member != null)
             {
