@@ -579,7 +579,7 @@ namespace BillSync
             int item6 = AddItem(group1, "Booze", "halloween party", DateTime.Parse("2013-04-01 7:34:42Z"));
             int item7 = AddItem(group1, "N64", "", DateTime.Parse("2013-06-01 7:34:42Z"));
             int item8 = AddItem(group1, "Super Smash Bros 64", "", DateTime.Parse("2013-10-01 7:34:42Z"));
-            int item10 = AddItem(group4, "Uhaul", "", DateTime.Now);
+            int item10 = AddItem(group4, "Food", "", DateTime.Now);
             int item11 = AddItem(group4, "Walmart", "", DateTime.Now);
             int item12 = AddItem(group4, "Groceries", "", DateTime.Now);
             int item13 = AddItem(group4, "Rice Cooker", "", DateTime.Now);

@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-
 using Microsoft.Devices;
 using System.IO;
 using System.IO.IsolatedStorage;

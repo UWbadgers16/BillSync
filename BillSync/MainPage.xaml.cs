@@ -22,6 +22,12 @@ using System.IO.IsolatedStorage;
 using System.IO;
 using Microsoft.Live;
 using Microsoft.Live.Controls;
+using System.IO.IsolatedStorage;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Resources;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Phone.Tasks;
 
 namespace BillSync
 {
@@ -106,14 +112,29 @@ namespace BillSync
 
         private void PanoramaItem_Loaded(object sender, RoutedEventArgs e)
         {
-            IList<BitmapImage> images = getImages();
+            IList<BitmapImage> isoImages = getImages();
+            IList<Image> images = new List<Image>();
+            images.Add(image6);
+            images.Add(image7);
+            images.Add(image8);
+            images.Add(image9);
+            images.Add(image10);
+            images.Add(image11);
+            WriteableBitmap wmp;
 
-            image6.Source = images[0];
-            image7.Source = images[1];
-            image8.Source = images[2];
-            image9.Source = images[3];
-            image10.Source = images[4];
-            image11.Source = images[5];
+            for (int i = 0; i < isoImages.Count; i++)
+            {
+                if (isoImages[i] != null)
+                {
+                    wmp = new WriteableBitmap(isoImages[i]);
+                    wmp = wmp.Rotate(90);
+                    images[i].Source = wmp;
+                }
+                else
+                {
+                    images[i].Source = isoImages[i];
+                }
+            }
         }
 
         private IList<BitmapImage> getImages()

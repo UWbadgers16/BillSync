@@ -50,7 +50,7 @@ namespace BillSync
             base.OnNavigatedTo(e);
             this.billListGroup.IsEnabled = true;
 
-            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1 || GlobalVars.member_name != null)
+            if (GlobalVars.item != null || GlobalVars.items != null || GlobalVars.editItem != null || GlobalVars.group_id != -1 || GlobalVars.member != null)
             {
                 if (GlobalVars.item != null)
                 {
@@ -81,11 +81,11 @@ namespace BillSync
                     //GlobalVars.itemsList.setProgressBar(false);
                     //GlobalVars.itemsList = null;
                 }
-                else if (GlobalVars.member_name != null)
+                else if (GlobalVars.member != null)
                 {
                     //IList<Member> temp_memb = Database_Functions.GetActiveMembers(group_id);
-                    Member m = getMemberByName(GlobalVars.member_name);
-                    GlobalVars.member_name = null;
+                    Member m = GlobalVars.member;
+                    GlobalVars.member = null;
                     contributors.Add(m);
                     //temp_memb.Add(findMissingMember(m));
                     listPicker_contributors.ItemsSource = null;
@@ -141,7 +141,7 @@ namespace BillSync
             {
                 MessageBoxResult m1 = MessageBox.Show("Add a new member", "Add member", MessageBoxButton.OKCancel);
                 if (m1 == MessageBoxResult.OK)
-                    NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/NewMember.xaml", UriKind.Relative));
                 else if (m1 == MessageBoxResult.Cancel)
                     NavigationService.GoBack();
             }
@@ -325,7 +325,7 @@ namespace BillSync
 
         private void button_addContributors_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/People.xaml?msg=" + "2", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/NewMember.xaml", UriKind.Relative));
         }
 
         private void button_deactivateContributors_Click(object sender, RoutedEventArgs e)
@@ -432,11 +432,11 @@ namespace BillSync
             //if (missing != null)
             //    Database_Functions.AddMember(group_id, missing.Name, missing.Email, missing.Phone);
 
-            if (isEditing)
-            {
+            //if (isEditing)
+            //{
                 Database_Functions.EditGroup(group_id, textBox_groupName.Text);
-                isEditing = false;
-            }
+                //isEditing = false;
+            //}
 
             NavigationService.GoBack();
         }

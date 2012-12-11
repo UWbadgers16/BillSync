@@ -33,7 +33,7 @@
         <!--Pivot Control-->
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,10,0,28" >
-            <TextBlock x:Name="member_name" Text="new member" FontSize="50" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Height="63" />
+            <TextBlock x:Name="member_name" Text="new member" FontSize="72" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Height="94" />
             
             <TextBlock Height="30" Name="textBlock_members" Text="Name" FontSize="20" Margin="12,0,0,0" />
             <TextBox InputScope="Text" Height="Auto" Name="textBox_name" Tap="textBox_name_Tap"  Text="" Margin="2,0,6,0" />
@@ -44,9 +44,9 @@
             <TextBlock Height="30" Name="textBlock_phone" Text="Phone Number" FontSize="20" Margin="12,0,0,0" />
             <TextBox InputScope="Text" Height="Auto" HorizontalAlignment="Stretch" Name="textBox_phone" Tap="textBox_phone_Tap"  Text="" VerticalAlignment="Top" Margin="2,0,6,0" />
 
-            <TextBlock Height="30" Text="Group" FontSize="20" Margin="12,0,0,0" />
-            <toolkit:ListPicker x:Name="listPicker_group" ItemTemplate="{StaticResource ListPickerGroupTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeGroupTemplate}" FullModeHeader="GROUPS" CacheMode="BitmapCache" Width="439" Margin="-10,0,0,0" />
-            <Button Content="Add members" Height="73" Name="button_addMember" Width="467" Click="button_addMembers_Click" Margin="0,10,0,0" />
+            <!--<TextBlock Height="30" Text="Group" FontSize="20" Margin="12,0,0,0" />
+            <toolkit:ListPicker x:Name="listPicker_group" ItemTemplate="{StaticResource ListPickerGroupTemplate}" FullModeItemTemplate="{StaticResource ListPickerFullModeGroupTemplate}" FullModeHeader="GROUPS" CacheMode="BitmapCache" Width="439" Margin="-10,0,0,0" />-->
+            <Button Content="Add member" Height="73" Name="button_addMember" Width="467" Click="button_addMembers_Click" Margin="0,10,0,0" />
         </StackPanel>
     </Grid>
 
