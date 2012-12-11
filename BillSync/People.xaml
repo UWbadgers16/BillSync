@@ -105,9 +105,5 @@
     </Grid>
 
     <!--Panorama-based applications should not show an ApplicationBar-->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/add.png" Click="ApplicationBarIconButton_Click"  Text="add member"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    
 </phone:PhoneApplicationPage>
