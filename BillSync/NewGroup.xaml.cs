@@ -432,13 +432,14 @@ namespace BillSync
             //if (missing != null)
             //    Database_Functions.AddMember(group_id, missing.Name, missing.Email, missing.Phone);
 
-            //if (isEditing)
-            //{
-                Database_Functions.EditGroup(group_id, textBox_groupName.Text);
-                //isEditing = false;
-            //}
-
-            NavigationService.GoBack();
+            Database_Functions.EditGroup(group_id, textBox_groupName.Text);
+            if (isEditing)
+            {
+                isEditing = false;
+                NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
+            }
+            else
+                NavigationService.GoBack();
         }
 
         //private void listPicker_contributors_Hold(object sender, System.Windows.Input.GestureEventArgs e)

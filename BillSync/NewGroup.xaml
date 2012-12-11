@@ -109,7 +109,6 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Images/save.png" Click="ApplicationBarSaveButton_Click"  Text="save group"/>
             <shell:ApplicationBarIconButton IconUri="/Images/add.png" Click="ApplicationBarAddButton_Click"  Text="add"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/delete.png" Click="ApplicationBarDeleteButton_Click"  Text="delete"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

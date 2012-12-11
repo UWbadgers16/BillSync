@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using System.Windows.Media.Imaging;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace BillSync
 {
@@ -23,6 +26,8 @@ namespace BillSync
         Boolean isEditing = false;
         NewGroup group;
         int item_id = -1;
+        string fileNameFull = null;
+        string fileNameThumb = null;
         //IList<Member> members;
         //int group_id = -1;
 
@@ -91,6 +96,13 @@ namespace BillSync
                 loadSpecifics(load);
                 isEditing = true;
                 GlobalVars.item = null;
+            }
+            else if(GlobalVars.fileNameFull != null || GlobalVars.fileNameThumb != null)
+            {
+                fileNameFull = GlobalVars.fileNameFull;
+                GlobalVars.fileNameFull = null;
+                fileNameThumb = GlobalVars.fileNameThumb;
+                GlobalVars.fileNameThumb = null;
             }
             //else if (GlobalVars.selectedMembers != null && GlobalVars.selectMode != null)
             //{
@@ -294,6 +306,13 @@ namespace BillSync
                 }
 
                 addTransactions(Database_Functions.GetActiveMembers(group.Group_ID));
+                if (fileNameFull != null || fileNameThumb != null)
+                {
+                    IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
+
+                    iso.MoveFile(fileNameFull, item_id.ToString() + ".jpg");
+                    iso.MoveFile(fileNameThumb, item_id.ToString() + "_th.jpg");
+                }
                 NavigationService.GoBack();
             }
             else
@@ -393,8 +412,6 @@ namespace BillSync
         private Boolean checkFields()
         {
             Boolean allEmpty = true;
-            if (textBox_description.Text == "")
-                return false;
             if (textBox_total.Text == "")
                 return false;
             if (listPicker.Items.Count == 0)

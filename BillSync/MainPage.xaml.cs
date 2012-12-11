@@ -54,6 +54,7 @@ namespace BillSync
                     Database_Functions.test();
                 }
             }
+            //deleteIsolatedStorage();
         }
 
         private void textBlock_newGroup_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -109,79 +110,77 @@ namespace BillSync
 
         private void PanoramaItem_Loaded(object sender, RoutedEventArgs e)
         {
-            //IList<BitmapImage> isoImages = getImages();
-            //IList<Image> images = new List<Image>();
-            //images.Add(image6);
-            //images.Add(image7);
-            //images.Add(image8);
-            //images.Add(image9);
-            //images.Add(image10);
-            //images.Add(image11);
-            //WriteableBitmap wmp;
+            IList<BitmapImage> isoImages = getImages();
+            IList<Image> images = new List<Image>();
+            images.Add(image6);
+            images.Add(image7);
+            images.Add(image8);
+            images.Add(image9);
+            images.Add(image10);
+            images.Add(image11);
+            WriteableBitmap wmp;
 
-            //for (int i = 0; i < isoImages.Count; i++)
-            //{
-            //    if (isoImages[i] != null)
-            //    {
-            //        wmp = new WriteableBitmap(isoImages[i]);
-            //        wmp = wmp.Rotate(90);
-            //        images[i].Source = wmp;
-            //    }
-            //    else
-            //    {
-            //        images[i].Source = isoImages[i];
-            //    }
-            //}
+            for (int i = 0; i < isoImages.Count; i++)
+            {
+                if (isoImages[i] != null)
+                {
+                    wmp = new WriteableBitmap(isoImages[i]);
+                    wmp = wmp.Rotate(90);
+                    images[i].Source = wmp;
+                }
+                else
+                {
+                    images[i].Source = isoImages[i];
+                }
+            }
         }
 
         private IList<BitmapImage> getImages()
         {
-            //ImageBrush temp = new ImageBrush();
-            //IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
-            //filenames = pickImages(iso.GetFileNames());
-            //IList<BitmapImage> images = new List<BitmapImage>();
+            ImageBrush temp = new ImageBrush();
+            IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
+            filenames = pickImages(iso.GetFileNames());
+            IList<BitmapImage> images = new List<BitmapImage>();
 
-            //foreach (string file in filenames)
-            //{
-            //    BitmapImage bimg = new BitmapImage();
-            //    if (iso.FileExists(file))
-            //    {
-            //        using (IsolatedStorageFileStream stream = iso.OpenFile(file, FileMode.Open, FileAccess.Read))
-            //        {
-            //            bimg.SetSource(stream);
-            //        }
-            //    }
-            //    else
-            //        bimg = null;
+            foreach (string file in filenames)
+            {
+                BitmapImage bimg = new BitmapImage();
+                if (iso.FileExists(file))
+                {
+                    using (IsolatedStorageFileStream stream = iso.OpenFile(file, FileMode.Open, FileAccess.Read))
+                    {
+                        bimg.SetSource(stream);
+                    }
+                }
+                else
+                    bimg = null;
 
-            //    images.Add(bimg);
-            //}
+                images.Add(bimg);
+            }
 
-            //return images;
-            return null;
+            return images;
         }
 
         private string[] pickImages(string[] files)
         {
-            //string[] filenames = new string[6];
-            //IList<string> thumbnails = findThumbnails(files);
-            //Random rand = new Random();
-            //IList<int> index = new List<int>();
-            //int temp;
+            string[] filenames = new string[6];
+            IList<string> thumbnails = findThumbnails(files);
+            Random rand = new Random();
+            IList<int> index = new List<int>();
+            int temp;
 
-            //for (int i = 0; i < thumbnails.Count && i < filenames.Length; i++)
-            //{
-            //    temp = rand.Next(thumbnails.Count);
+            for (int i = 0; i < thumbnails.Count && i < filenames.Length; i++)
+            {
+                temp = rand.Next(thumbnails.Count);
 
-            //    while (index.Contains(temp))
-            //        temp = rand.Next(thumbnails.Count);
+                while (index.Contains(temp))
+                    temp = rand.Next(thumbnails.Count);
 
-            //    filenames[i] = thumbnails[temp];
-            //    index.Add(temp);
-            //}
+                filenames[i] = thumbnails[temp];
+                index.Add(temp);
+            }
 
-            //return filenames;
-            return null;
+            return filenames;
         }
 
         private void image6_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -241,6 +240,16 @@ namespace BillSync
             }
 
             return thumbnails;
+        }
+
+        private void deleteIsolatedStorage()
+        {
+            IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
+            string[] filenames = iso.GetFileNames();
+            foreach (string file in filenames)
+            {
+                iso.DeleteFile(file);
+            }
         }
     }
 }

@@ -197,6 +197,8 @@ namespace BillSync
         void cam_CaptureImageAvailable(object sender, Microsoft.Devices.ContentReadyEventArgs e)
         {
             string completeName = filename + ".jpg";
+            if (filename.Equals("-1"))
+                GlobalVars.fileNameFull = completeName;
 
             try
             {   // Write message to the UI thread.
@@ -255,6 +257,8 @@ namespace BillSync
         public void cam_CaptureThumbnailAvailable(object sender, ContentReadyEventArgs e)
         {
             string completeName = filename + "_th.jpg";
+            if (filename.Equals("-1"))
+                GlobalVars.fileNameThumb = completeName;
 
             try
             {
