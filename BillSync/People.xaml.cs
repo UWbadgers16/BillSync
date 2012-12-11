@@ -236,10 +236,7 @@ namespace BillSync
 
         }
 
-        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/NewMember.xaml?", UriKind.Relative));
-        }
+        
         private int findMember(string name)
         {
             IList<Member> members = Database_Functions.GetAllMembers();
