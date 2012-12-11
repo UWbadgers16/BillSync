@@ -44,14 +44,6 @@ namespace BillSync
                 {
                     // create database if it does not exist
                     context.CreateDatabase();
-                    Database_Functions.test();
-                }
-                else
-                { // debug
-                    //MessageBox.Show("deleting db");
-                    context.DeleteDatabase();
-                    context.CreateDatabase();
-                    Database_Functions.test();
                 }
             }
             //deleteIsolatedStorage();
@@ -227,6 +219,11 @@ namespace BillSync
         private void textBlock_syncing_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             NavigationService.Navigate(new Uri("/SkyDrive.xaml", UriKind.Relative));
+        }
+
+        private void textBlock_debug_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Debug.xaml", UriKind.Relative));
         }
 
         private IList<string> findThumbnails(string[] files)
