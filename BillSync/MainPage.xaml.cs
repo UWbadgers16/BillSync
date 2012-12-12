@@ -98,6 +98,15 @@ namespace BillSync
             }
             else
                 base.OnBackKeyPress(e);
+            //{
+            //    e.Cancel = true;
+            //    MessageBoxResult m = MessageBox.Show("Are you sure you want to exit?", "Exit?", MessageBoxButton.OKCancel);
+            //    if (m == MessageBoxResult.OK)
+            //    {
+            //        NavigationService.RemoveBackEntry();
+            //        NavigationService.GoBack();
+            //    }
+            //}
         }
 
         private void PanoramaItem_Loaded(object sender, RoutedEventArgs e)

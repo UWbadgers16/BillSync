@@ -276,8 +276,8 @@ namespace BillSync
                 if (m == MessageBoxResult.OK)
                     saveGroup();
                 else
-                    NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
-
+                    //NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
+                    NavigationService.GoBack();
                 //base.OnBackKeyPress(e);
             }
         }
@@ -471,7 +471,8 @@ namespace BillSync
             {
                 isEditing = false;
                 if (backButtonPressed)
-                    NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
+                    //NavigationService.Navigate(new Uri("/ItemsList.xaml", UriKind.Relative));
+                    NavigationService.GoBack();
             }
             else
             {

@@ -30,9 +30,10 @@
             <RichTextBox Margin="0,0,0,488">
                 <Paragraph>Click the buttons below to populate the database with some test data or delete the database. If you accidently delete the database and have it backed up on SkyDrive, go to the SkyDrive page and click the download button.</Paragraph>
             </RichTextBox>
-            <Button Content="Populate DB" Click="populateButton_Click" Height="72" Width="200" Margin="108,258,108,304" />
-            <Button Content="Delete DB" Click="deleteButton_Click" Height="72" Width="200" Margin="108,362,108,200" />
-            <Button Content="Email Ledger" Click="emailButton_Click" Height="72" Width="200" Margin="128,466,128,96" />
+            <Button Content="Populate DB" Click="populateButton_Click" Height="72" Width="200" Margin="125,185,131,377" />
+            <Button Content="Delete DB" Click="deleteButton_Click" Height="72" Width="200" Margin="125,289,131,273" />
+            <Button Content="Email Ledger" Click="emailButton_Click" Height="72" Width="200" Margin="125,0,131,73" VerticalAlignment="Bottom" />
+            <Button Content="Clear Storage" Height="Auto" Margin="117,391,125,171" Click="clearStorageButton_Click" />
         </Grid>
     </Grid>
  

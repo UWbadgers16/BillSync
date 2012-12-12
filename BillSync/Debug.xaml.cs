@@ -10,6 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using System.Windows.Media.Imaging;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace BillSync
 {
@@ -47,6 +50,22 @@ namespace BillSync
         private void emailButton_Click(object sender, EventArgs e)
         {
             Database_Functions.sendLedgerEmail(4);
+        }
+
+        private void clearStorageButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Clearing storage");
+            deleteIsolatedStorage();
+        }
+
+        private void deleteIsolatedStorage()
+        {
+            IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
+            string[] filenames = iso.GetFileNames();
+            foreach (string file in filenames)
+            {
+                iso.DeleteFile(file);
+            }
         }
     }
 }

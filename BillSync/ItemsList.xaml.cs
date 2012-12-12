@@ -26,7 +26,6 @@ namespace BillSync
         public ItemsList()
         {
             InitializeComponent();
-            progressBar.Visibility = Visibility.Visible;
         }
 
         //public void setProgressBar(Boolean on)
@@ -43,8 +42,8 @@ namespace BillSync
         //    }
         //}
 
-        //protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
-        //{
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
         //base.OnNavigatedTo(e);
 
         ////Items must be added in order by correct date, otherwise they will appear out of order.
@@ -83,7 +82,9 @@ namespace BillSync
         //    GlobalVars.main = null;
         //    main.setProgressBar(false);
         //}
-        //}
+            ContentPanel.Children.Remove(transListGroup);
+            progressBar.Visibility = Visibility.Visible;
+        }
 
         //globalvars.groupid = mygroupid
         //navigate to new group page
@@ -279,7 +280,13 @@ namespace BillSync
                               select new Group<ItemWrapper>(c.Key, c);
 
             this.transListGroup.ItemsSource = transByDate;
+            ContentPanel.Children.Add(transListGroup);
             progressBar.Visibility = Visibility.Collapsed;
         }
+
+        //protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        //{
+        //    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        //}
     }
 }
